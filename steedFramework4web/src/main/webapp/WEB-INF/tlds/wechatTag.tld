@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+    version="2.1">
+    <description>JSTL 1.2 core library</description>
+  <display-name>JSTL core</display-name>
+  <tlib-version>1.2</tlib-version>
+	<short-name>steedWechat</short-name>
+	<uri>/steed_wechat_tag</uri>
+	
+	<tag>
+		<description>微信jssdk支付</description>
+		<name>chooseWXPay</name>
+		<tag-class>steed.tag.outhtml.wechat.ChooseWXPay</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>统一下单接口返回的prepay_id</description>
+			<name>prepay_id</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>signType</name>
+		</attribute>
+		<attribute>
+			<description>fail</description>
+			<name>fail</name>
+		</attribute>
+		<attribute>
+			<description>success</description>
+			<name>success</name>
+		</attribute>
+	</tag>
+	<tag>
+		<description>微信支付地址共享</description>
+		<name>wechatEditAddress</name>
+		<tag-class>steed.tag.outhtml.wechat.WechatEditAddress</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>换取网页授权的code</description>
+			<name>code</name>
+		</attribute>
+		<attribute>
+			<description>回调函数</description>
+			<name>callBack</name>
+		</attribute>
+	</tag>
+	
+	
+	
+	<tag>
+		<description>微信jsapi初始化</description>
+		<name>wechatJsApiSupport</name>
+		<tag-class>steed.tag.outhtml.wechat.WechatJsApiSupport</tag-class>
+		<body-content>JSP</body-content>
+		
+		<attribute>
+			<description>是否开启debug模式</description>
+			<name>debug</name>
+		</attribute>
+		<attribute>
+			<description>要使用的api</description>
+			<name>apiList</name>
+		</attribute>
+	</tag>
+</taglib>

@@ -1,0 +1,5 @@
+<tasks>
+	<!-- <task class="steed.ext.task.ArticleSummaryTask" delay="22" timeUint="HOURS" /> -->
+	<!-- <task class="steed.ext.market.task.OrderRefreshTask" delay="1" timeUnit="SECONDS" /> -->
+	<!-- <task class="steed.bangbang.RefreshOrderTask" delay="60" timeUnit="SECONDS" /> -->
+</tasks>

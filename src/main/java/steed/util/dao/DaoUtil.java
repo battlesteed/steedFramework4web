@@ -54,6 +54,9 @@ public class DaoUtil {
 	 */
 	private static final ThreadLocal<Boolean> autoManagTransaction = new ThreadLocal<>();
 	
+	private DaoUtil() {
+	}
+
 	/**
 	 * 查询条件后缀
 	 */

@@ -41,28 +41,29 @@ import steed.util.reflect.ReflectUtil;
  */
 public class DaoUtil {
 	private static final Logger logger = LoggerFactory.getLogger(DaoUtil.class);
-//	private static boolean selfManagTransaction = true;
-	private static final ThreadLocal<Boolean> transactionType = new ThreadLocal<Boolean>();
+	
+	private static final ThreadLocal<Boolean> transactionType = new ThreadLocal<>();
 	// 具体的错误提示用
-	private static final ThreadLocal<Exception> exception = new ThreadLocal<Exception>();
-	private static final ThreadLocal<Transaction> currentTransaction = new ThreadLocal<Transaction>();
+	private static final ThreadLocal<Exception> exception = new ThreadLocal<>();
+	private static final ThreadLocal<Transaction> currentTransaction = new ThreadLocal<>();
 	/**
 	 * 是否自动提交或回滚事务
 	 * 自助事务步骤：
 	 * 1,调用setAutoManagTransaction(false)把自动事务设为false
 	 * 2,调用managTransaction()管理事务;
 	 */
-	private static final ThreadLocal<Boolean> autoManagTransaction = new ThreadLocal<Boolean>();
+	private static final ThreadLocal<Boolean> autoManagTransaction = new ThreadLocal<>();
 	
 	/**
 	 * 查询条件后缀
 	 */
 	private static final String[] indexSuffix = {"_max_1","_min_1","_like_1","_not_in_1","_not_equal_1","_not_join","_not_null","_not_compile_param"};
 	/***********\异常提示专用************/
-	//TODO 完善异常类型
+	
+	/*//TODO 完善异常类型
 	private static final Integer[] exceptionTypes = {10,11};
 	private static final String[] exceptionReasons = {"主键重复","主键未指定"};
-	private static final Exception[] exceptions = {};
+	private static final Exception[] exceptions = {};*/
 	
 	/***********#异常提示专用************/
 	public static Exception getExceptiontype() {

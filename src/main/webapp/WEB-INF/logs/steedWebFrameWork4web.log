@@ -1,0 +1,29 @@
+2016-07-27 at 11:01:52 CST DEBUG steed.util.dao.DaoUtil 1214 getHql - hql------>select loginLog_steed_00 from steed.ext.domain.system.LoginLog loginLog_steed_00 where 1=1 and loginLog_steed_00.loginDate<=:loginDate_max_1 and loginLog_steed_00.loginResult != :loginResult_not_equal_1 and loginLog_steed_00.loginDate>=:loginDate_min_1 and loginLog_steed_00.remoteAddr like :remoteAddr 
+2016-07-27 at 11:01:52 CST DEBUG steed.util.dao.DaoUtil 1256 changeSelectHql - countHql--->select count(*) from steed.ext.domain.system.LoginLog loginLog_steed_00 where 1=1 and loginLog_steed_00.loginDate<=:loginDate_max_1 and loginLog_steed_00.loginResult != :loginResult_not_equal_1 and loginLog_steed_00.loginDate>=:loginDate_min_1 and loginLog_steed_00.remoteAddr like :remoteAddr 
+2016-07-27 at 11:01:52 CST DEBUG steed.util.dao.DaoUtil 1214 getHql - hql------>select menu_steed_00 from steed.ext.domain.system.Menu menu_steed_00 where 1=1 and menu_steed_00.show =:show order by menu_steed_00.order1 asc
+2016-07-27 at 11:01:54 CST DEBUG steed.util.dao.DaoUtil 1214 getHql - hql------>select role_steed_00 from steed.ext.domain.user.Role role_steed_00 where 1=1 
+2016-07-27 at 11:01:54 CST DEBUG steed.util.dao.DaoUtil 1256 changeSelectHql - countHql--->select count(*) from steed.ext.domain.user.Role role_steed_00 where 1=1 
+2016-07-27 at 11:01:54 CST DEBUG steed.util.dao.DaoUtil 1267 createQuery - hql---->select count(*) from steed.ext.domain.user.Role role_steed_00 where 1=1 
+2016-07-27 at 11:01:54 CST DEBUG steed.util.dao.DaoUtil 1268 createQuery - 参数---->{}
+2016-07-27 at 11:01:54 CST DEBUG steed.util.dao.DaoUtil 1267 createQuery - hql---->select role_steed_00 from steed.ext.domain.user.Role role_steed_00 where 1=1 
+2016-07-27 at 11:01:54 CST DEBUG steed.util.dao.DaoUtil 1268 createQuery - 参数---->{}
+2016-07-27 at 11:01:55 CST DEBUG steed.util.dao.DaoUtil 1214 getHql - hql------>select role_steed_00 from steed.ext.domain.user.Role role_steed_00 where 1=1 
+2016-07-27 at 11:01:55 CST DEBUG steed.util.dao.DaoUtil 1214 getHql - hql------>select user_steed_00 from steed.ext.domain.user.User user_steed_00 where 1=1 
+2016-07-27 at 11:01:55 CST DEBUG steed.util.dao.DaoUtil 1256 changeSelectHql - countHql--->select count(*) from steed.ext.domain.user.User user_steed_00 where 1=1 
+2016-07-27 at 11:01:55 CST DEBUG steed.util.dao.DaoUtil 1267 createQuery - hql---->select count(*) from steed.ext.domain.user.User user_steed_00 where 1=1 
+2016-07-27 at 11:01:55 CST DEBUG steed.util.dao.DaoUtil 1268 createQuery - 参数---->{}
+2016-07-27 at 11:01:55 CST DEBUG steed.util.dao.DaoUtil 1267 createQuery - hql---->select user_steed_00 from steed.ext.domain.user.User user_steed_00 where 1=1 
+2016-07-27 at 11:01:55 CST DEBUG steed.util.dao.DaoUtil 1268 createQuery - 参数---->{}
+2016-07-27 at 11:02:00 CST DEBUG steed.util.dao.DaoUtil 1214 getHql - hql------>select role_steed_00 from steed.ext.domain.user.Role role_steed_00 where 1=1 
+2016-07-27 at 11:02:00 CST DEBUG steed.util.dao.DaoUtil 1256 changeSelectHql - countHql--->select count(*) from steed.ext.domain.user.Role role_steed_00 where 1=1 
+2016-07-27 at 11:02:00 CST DEBUG steed.util.dao.DaoUtil 1267 createQuery - hql---->select count(*) from steed.ext.domain.user.Role role_steed_00 where 1=1 
+2016-07-27 at 11:02:00 CST DEBUG steed.util.dao.DaoUtil 1268 createQuery - 参数---->{}
+2016-07-27 at 11:02:00 CST DEBUG steed.util.dao.DaoUtil 1267 createQuery - hql---->select role_steed_00 from steed.ext.domain.user.Role role_steed_00 where 1=1 
+2016-07-27 at 11:02:00 CST DEBUG steed.util.dao.DaoUtil 1268 createQuery - 参数---->{}
+2016-07-27 at 11:02:01 CST DEBUG steed.util.dao.DaoUtil 1214 getHql - hql------>select role_steed_00 from steed.ext.domain.user.Role role_steed_00 where 1=1 
+2016-07-27 at 11:02:01 CST DEBUG steed.util.dao.DaoUtil 1214 getHql - hql------>select user_steed_00 from steed.ext.domain.user.User user_steed_00 where 1=1 
+2016-07-27 at 11:02:01 CST DEBUG steed.util.dao.DaoUtil 1256 changeSelectHql - countHql--->select count(*) from steed.ext.domain.user.User user_steed_00 where 1=1 
+2016-07-27 at 11:02:01 CST DEBUG steed.util.dao.DaoUtil 1267 createQuery - hql---->select count(*) from steed.ext.domain.user.User user_steed_00 where 1=1 
+2016-07-27 at 11:02:01 CST DEBUG steed.util.dao.DaoUtil 1268 createQuery - 参数---->{}
+2016-07-27 at 11:02:01 CST DEBUG steed.util.dao.DaoUtil 1267 createQuery - hql---->select user_steed_00 from steed.ext.domain.user.User user_steed_00 where 1=1 
+2016-07-27 at 11:02:01 CST DEBUG steed.util.dao.DaoUtil 1268 createQuery - 参数---->{}

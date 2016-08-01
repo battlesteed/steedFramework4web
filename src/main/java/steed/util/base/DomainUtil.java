@@ -397,7 +397,9 @@ public class DomainUtil{
 	 */
 	public static <T> T fillDomain(T filled,T fill,Collection<String> fieldsNotSkip,boolean strictlyMode){
 		Class clazz = fill.getClass();
+		List<Field> allFields = ReflectUtil.getAllFields(fill);
 		Field[] fields = clazz.getDeclaredFields();
+//		Field[] fields = clazz.getDeclaredFields();
 		try {
 			if(fieldsNotSkip == null){
 				fieldsNotSkip = new ArrayList<String>();

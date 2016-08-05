@@ -7,11 +7,20 @@
 package steed.test.ogm;
 import javax.persistence.Entity;
 
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
+
 /**
  * @author Emmanuel Bernard
  */
+@Indexed
 @Entity
 public class Dog extends Animal {
+	
+	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	private String name;
 
 	public String getName() {

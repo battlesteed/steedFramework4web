@@ -398,6 +398,25 @@
 
 	
 	<!-- /rpc -->
+	<!-- #hibernate search -->
+	<dependency>
+   		<groupId>org.hibernate</groupId>
+	   <artifactId>hibernate-search-orm</artifactId>
+	   <version>5.5.4.Final</version>
+	</dependency>
+		<!-- If using JPA, add: -->
+	<dependency>
+	   <groupId>org.hibernate</groupId>
+	   <artifactId>hibernate-entitymanager</artifactId>
+	   <version>5.0.9.Final</version>
+	</dependency>
+	<!-- Infinispan integration: -->
+	<dependency>
+	   <groupId>org.infinispan</groupId>
+	   <artifactId>infinispan-directory-provider</artifactId>
+	   <version>8.1.0.Final</version>
+	</dependency>
+	<!-- /hibernate search -->
     
   </dependencies>
 

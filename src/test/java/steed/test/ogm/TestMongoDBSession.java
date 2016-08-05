@@ -1,9 +1,17 @@
 package steed.test.ogm;
 
+import java.awt.print.Book;
+import java.util.List;
+
+import org.hibernate.Transaction;
 import org.hibernate.ogm.OgmSession;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.junit.Test;
 
 import steed.largewebsite.ogm.OgmUtil;
+import steed.util.base.BaseUtil;
 
 public class TestMongoDBSession {
 	@Test
@@ -19,6 +27,39 @@ public class TestMongoDBSession {
 		session.flush();
 //		session.
 		session.getTransaction().commit();
+		session.close();
+	}
+	@Test
+	public void testHibernateSearch(){
+		OgmSession session = OgmUtil.getSession();
+		FullTextSession fullTextSession = Search.getFullTextSession(session);
+		/*try {
+			fullTextSession.createIndexer().startAndWait();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}*/
+		Transaction tx = fullTextSession.beginTransaction();
+
+		// create native Lucene query using the query DSL
+		// alternatively you can write the Lucene query using the Lucene query parser
+		// or the Lucene programmatic API. The Hibernate Search DSL is recommended though
+		QueryBuilder qb = fullTextSession.getSearchFactory()
+		  .buildQueryBuilder().forEntity(Dog.class).get();
+		org.apache.lucene.search.Query query = qb
+		  .keyword()
+		  .onFields("name")
+		  .matching("Dindddda")
+		  .createQuery();
+
+		// wrap Lucene query in a org.hibernate.Query
+		org.hibernate.Query hibQuery =
+		    fullTextSession.createFullTextQuery(query, Dog.class);
+
+		// execute search
+		List result = hibQuery.list();
+		BaseUtil.outJson(result.size());
+		
+		tx.commit();
 		session.close();
 	}
 }

@@ -36,7 +36,7 @@
 		$("#loging").show();
 		$.ajax({
 			type : "post",
-			url : "${ctx}/<st:config key='site.adminPostLoginPath' />",
+			url : "${ctx}<st:config key='site.adminPostLoginPath' />",
 			dataType : 'json',
 			data : {
 				"password" : password,

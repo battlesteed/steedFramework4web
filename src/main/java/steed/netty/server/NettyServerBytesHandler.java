@@ -21,8 +21,8 @@ public class NettyServerBytesHandler extends SimpleChannelInboundHandler<ByteBuf
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		super.channelActive(ctx);
 		BaseUtil.out("客户端上线.....");
-		//ctx.channel().writeAndFlush("ddd");
-	//	NettyChannelMap.add("dddd", (SocketChannel)ctx.channel());
+		ctx.channel().writeAndFlush("ddd");
+		NettyChannelMap.add("dddd", (SocketChannel)ctx.channel());
 	}
 
     @Override

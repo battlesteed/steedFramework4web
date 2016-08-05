@@ -48,12 +48,12 @@ public class NettyServerBootstrap {
             protected void initChannel(SocketChannel socketChannel) throws Exception {
                 ChannelPipeline p = socketChannel.pipeline();
                 byte[] ETX = {0x0D};
-               // p.addFirst(new DelimiterBasedFrameDecoder(Integer.MAX_VALUE,Unpooled.copiedBuffer(ETX)));  
+                p.addFirst(new DelimiterBasedFrameDecoder(Integer.MAX_VALUE,Unpooled.copiedBuffer(ETX)));  
 //                p.addFirst(new LengthFieldBasedFrameDecoder(100000000,5,2,7,0));  
                 p.addLast(new ObjectEncoder());
-                p.addLast(new ObjectDecoder(ClassResolvers.cacheDisabled(null)));
+//                p.addLast(new ObjectDecoder(ClassResolvers.cacheDisabled(null)));
                 p.addLast(new NettyServerBytesHandler());
-                p.addLast(new NettyServerHandler());
+//                p.addLast(new NettyServerHandler());
             }
         });
         ChannelFuture f= bootstrap.bind(port).sync();

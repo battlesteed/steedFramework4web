@@ -1,15 +1,17 @@
 package steed.test.ogm;
 
-import java.awt.print.Book;
 import java.util.List;
 
+import org.hibernate.CacheMode;
 import org.hibernate.Transaction;
 import org.hibernate.ogm.OgmSession;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
+import org.hibernate.search.batchindexing.MassIndexerProgressMonitor;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.junit.Test;
 
+import steed.largewebsite.hibernatesearch.HibernateSearchUtil;
 import steed.largewebsite.ogm.OgmUtil;
 import steed.util.base.BaseUtil;
 
@@ -17,10 +19,11 @@ public class TestMongoDBSession {
 	@Test
 	public void startUp(){
 		OgmSession session = OgmUtil.getSession();
-		Dog dina = session.get(Dog.class, 12L);
-//		Dog dina = new Dog();
-//		dina.setId(12L);
-		dina.setName("Dindddda");
+//		Dog dina = session.get(Dog.class, 12L);
+		Dog dina = new Dog();
+		dina.setId(132L);
+		dina.setName("Diddndddda");
+		dina.setName2("Diddndddda");
 		session.beginTransaction();
 //		session.save(dina);
 		session.update(dina);
@@ -33,13 +36,9 @@ public class TestMongoDBSession {
 	public void testHibernateSearch(){
 		OgmSession session = OgmUtil.getSession();
 		FullTextSession fullTextSession = Search.getFullTextSession(session);
-		/*try {
-			fullTextSession.createIndexer().startAndWait();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}*/
-		Transaction tx = fullTextSession.beginTransaction();
+		HibernateSearchUtil.rebuildWholeIndex();
 
+		Transaction tx = fullTextSession.beginTransaction();
 		// create native Lucene query using the query DSL
 		// alternatively you can write the Lucene query using the Lucene query parser
 		// or the Lucene programmatic API. The Hibernate Search DSL is recommended though
@@ -47,8 +46,8 @@ public class TestMongoDBSession {
 		  .buildQueryBuilder().forEntity(Dog.class).get();
 		org.apache.lucene.search.Query query = qb
 		  .keyword()
-		  .onFields("name")
-		  .matching("Dindddda")
+		  .onFields("name2")
+		  .matching("Diddndddda")
 		  .createQuery();
 
 		// wrap Lucene query in a org.hibernate.Query

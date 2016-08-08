@@ -16,6 +16,7 @@ import org.hibernate.Session;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.hql.ast.origin.hql.parse.HQLParser.new_key_return;
 import org.hibernate.ogm.OgmSession;
 import org.hibernate.ogm.OgmSessionFactory;
 import org.hibernate.ogm.boot.OgmSessionFactoryBuilder;
@@ -24,10 +25,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import steed.exception.runtime.BaseRuntimeException;
+import steed.largewebsite.ogm.domain.BaseNosqlDomain;
 import steed.test.ogm.Dog;
 import steed.util.base.PathUtil;
 import steed.util.base.PropertyUtil;
 import steed.util.file.FileUtil;
+import steed.util.reflect.ReflectUtil;
 
 /**
  * 获取线程安全的session
@@ -93,8 +96,12 @@ public class OgmUtil {
 					.build();
 
 			MetadataSources metadataSources = new MetadataSources( standardRegistry );
-			metadataSources.addAnnotatedClass(Dog.class);
-			new OgmUtil().scanDomain(metadataSources);
+			
+			DomainScanner instanceFromProperties = getDomainScanner();
+			List<Class<? extends BaseNosqlDomain>> scan = instanceFromProperties.scan(configFile);
+			for(Class<? extends BaseNosqlDomain> temp:scan){
+				metadataSources.addAnnotatedClass(temp);
+			}
 
 			OgmSessionFactory sessionFactory = metadataSources.buildMetadata().getSessionFactoryBuilder().unwrap( OgmSessionFactoryBuilder.class ).build();
 
@@ -109,31 +116,12 @@ public class OgmUtil {
 		}
 		return null;
 	}
-	
-	private void scanDomain(MetadataSources source){
 
-		String classesPath = PathUtil.getClassesPath();
-		int len = classesPath.length() - 1;
-		
-		List<File> allFile = new FileUtil().getAllFile(classesPath,null);
-		for (File f:allFile) {
-			String absolutePath = f.getAbsolutePath();
-			if(absolutePath.contains("domain") && PropertyUtil.getBoolean("isSignalDatabase")){
-				String replaceAll = absolutePath.substring(len).replaceAll("\\\\", "/").replaceAll("\\/", ".");
-				try {
-					String domainClassName = replaceAll.substring(0,replaceAll.length() - 6);
-					Class domainClass = Class.forName(domainClassName);
-					Entity entity = (Entity) domainClass.getAnnotation(Entity.class);
-					if (entity != null) {
-						source.addAnnotatedClass(domainClass);
-					}
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+	public static DomainScanner getDomainScanner() {
+		DomainScanner instanceFromProperties = ReflectUtil.getInstanceFromProperties("ogm.DomainScanner",PropertyUtil.configProperties);
+		return instanceFromProperties;
 	}
-	
+
 	public static OgmSession getSession(){
 		OgmSession session = null;
 		if (isSignalMode) {
@@ -158,7 +146,7 @@ public class OgmUtil {
 		}
 		return sessionStory.get();
 	}
-	private static String getCurrentDatabase(){
+	public static String getCurrentDatabase(){
 		return currentDatabase.get()==null?mainFactory:currentDatabase.get();
 	}
 	

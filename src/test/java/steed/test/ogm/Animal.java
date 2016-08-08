@@ -11,6 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
+
 /**
  * Animal
  *
@@ -18,9 +25,11 @@ import javax.persistence.Table;
 @Entity
 @Table( name = "ANIMAL" )
 public class Animal {
+	
 	private Long id;
 	private Animal mother;
 	private Animal father;
+	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	private String name;
 
 	public String getName() {

@@ -24,8 +24,8 @@ import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import steed.domain.BaseDatabaseDomain;
 import steed.domain.BaseDomain;
+import steed.domain.BaseRelationalDatabaseDomain;
 import steed.domain.BaseUnionKeyDomain;
 import steed.domain.annotation.NotQueryCondition;
 import steed.domain.annotation.UpdateEvenNull;
@@ -130,7 +130,7 @@ public class DaoUtil {
 	/**
 	 */
 	@SuppressWarnings("rawtypes")
-	public static <T> Page<T> listObj(int pageSize,int currentPage, Class<? extends BaseDatabaseDomain> t){
+	public static <T> Page<T> listObj(int pageSize,int currentPage, Class<? extends BaseRelationalDatabaseDomain> t){
 		try {
 			StringBuffer hql = getSelectHql(t,null,null,null);
 			Long recordCount = getRecordCount(null, hql);
@@ -154,7 +154,7 @@ public class DaoUtil {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> List<Serializable> listAllObjKey(Class<? extends BaseDatabaseDomain> t){
+	public static <T> List<Serializable> listAllObjKey(Class<? extends BaseRelationalDatabaseDomain> t){
 		try {
 			String name = t.getName();
 			String keyName = DomainUtil.getDomainIDName(t);
@@ -170,7 +170,7 @@ public class DaoUtil {
 		}
 	}
 	
-	public static boolean saveList(List<? extends BaseDatabaseDomain> list){
+	public static boolean saveList(List<? extends BaseRelationalDatabaseDomain> list){
 		Session session = null;
 		try {
 			session = HibernateUtil.getSession();
@@ -196,7 +196,7 @@ public class DaoUtil {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> List<T> listByKeys(Class<? extends BaseDatabaseDomain> t,String[] ids){
+	public static <T> List<T> listByKeys(Class<? extends BaseRelationalDatabaseDomain> t,String[] ids){
 		try {
 			Map<String, Object> map = new HashMap<String, Object>();
 //			String[] split = ids.split("\\,");
@@ -227,12 +227,12 @@ public class DaoUtil {
 	 * @param list
 	 * @return
 	 */
-	public static boolean updateList(List<? extends BaseDatabaseDomain> list){
+	public static boolean updateList(List<? extends BaseRelationalDatabaseDomain> list){
 		Session session = null;
 		try {
 			session = HibernateUtil.getSession();
 			beginTransaction();
-			for (Object obj:list ) {
+			for (BaseRelationalDatabaseDomain obj:list ) {
 				session.update(obj);
 			}
 			return managTransaction(true);
@@ -254,10 +254,10 @@ public class DaoUtil {
 	 * 
 	 * @return update失败的对象数
 	 */
-	public static int updateListNotNullFieldOneByOne(List<? extends BaseDatabaseDomain> list,List<String> updateEvenNull){
+	public static int updateListNotNullFieldOneByOne(List<? extends BaseRelationalDatabaseDomain> list,List<String> updateEvenNull){
 		int failed = 0;
 		for (Object o:list) {
-			if (!updateNotNullField((BaseDatabaseDomain) o, updateEvenNull)) {
+			if (!updateNotNullField((BaseRelationalDatabaseDomain) o, updateEvenNull)) {
 				failed++;
 			}
 		}
@@ -273,7 +273,7 @@ public class DaoUtil {
 	 * @param obj
 	 * @return
 	 */
-	public static boolean saveOrUpdate(BaseDatabaseDomain obj){
+	public static boolean saveOrUpdate(BaseRelationalDatabaseDomain obj){
 		Session session = null;
 		try {
 			session = HibernateUtil.getSession();
@@ -281,7 +281,7 @@ public class DaoUtil {
 			if (BaseUtil.isObjEmpty(DomainUtil.getDomainId(obj))) {
 				return save(obj);
 			}else {
-				BaseDatabaseDomain smartGet = smartGet(obj);
+				BaseRelationalDatabaseDomain smartGet = smartGet(obj);
 				if (smartGet != null) {
 					session.evict(smartGet);
 //					session.clear();
@@ -542,7 +542,7 @@ public class DaoUtil {
 	 * @return
 	 */
 	@Deprecated
-	public static boolean cascadeDelete(BaseDatabaseDomain obj,List<Class<?>> domainSkip){
+	public static boolean cascadeDelete(BaseRelationalDatabaseDomain obj,List<Class<?>> domainSkip){
 		beginTransaction();
 		if (domainSkip == null) {
 			domainSkip = new ArrayList<Class<?>>();
@@ -558,7 +558,7 @@ public class DaoUtil {
 	 * @param obj
 	 * @return
 	 */
-	public static boolean delete(BaseDatabaseDomain obj){
+	public static boolean delete(BaseRelationalDatabaseDomain obj){
 		Session session = null;
 		try {
 			session = HibernateUtil.getSession();
@@ -585,14 +585,14 @@ public class DaoUtil {
 		}
 	}
 	
-	private static boolean deleteConneced(BaseDatabaseDomain obj,int level,List<Class<?>> domainSkip){
+	private static boolean deleteConneced(BaseRelationalDatabaseDomain obj,int level,List<Class<?>> domainSkip){
 		if (level-- == 0) {
 			return true;
 		}
 		Session session = null;
 		try {
 			session = HibernateUtil.getSession();
-			BaseDatabaseDomain smartGet = DaoUtil.smartGet(obj);
+			BaseRelationalDatabaseDomain smartGet = DaoUtil.smartGet(obj);
 			if (smartGet == null) {
 				return true;
 			}
@@ -600,11 +600,11 @@ public class DaoUtil {
 				try {
 					Class<?> type = temp.getType();
 					if (!domainSkip.contains(temp)) {
-						if (BaseDatabaseDomain.class.isAssignableFrom(type)) {
+						if (BaseRelationalDatabaseDomain.class.isAssignableFrom(type)) {
 							//TODO 支持javax.persistence.OneToOne外的其他OneToOne注解
 							if (ReflectUtil.getAnnotation(OneToOne.class, smartGet.getClass(), temp) != null) {
 								temp.setAccessible(true);
-								BaseDatabaseDomain object = (BaseDatabaseDomain) temp.get(smartGet);
+								BaseRelationalDatabaseDomain object = (BaseRelationalDatabaseDomain) temp.get(smartGet);
 								if (!BaseUtil.isObjEmpty(object)) {
 									if (deleteConneced(object,level,domainSkip)) {
 										session.delete(object);
@@ -617,12 +617,12 @@ public class DaoUtil {
 							if (ReflectUtil.getAnnotation(OneToMany.class, smartGet.getClass(), temp) != null) {
 								temp.setAccessible(true);
 								Collection<?> collection = (Collection<?>) temp.get(smartGet);
-								// 获取Collection泛型，看是不是BaseDatabaseDomain，然后循环删除
+								// 获取Collection泛型，看是不是BaseRelationalDatabaseDomain，然后循环删除
 								try {
 									Class<?> c = ReflectUtil.getGenericType(temp);
-									if (BaseDatabaseDomain.class.isAssignableFrom(c)) {
+									if (BaseRelationalDatabaseDomain.class.isAssignableFrom(c)) {
 										for(Object o:collection){
-											if(!deleteConneced((BaseDatabaseDomain)o, level, domainSkip)){
+											if(!deleteConneced((BaseRelationalDatabaseDomain)o, level, domainSkip)){
 												return false;
 											}
 										}
@@ -700,11 +700,11 @@ public class DaoUtil {
 		}
 	}
 	
-	public static <T extends BaseDatabaseDomain> List<T> listAllObj(Class<T> t,List<String> desc,List<String> asc){
+	public static <T extends BaseRelationalDatabaseDomain> List<T> listAllObj(Class<T> t,List<String> desc,List<String> asc){
 		return listAllObj(t, null, desc, asc);
 	}
 	
-	public static <T extends BaseDatabaseDomain> List<T> listAllObj(Class<T> t){
+	public static <T extends BaseRelationalDatabaseDomain> List<T> listAllObj(Class<T> t){
 		/*try {
 			Query query = createQuery(null, getSelectHql(t, null, null, null));
 			List list = query.list();
@@ -739,7 +739,7 @@ public class DaoUtil {
 	/**
 	 * 比如说，文章里有个用户实体类，
 	 * 但是前台传过来的只有用户的id，我想获取用户的其他信息就要查数据库，
-	 * 调用该方法会把baseDomain关联的所有BaseDatabaseDomain查出来
+	 * 调用该方法会把baseDomain关联的所有BaseRelationalDatabaseDomain查出来
 	 * @param baseDomain
 	 */
 	public static void getRefrenceById(BaseDomain baseDomain){
@@ -748,8 +748,8 @@ public class DaoUtil {
 			Object temp;
 			try {
 				temp = f.get(baseDomain);
-				if (temp != null & temp instanceof BaseDatabaseDomain) {
-					f.set(baseDomain, smartGet((BaseDatabaseDomain)temp));
+				if (temp != null & temp instanceof BaseRelationalDatabaseDomain) {
+					f.set(baseDomain, smartGet((BaseRelationalDatabaseDomain)temp));
 				}
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
@@ -791,7 +791,7 @@ public class DaoUtil {
 	 * @param obj 查询条件
 	 * @return
 	 */
-	public static boolean isResultNull(BaseDatabaseDomain obj){
+	public static boolean isResultNull(BaseRelationalDatabaseDomain obj){
 		return getCount(obj) == 0;
 	}
 	
@@ -800,8 +800,8 @@ public class DaoUtil {
 	 * @param query
 	 * @return
 	 */
-	public static long getCount(BaseDatabaseDomain query){
-		Class<? extends BaseDatabaseDomain> t = query.getClass();
+	public static long getCount(BaseRelationalDatabaseDomain query){
+		Class<? extends BaseRelationalDatabaseDomain> t = query.getClass();
 		Map<String, Object> map = new HashMap<String, Object>();
 		putField2Map(query, map, "");
 		return getCount(t, map);
@@ -831,7 +831,7 @@ public class DaoUtil {
 	 * @param map 查询数据
 	 * @return
 	 */
-	public static long getCount(Class<? extends BaseDatabaseDomain> t,Map<String, Object> map){
+	public static long getCount(Class<? extends BaseRelationalDatabaseDomain> t,Map<String, Object> map){
 		try {
 			Query query = getSession().createQuery(getCountHql(getSelectHql(t, map, null, null)).toString());
 			setMapParam(map, query);
@@ -909,18 +909,18 @@ public class DaoUtil {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static <T extends BaseDatabaseDomain> T smartLoad(T domain){
+	public static <T extends BaseRelationalDatabaseDomain> T smartLoad(T domain){
 		return (T) load(domain.getClass(), DomainUtil.getDomainId(domain));
 	}
 	/**
 	 * 聪明的get方法
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T extends BaseDatabaseDomain> T smartGet(T domain){
+	public static <T extends BaseRelationalDatabaseDomain> T smartGet(T domain){
 		return (T) get(domain.getClass(), DomainUtil.getDomainId(domain));
 	}
 	@SuppressWarnings("unchecked")
-	public static <T extends BaseDatabaseDomain> T get(Class<T> t,Serializable key){
+	public static <T extends BaseRelationalDatabaseDomain> T get(Class<T> t,Serializable key){
 		try {
 			T t2 = (T) getSession().get(t, key);
 			return t2;
@@ -932,7 +932,7 @@ public class DaoUtil {
 		}
 	}
 	
-	public static <T extends BaseDatabaseDomain> List<T> getList(Class<T> t,Serializable[] keys){
+	public static <T extends BaseRelationalDatabaseDomain> List<T> getList(Class<T> t,Serializable[] keys){
 		try {
 			List<T> list = new ArrayList<T>();
 			for (Serializable s:keys) {
@@ -950,7 +950,7 @@ public class DaoUtil {
 	
 	
 	@SuppressWarnings("unchecked")
-	public static <T extends BaseDatabaseDomain> T load(Class<T> t,Serializable key){
+	public static <T extends BaseRelationalDatabaseDomain> T load(Class<T> t,Serializable key){
 		try {
 			Session session = HibernateUtil.getSession();
 			return (T) session.load(t, key);
@@ -1045,7 +1045,7 @@ public class DaoUtil {
 		currentTransaction.remove();
 	}
 	
-	public static boolean save(BaseDatabaseDomain obj){
+	public static boolean save(BaseRelationalDatabaseDomain obj){
 		try {
 			Session session = HibernateUtil.getSession();
 			beginTransaction();
@@ -1067,7 +1067,7 @@ public class DaoUtil {
 	 * 			所以想跳过UpdateEvenNull注解只更新不为空的字段可以传一个空的list
 	 * @return
 	 */
-	public static boolean updateNotNullField(BaseDatabaseDomain obj,List<String> updateEvenNull){
+	public static boolean updateNotNullField(BaseRelationalDatabaseDomain obj,List<String> updateEvenNull){
 		return updateNotNullField(obj, updateEvenNull, false);
 	}
 	/**
@@ -1082,7 +1082,7 @@ public class DaoUtil {
 	 * @see steed.util.base.DomainUtil#fillDomain
 	 * @return
 	 */
-	public static boolean updateNotNullField(BaseDatabaseDomain obj,List<String> updateEvenNull,boolean strictlyMode){
+	public static boolean updateNotNullField(BaseRelationalDatabaseDomain obj,List<String> updateEvenNull,boolean strictlyMode){
 		List<String> list;
 		if (updateEvenNull == null) {
 			list = new ArrayList<String>();
@@ -1098,7 +1098,7 @@ public class DaoUtil {
 		return update(DomainUtil.fillDomain(smartGet(obj), obj,list,strictlyMode));
 	}
 	
-	public static boolean update(Object obj){
+	public static boolean update(BaseRelationalDatabaseDomain obj){
 		try {
 			Session session = HibernateUtil.getSession();
 			beginTransaction();
@@ -1119,9 +1119,9 @@ public class DaoUtil {
 	 * @param list
 	 * @return update失败的对象数
 	 */
-	public static int updateListOneByOne(List<? extends BaseDatabaseDomain> list){
+	public static int updateListOneByOne(List<? extends BaseRelationalDatabaseDomain> list){
 		int failed = 0;
-		for (Object o:list) {
+		for (BaseRelationalDatabaseDomain o:list) {
 			if (!update(o)) {
 				failed++;
 			}
@@ -1226,7 +1226,7 @@ public class DaoUtil {
 	 * @param asc 需要升序排列的字段
 	 * @return 生成的hql
 	 */
-	public static StringBuffer getSelectHql(BaseDatabaseDomain domain,List<String> desc,List<String> asc) {
+	public static StringBuffer getSelectHql(BaseRelationalDatabaseDomain domain,List<String> desc,List<String> asc) {
 		Class<?> clazz = domain.getClass();
 		Map<String, Object> map = new HashMap<String, Object>();
 		putField2Map(domain, map, "");
@@ -1410,13 +1410,13 @@ public class DaoUtil {
 				f.setAccessible(true);
 				Object value = f.get(obj);
 				if (!BaseUtil.isObjEmpty(value)) {
-					if (value instanceof BaseDatabaseDomain 
+					if (value instanceof BaseRelationalDatabaseDomain 
 							&& !(value instanceof BaseUnionKeyDomain)
 							&& BaseUtil.isObjEmpty(DomainUtil.getDomainId((BaseDomain) value))) {
 						//TODO 子查询支持
 						putField2Map(value, map,fieldName +".");
 					}else {
-						if (value instanceof BaseDatabaseDomain ) {
+						if (value instanceof BaseRelationalDatabaseDomain ) {
 							JoinColumn annotation = ReflectUtil.getAnnotation(JoinColumn.class, objClass, f);
 							if (annotation == null 
 									|| !(!annotation.insertable() 

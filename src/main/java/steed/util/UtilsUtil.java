@@ -1,5 +1,6 @@
 package steed.util;
 
+import steed.largewebsite.ogm.OgmUtil;
 import steed.util.base.PathUtil;
 import steed.util.base.PropertyUtil;
 import steed.util.dao.DaoUtil;
@@ -33,5 +34,7 @@ public class UtilsUtil {
 		HibernateUtil.release();
 		MutiAccountSupportUtil.relese();
 		DaoUtil.relese();
+		//TODO ogm与上层工具类解耦
+		OgmUtil.release();
 	}
 }

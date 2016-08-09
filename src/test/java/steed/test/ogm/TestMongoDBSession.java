@@ -18,19 +18,11 @@ import steed.util.base.BaseUtil;
 public class TestMongoDBSession {
 	@Test
 	public void startUp(){
-		OgmSession session = OgmUtil.getSession();
-//		Dog dina = session.get(Dog.class, 12L);
 		Dog dina = new Dog();
 		dina.setId(132L);
-		dina.setName("Diddndddda");
-		dina.setName2("Diddndddda");
-		session.beginTransaction();
-//		session.save(dina);
-		session.update(dina);
-		session.flush();
-//		session.
-		session.getTransaction().commit();
-		session.close();
+		dina.setName("战马");
+		dina.setName2("battlesteed");
+		dina.update();
 	}
 	@Test
 	public void testHibernateSearch(){

@@ -47,20 +47,28 @@ public class BaseRelationalDatabaseDomain extends BaseDatabaseDomain{
 	public void initializeAll(){
 		initialize();
 	}
+	
+	@Override
 	public <T extends BaseDatabaseDomain> T smartGet(){
 		return (T) DaoUtil.smartGet(this);
 	}
 	
+	@Override
 	public boolean update(){
 		return DaoUtil.update(this);
 	}
+	
+	@Override
 	public boolean delete(){
 		return DaoUtil.delete(this);
 	}
+	
+	@Override
 	public boolean save(){
 		return DaoUtil.save(this);
 	}
 	
+	@Override
 	public boolean saveOrUpdate(){
 		if (BaseUtil.isObjEmpty(DomainUtil.getDomainId(this))) {
 			return save();
@@ -75,10 +83,12 @@ public class BaseRelationalDatabaseDomain extends BaseDatabaseDomain{
 		}
 	}
 	
+	@Override
 	public boolean updateNotNullField(List<String> updateEvenNull){
 		return updateNotNullField(updateEvenNull, false);
 	}
 	
+	@Override
 	public boolean updateNotNullField(List<String> updateEvenNull,boolean strictlyMode){
 		return DaoUtil.updateNotNullField(this, updateEvenNull,strictlyMode);
 	}

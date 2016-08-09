@@ -7,7 +7,6 @@
 package steed.test.ogm;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;

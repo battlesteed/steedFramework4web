@@ -14,14 +14,14 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
-import steed.domain.BaseDatabaseDomain;
+import steed.domain.BaseRelationalDatabaseDomain;
 import steed.domain.annotation.ValidateReg;
 import steed.util.base.RegUtil;
 
 @Entity
 @Table(name="LoginLog")
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-public class LoginLog extends BaseDatabaseDomain{
+public class LoginLog extends BaseRelationalDatabaseDomain{
 	private static final long serialVersionUID = 5725880859445051467L;
 //	@ValidateReg(reg={RegUtil.CommonUseReg.chineseAndChar})
 	private String nickName;

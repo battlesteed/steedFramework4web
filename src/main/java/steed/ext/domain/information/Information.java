@@ -13,7 +13,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
-import steed.domain.BaseDatabaseDomain;
+import steed.domain.BaseRelationalDatabaseDomain;
 import steed.domain.annotation.CleanXss;
 import steed.domain.annotation.UpdateEvenNull;
 import steed.ext.domain.user.User;
@@ -25,7 +25,7 @@ import steed.util.digest.Base64Util;
  */
 @Entity
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-public class Information extends BaseDatabaseDomain{
+public class Information extends BaseRelationalDatabaseDomain{
 	private static final long serialVersionUID = 7918896356926299852L;
 
 	private Integer id;

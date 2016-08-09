@@ -1,6 +1,5 @@
 package steed.largewebsite.ogm;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,13 +9,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 
-import javax.persistence.Entity;
-
 import org.hibernate.Session;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.hql.ast.origin.hql.parse.HQLParser.new_key_return;
 import org.hibernate.ogm.OgmSession;
 import org.hibernate.ogm.OgmSessionFactory;
 import org.hibernate.ogm.boot.OgmSessionFactoryBuilder;
@@ -24,12 +20,11 @@ import org.hibernate.ogm.cfg.OgmProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import steed.domain.BaseDatabaseDomain;
+import steed.domain.DomainScanner;
 import steed.exception.runtime.BaseRuntimeException;
-import steed.largewebsite.ogm.domain.BaseNosqlDomain;
-import steed.test.ogm.Dog;
 import steed.util.base.PathUtil;
 import steed.util.base.PropertyUtil;
-import steed.util.file.FileUtil;
 import steed.util.reflect.ReflectUtil;
 
 /**
@@ -98,8 +93,8 @@ public class OgmUtil {
 			MetadataSources metadataSources = new MetadataSources( standardRegistry );
 			
 			DomainScanner instanceFromProperties = getDomainScanner();
-			List<Class<? extends BaseNosqlDomain>> scan = instanceFromProperties.scan(configFile);
-			for(Class<? extends BaseNosqlDomain> temp:scan){
+			List<Class<? extends BaseDatabaseDomain>> scan = instanceFromProperties.scan(configFile);
+			for(Class<? extends BaseDatabaseDomain> temp:scan){
 				metadataSources.addAnnotatedClass(temp);
 			}
 

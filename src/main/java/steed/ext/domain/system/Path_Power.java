@@ -5,9 +5,9 @@ import java.util.List;
 
 import javax.persistence.Id;
 
-import steed.domain.BaseDomain;
+import steed.domain.BaseRelationalDatabaseDomain;
 
-public class Path_Power extends BaseDomain{
+public class Path_Power extends BaseRelationalDatabaseDomain{
 	private String path;
 	private String power;
 

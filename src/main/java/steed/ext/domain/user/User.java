@@ -16,7 +16,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
-import steed.domain.BaseDatabaseDomain;
+import steed.domain.BaseRelationalDatabaseDomain;
 import steed.domain.BaseUser;
 import steed.domain.annotation.EditNotAllowed;
 import steed.domain.annotation.ValidateReg;
@@ -42,7 +42,7 @@ import steed.util.digest.DigestUtil;
  */
 @Entity
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-public class User extends BaseDatabaseDomain implements BaseUser{
+public class User extends BaseRelationalDatabaseDomain implements BaseUser{
 	private static final long serialVersionUID = -1764586832947652845L;
 	private String sex;
 	/**

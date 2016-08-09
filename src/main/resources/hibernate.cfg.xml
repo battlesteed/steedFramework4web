@@ -56,9 +56,9 @@
         <property name="cache.use_structured_entries">true</property>
         <property name="cache.region.factory_class">org.hibernate.cache.EhCacheRegionFactory</property>
         <!-- 开发模式下的ehache配置 -->
-        <property name="net.sf.ehcache.configurationResourceName">/ehcacheDevMode.xml</property>
+       <!--  <property name="net.sf.ehcache.configurationResourceName">/ehcacheDevMode.xml</property> -->
         <!-- 生产模式下的ehache配置 -->
-      <!--   <property name="net.sf.ehcache.configurationResourceName">/ehcache.xml</property> -->
+        <property name="net.sf.ehcache.configurationResourceName">/ehcache.xml</property>
 		
 		<!-- 自动扫描实体类不用手动配置 -->
 		

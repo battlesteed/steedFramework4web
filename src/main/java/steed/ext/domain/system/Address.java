@@ -9,12 +9,12 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
-import steed.domain.BaseDatabaseDomain;
+import steed.domain.BaseRelationalDatabaseDomain;
 import steed.domain.annotation.ValidateReg;
 import steed.util.base.RegUtil;
 @Entity
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-public class Address extends BaseDatabaseDomain{
+public class Address extends BaseRelationalDatabaseDomain{
 	private static final long serialVersionUID = 6175558172411441441L;
 	@ValidateReg(reg={RegUtil.CommonUsedReg.chineseAndChar})
 	private String province;

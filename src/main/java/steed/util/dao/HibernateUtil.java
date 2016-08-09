@@ -1,12 +1,9 @@
 package steed.util.dao;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import javax.persistence.Entity;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,9 +15,10 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import steed.util.base.PathUtil;
+import steed.domain.BaseDatabaseDomain;
+import steed.domain.DomainScanner;
 import steed.util.base.PropertyUtil;
-import steed.util.file.FileUtil;
+import steed.util.reflect.ReflectUtil;
 /**
  * 获取线程安全的session
  * @author 战马
@@ -38,8 +36,13 @@ public class HibernateUtil{
 	private static boolean isSignalMode = true;
 	
 	static {
-		buildFactory();
-		isSignalMode = PropertyUtil.getBoolean("isSignalDatabase");
+		try{
+			buildFactory();
+			isSignalMode = PropertyUtil.getBoolean("isSignalDatabase");
+		}catch (Error e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 	public static boolean getColseSession(){
 		Boolean closeSession = HibernateUtil.closeSession.get();
@@ -70,7 +73,14 @@ public class HibernateUtil{
 				    .build();
 
 			MetadataSources metadataSources = new MetadataSources( standardRegistry );
-			new HibernateUtil().scanDomain(metadataSources);
+			
+			DomainScanner instanceFromProperties = getDomainScanner();
+			List<Class<? extends BaseDatabaseDomain>> scan = instanceFromProperties.scan(configFile);
+			for(Class<? extends BaseDatabaseDomain> temp:scan){
+				metadataSources.addAnnotatedClass(temp);
+			}
+			
+		//	new HibernateUtil().scanDomain(metadataSources);
 			
 			Metadata metadata = metadataSources.getMetadataBuilder()
 			    .applyImplicitNamingStrategy( ImplicitNamingStrategyJpaCompliantImpl.INSTANCE )
@@ -89,28 +99,9 @@ public class HibernateUtil{
 		return null;
 	}
 	
-	private void scanDomain(MetadataSources source){
-
-		String classesPath = PathUtil.getClassesPath();
-		int len = classesPath.length() - 1;
-		
-		List<File> allFile = new FileUtil().getAllFile(classesPath,null);
-		for (File f:allFile) {
-			String absolutePath = f.getAbsolutePath();
-			if(absolutePath.contains("domain") && PropertyUtil.getBoolean("isSignalDatabase")){
-				String replaceAll = absolutePath.substring(len).replaceAll("\\\\", "/").replaceAll("\\/", ".");
-				try {
-					String domainClassName = replaceAll.substring(0,replaceAll.length() - 6);
-					Class domainClass = Class.forName(domainClassName);
-					Entity entity = (Entity) domainClass.getAnnotation(Entity.class);
-					if (entity != null) {
-						source.addAnnotatedClass(domainClass);
-					}
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+	public static DomainScanner getDomainScanner() {
+		DomainScanner instanceFromProperties = ReflectUtil.getInstanceFromProperties("dao.DomainScanner",PropertyUtil.configProperties);
+		return instanceFromProperties;
 	}
 	
 	public static Session getSession(){

@@ -13,10 +13,10 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
-import steed.domain.BaseDatabaseDomain;
+import steed.domain.BaseRelationalDatabaseDomain;
 @Entity
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-public class Menu extends BaseDatabaseDomain{
+public class Menu extends BaseRelationalDatabaseDomain{
 	private static final long serialVersionUID = 5721539566317121839L;
 	private String name;
 	private String url;

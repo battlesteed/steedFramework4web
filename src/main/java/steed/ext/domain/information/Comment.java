@@ -1,8 +1,8 @@
 package steed.ext.domain.information;
 
-import steed.domain.BaseDatabaseDomain;
+import steed.domain.BaseRelationalDatabaseDomain;
 
-public class Comment extends BaseDatabaseDomain{
+public class Comment extends BaseRelationalDatabaseDomain{
 	private static final long serialVersionUID = -7357953475167253685L;
 
 	@Override

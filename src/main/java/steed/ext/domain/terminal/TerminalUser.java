@@ -8,7 +8,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
-import steed.domain.BaseDatabaseDomain;
+import steed.domain.BaseRelationalDatabaseDomain;
 import steed.domain.annotation.ValidateReg;
 import steed.util.base.RegUtil;
 
@@ -19,7 +19,7 @@ import steed.util.base.RegUtil;
  */
 @Entity
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-public class TerminalUser extends BaseDatabaseDomain{
+public class TerminalUser extends BaseRelationalDatabaseDomain{
 	@ValidateReg(reg={RegUtil.CommonUsedReg.chineseAndChar})
 	private String userid;
 	/**

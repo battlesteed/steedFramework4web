@@ -9,13 +9,13 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
-import steed.domain.BaseDatabaseDomain;
+import steed.domain.BaseRelationalDatabaseDomain;
 import steed.domain.annotation.ValidateReg;
 import steed.util.base.RegUtil;
 
 @Entity
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-public class Power extends BaseDatabaseDomain{
+public class Power extends BaseRelationalDatabaseDomain{
 	private static final long serialVersionUID = 8841822962310540390L;
 	@ValidateReg(reg={RegUtil.CommonUsedReg.chineseAndChar})
 	private String name;

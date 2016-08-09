@@ -6,7 +6,7 @@ import java.util.List;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class BaseTimeOrderDomain extends BaseDatabaseDomain{
+public class BaseTimeOrderDomain extends BaseRelationalDatabaseDomain{
 	private static final long serialVersionUID = 6249017384270298464L;
 	
 	protected Date addTime;

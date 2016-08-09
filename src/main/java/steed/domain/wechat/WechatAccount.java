@@ -9,14 +9,14 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
-import steed.domain.BaseDatabaseDomain;
+import steed.domain.BaseRelationalDatabaseDomain;
 import steed.ext.domain.user.User;
 
 
 /** 微信公众号 */
 @Entity
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-public class WechatAccount extends BaseDatabaseDomain{
+public class WechatAccount extends BaseRelationalDatabaseDomain{
 	private static final long serialVersionUID = -703139000141520185L;
 	/** AppSecret */
 	private java.lang.String appSecret;

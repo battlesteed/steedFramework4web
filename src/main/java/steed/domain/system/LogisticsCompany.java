@@ -8,11 +8,11 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
-import steed.domain.BaseDatabaseDomain;
+import steed.domain.BaseRelationalDatabaseDomain;
 
 @Entity
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-public class LogisticsCompany extends BaseDatabaseDomain{
+public class LogisticsCompany extends BaseRelationalDatabaseDomain{
 	private static final long serialVersionUID = 2012029727907799622L;
 	private String code;
 	private String name;

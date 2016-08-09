@@ -15,13 +15,13 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
-import steed.domain.BaseDatabaseDomain;
+import steed.domain.BaseRelationalDatabaseDomain;
 import steed.domain.annotation.ValidateReg;
 import steed.util.base.CollectionsUtil;
 import steed.util.base.RegUtil;
 @Entity
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-public class Role extends BaseDatabaseDomain{
+public class Role extends BaseRelationalDatabaseDomain{
 	private static final long serialVersionUID = 1L;
 	@ValidateReg(reg={RegUtil.CommonUsedReg.chineseAndChar})
 	private String name;

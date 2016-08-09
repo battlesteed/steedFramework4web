@@ -9,7 +9,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
-import steed.domain.BaseDatabaseDomain;
+import steed.domain.BaseRelationalDatabaseDomain;
 import steed.util.base.StringUtil;
 import steed.util.wechat.domain.result.WechatResult;
 
@@ -20,7 +20,7 @@ import steed.util.wechat.domain.result.WechatResult;
  */
 @Entity
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-public class WechatUser extends BaseDatabaseDomain implements WechatResult{
+public class WechatUser extends BaseRelationalDatabaseDomain implements WechatResult{
 	private static final long serialVersionUID = 1L;
 	private String errcode;
 	private String errmsg;

@@ -17,9 +17,9 @@ import steed.util.reflect.ReflectUtil;
 
 public class PropertyUtil {
 	private static Map<String, Properties> propertiesMap = new HashMap<String, Properties>();
-	/**
-	 * 配置是否每次都重新加载properties文件，上线后一般要改为false
-	 */
+//	/**
+//	 * 配置是否每次都重新加载properties文件，上线后一般要改为false
+//	 */
 //	private static boolean reload = true;
 	
 	public static final String configProperties = "config.properties";

@@ -16,7 +16,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
-import steed.domain.BaseDatabaseDomain;
+import steed.domain.BaseRelationalDatabaseDomain;
 import steed.domain.annotation.ValidateReg;
 import steed.exception.runtime.system.FrameworkException;
 import steed.util.base.RegUtil;
@@ -24,7 +24,7 @@ import steed.util.base.RegUtil;
 @Entity
 @Table(name="Config")
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-public class Config extends BaseDatabaseDomain{
+public class Config extends BaseRelationalDatabaseDomain{
 	private static final long serialVersionUID = 1L;
 	@ValidateReg(reg={RegUtil.CommonUsedReg.chineseAndChar})
 	private String kee;

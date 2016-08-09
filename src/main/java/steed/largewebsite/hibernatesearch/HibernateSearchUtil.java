@@ -1,11 +1,7 @@
 package steed.largewebsite.hibernatesearch;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import javax.persistence.Entity;
 
 import org.hibernate.CacheMode;
 import org.hibernate.ogm.OgmSession;
@@ -13,13 +9,9 @@ import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
 import org.hibernate.search.annotations.Indexed;
 
-import steed.largewebsite.ogm.DomainScanner;
+import steed.domain.BaseDatabaseDomain;
+import steed.domain.DomainScanner;
 import steed.largewebsite.ogm.OgmUtil;
-import steed.largewebsite.ogm.domain.BaseNosqlDomain;
-import steed.test.ogm.Dog;
-import steed.util.base.PathUtil;
-import steed.util.base.PropertyUtil;
-import steed.util.file.FileUtil;
 
 /**
  * hibernate search工具类
@@ -37,10 +29,10 @@ public class HibernateSearchUtil {
 		FullTextSession fullTextSession = Search.getFullTextSession(session);
 		try {
 			DomainScanner domainScanner = OgmUtil.getDomainScanner();
-			List<Class<? extends BaseNosqlDomain>> scan = domainScanner.scan(OgmUtil.getCurrentDatabase());
-			Iterator<Class<? extends BaseNosqlDomain>> iterator = scan.iterator();
+			List<Class<? extends BaseDatabaseDomain>> scan = domainScanner.scan(OgmUtil.getCurrentDatabase());
+			Iterator<Class<? extends BaseDatabaseDomain>> iterator = scan.iterator();
 			while(iterator.hasNext()){
-				Class<? extends BaseNosqlDomain> next = iterator.next();
+				Class<? extends BaseDatabaseDomain> next = iterator.next();
 				if (next.getAnnotation(Indexed.class) == null) {
 					iterator.remove();
 				}

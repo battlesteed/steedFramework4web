@@ -1,4 +1,4 @@
-package steed.largewebsite.ogm;
+package steed.domain;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -6,9 +6,11 @@ import java.util.List;
 
 import javax.persistence.Entity;
 
-import steed.domain.BaseDatabaseDomain;
+import org.apache.poi.ss.formula.functions.EDate;
+
 import steed.domain.DomainScanner;
 import steed.largewebsite.ogm.domain.BaseNosqlDomain;
+import steed.util.base.BaseUtil;
 import steed.util.base.PathUtil;
 import steed.util.base.PropertyUtil;
 import steed.util.file.FileUtil;
@@ -22,7 +24,7 @@ public class SingleDomainScanner implements DomainScanner{
 	
 	public List<Class<? extends BaseDatabaseDomain>> scan(String configFile){
 		List<Class<? extends BaseDatabaseDomain>> list = new ArrayList<>();
-		if(!PropertyUtil.getBoolean("isSignalNoSqlDatabase")){
+		if(!PropertyUtil.getBoolean("isSignalDatabase")){
 			return list;
 		}
 		String classesPath = PathUtil.getClassesPath();
@@ -37,8 +39,9 @@ public class SingleDomainScanner implements DomainScanner{
 			String replaceAll = absolutePath.substring(len).replaceAll("\\\\", "/").replaceAll("\\/", ".");
 			try {
 				String domainClassName = replaceAll.substring(0,replaceAll.length() - 6);
+				BaseUtil.out("扫描",domainClassName);
 				Class domainClass = Class.forName(domainClassName);
-				if (BaseNosqlDomain.class.isAssignableFrom(domainClass)) {
+				if (BaseRelationalDatabaseDomain.class.isAssignableFrom(domainClass)) {
 					if (domainClass.getAnnotation(Entity.class) != null) {
 						list.add(domainClass);
 					}

@@ -8,7 +8,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
-import steed.domain.BaseDatabaseDomain;
+import steed.domain.BaseRelationalDatabaseDomain;
 
 /**
  * 栏目
@@ -17,7 +17,7 @@ import steed.domain.BaseDatabaseDomain;
  */
 @Entity
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-public class Programa extends BaseDatabaseDomain{
+public class Programa extends BaseRelationalDatabaseDomain{
 	private static final long serialVersionUID = -2258584179191606674L;
 	private String name;
 	private String description;

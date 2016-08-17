@@ -11,7 +11,9 @@ import org.hibernate.search.annotations.Indexed;
 
 import steed.domain.BaseDatabaseDomain;
 import steed.domain.DomainScanner;
+import steed.exception.PathIsTopException;
 import steed.largewebsite.ogm.OgmUtil;
+import steed.util.base.PathUtil;
 
 /**
  * hibernate search工具类
@@ -20,6 +22,14 @@ import steed.largewebsite.ogm.OgmUtil;
  *
  */
 public class HibernateSearchUtil {
+	
+	static{
+		try {
+			System.setProperty("hibernatesearch.infinispanDataDir", PathUtil.mergePath(PathUtil.getParaentPath(PathUtil.getClassesPath()), "infinispan"));
+		} catch (PathIsTopException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	 * 重新创建所有索引

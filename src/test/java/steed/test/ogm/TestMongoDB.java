@@ -1,5 +1,7 @@
 package steed.test.ogm;
 
+import java.util.Properties;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -10,7 +12,13 @@ import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.TransactionManager;
 
+import org.infinispan.Cache;
+import org.infinispan.manager.DefaultCacheManager;
 import org.junit.Test;
+
+import steed.test.ogm.domain.Breed;
+import steed.test.ogm.domain.Dog;
+import steed.util.base.BaseUtil;
 
 public class TestMongoDB {
 	@Test
@@ -58,4 +66,14 @@ public class TestMongoDB {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public static void main(String args[]) throws Exception {
+		System.setProperty("jgroups.bind_addr", "127.0.0.1");
+//	      Cache<Object, Object> c = new DefaultCacheManager("gui-demo-cache-config.xml").getCache();
+	      Cache<Object, Object> c = new DefaultCacheManager("default-hibernatesearch-infinispan.xml").getCache();
+//	      c.put("key", "value");
+//	      c.stop();
+	      BaseUtil.out(c.size());
+	   }
 }

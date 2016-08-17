@@ -18,7 +18,7 @@ import org.hibernate.search.hcore.impl.HibernateSessionFactoryService;
 import org.hibernate.search.spi.BuildContext;
 import org.hibernate.search.store.ShardIdentifierProviderTemplate;
 
-import steed.test.ogm.Animal;
+import steed.test.ogm.domain.Animal;
 
 public class DefaultShardIdentifierProvider extends ShardIdentifierProviderTemplate {
 

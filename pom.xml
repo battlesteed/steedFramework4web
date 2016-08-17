@@ -417,13 +417,13 @@
 	   <version>8.1.0.Final</version>
 	</dependency>
 	
-
+<!-- 
 	<dependency>
 	   <groupId>org.hibernate</groupId>
 	   <artifactId>hibernate-search-infinispan</artifactId>
 	   <version>5.5.4.Final</version>
 	</dependency>
-
+ -->
 	
 	
 	

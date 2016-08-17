@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import steed.domain.BaseDatabaseDomain;
 import steed.domain.DomainScanner;
 import steed.largewebsite.ogm.domain.BaseNosqlDomain;
+import steed.util.base.BaseUtil;
 import steed.util.base.PathUtil;
 import steed.util.base.PropertyUtil;
 import steed.util.file.FileUtil;
@@ -44,6 +45,8 @@ public class SingleDomainScanner implements DomainScanner{
 			
 			try {
 				String domainClassName = replaceAll.substring(0,replaceAll.length() - 6);
+				BaseUtil.out("扫描",domainClassName);
+				
 				@SuppressWarnings("unchecked")
 				Class<? extends BaseDatabaseDomain> domainClass = (Class<? extends BaseDatabaseDomain>) Class.forName(domainClassName);
 				if (BaseNosqlDomain.class.isAssignableFrom(domainClass)) {

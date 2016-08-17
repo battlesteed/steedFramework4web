@@ -2,19 +2,20 @@ package steed.test.ogm;
 
 import java.util.List;
 
-import org.hibernate.CacheMode;
 import org.hibernate.Transaction;
 import org.hibernate.ogm.OgmSession;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
-import org.hibernate.search.batchindexing.MassIndexerProgressMonitor;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.junit.Test;
 
+import steed.exception.PathIsTopException;
 import steed.largewebsite.hibernatesearch.HibernateSearchUtil;
 import steed.largewebsite.ogm.OgmUtil;
 import steed.test.ogm.domain.Dog;
+import steed.util.UtilsUtil;
 import steed.util.base.BaseUtil;
+import steed.util.base.PathUtil;
 
 public class TestMongoDBSession {
 	@Test
@@ -27,6 +28,7 @@ public class TestMongoDBSession {
 	}
 	@Test
 	public void testHibernateSearch(){
+		UtilsUtil.initUtils();
 		OgmSession session = OgmUtil.getSession();
 		FullTextSession fullTextSession = Search.getFullTextSession(session);
 //		HibernateSearchUtil.rebuildWholeIndex();

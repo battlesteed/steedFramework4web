@@ -23,6 +23,9 @@ public class UtilsUtil {
 		System.setProperty("log_dir", PathUtil.praseRelativePath(PropertyUtil.getConfig("log_dir")));
 		//log4j日志文件编码
 		System.setProperty("log_encoding",PropertyUtil.getConfig("characterSet"));
+		
+		System.setProperty("hibernatesearch.infinispanDataDir", PathUtil.praseRelativePath(PropertyUtil.getConfig("hibernatesearch.infinispanDataDir")));
+		
 		MutiAccountSupportUtil.setSingleMode(PropertyUtil.getBoolean("wechat.singleMode"));
 //		HibernateUtil.setWhole_closeSession(PropertyUtil.getConstant("whole_closeSession",Boolean.class));
 	}

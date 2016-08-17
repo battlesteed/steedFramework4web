@@ -8,7 +8,11 @@ import org.hibernate.Hibernate;
 import steed.util.base.BaseUtil;
 import steed.util.base.DomainUtil;
 import steed.util.dao.DaoUtil;
-
+/**
+ * 关系型数据库基础实体类
+ * @author 战马
+ *
+ */
 public class BaseRelationalDatabaseDomain extends BaseDatabaseDomain{
 	public void initialize(){
 		Hibernate.initialize(this);

@@ -33,14 +33,15 @@ public class SingleDomainScanner implements DomainScanner{
 		List<File> allFile = new FileUtil().getAllFile(classesPath,null);
 		if (PropertyUtil.getBoolean("devMode")) {
 			allFile.addAll(new FileUtil().getAllFile(classesPath.replaceFirst("classes", "test-classes"),null));
+			allFile.addAll(new FileUtil().getAllFile(classesPath.replaceFirst("test-classes", "classes"),null));
 		}
 		
 		for (File f:allFile) {
 			String absolutePath = f.getAbsolutePath();
-			if (!absolutePath.endsWith(".class")) {
+			if (!absolutePath.endsWith(".class") || (!absolutePath.contains("domain") && !absolutePath.contains("model"))) {
 				continue;
 			}
-			String replaceAll = absolutePath.substring(len).replaceAll("\\\\", "/").replaceAll("\\/", ".");
+			String replaceAll = absolutePath.substring(absolutePath.indexOf("classes")+"classes.".length()).replaceAll("\\\\", "/").replaceAll("\\/", ".");
 			try {
 				String domainClassName = replaceAll.substring(0,replaceAll.length() - 6);
 				BaseUtil.out("扫描",domainClassName);

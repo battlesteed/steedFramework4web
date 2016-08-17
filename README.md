@@ -37,6 +37,8 @@ steedFramework4web by 战马
 
 16.集成log4j2,自动分类并压缩日志.
 
+17.编写了专门用来写接口与其他系统对接的接口模块(包括android,ios等客户的接口,android配套的接口调用模块会适时和android框架一起放出)
+
 环境要求:
 
 jdk1.8(要用1.7的改一下hibernate版本,最新hibernate不支持1.7,那些用jdk1.6的我就不吐槽了,什么年代了,还用这么古老的东西),mysql 5.5及以上(或者其他数据库,这里不提供其他数据库的初始数据文件,请自己生成)
@@ -47,9 +49,11 @@ jdk1.8(要用1.7的改一下hibernate版本,最新hibernate不支持1.7,那些�
 
 2.修改/src/main/resources/pool-one.properties数据库连接相关信息(也支持c3p0连接池,把/src/main/resources/hibernate.cfg.xml c3p0注释去掉,然后注释掉proxool即可)
 
-3.修改/src/main/resources/properties/config.properties 中的serverEncoding和site.rootURL.  
+3.修改/src/main/resources/properties/config.properties 中的serverEncoding和site.rootURL和aesKey(可以不修改,建议修改). 
+ 
+4.如果修改了aeskey请运行steed.test.DatabaseTest.aesInit()(运行之前请手动添加junit jar包).
 
-4.部署运行,默认账号:admin,密码:123456
+5.部署运行,默认账号:admin,密码:123456
 
 使用说明:
 请自己手动添加servlet容器jar包和junit jar包

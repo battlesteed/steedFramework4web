@@ -20,7 +20,7 @@ public class TestMongoDBSession {
 	public void startUp(){
 		Dog dina = new Dog();
 		dina.setId(132L);
-		dina.setName("战马");
+		dina.setName("战马4");
 		dina.setName2("battlesteed");
 		dina.update();
 	}
@@ -39,7 +39,7 @@ public class TestMongoDBSession {
 		org.apache.lucene.search.Query query = qb
 		  .keyword()
 		  .onFields("name2")
-		  .matching("Diddndddda")
+		  .matching("battlesteed")
 		  .createQuery();
 
 		// wrap Lucene query in a org.hibernate.Query

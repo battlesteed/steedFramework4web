@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<infinispan
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="urn:infinispan:config:8.0 http://www.infinispan.org/schemas/infinispan-config-8.0.xsd"
+        xmlns="urn:infinispan:config:8.0">
+
+    <!-- *************************** -->
+    <!-- System-wide global settings -->
+    <!-- *************************** -->
+    <jgroups>
+        <!-- Note that the JGroups transport uses sensible defaults if no configuration
+            property is defined. See the JGroupsTransport javadocs for more flags.
+            jgroups-udp.xml is the default stack bundled in the Infinispan core jar: integration
+            and tuning are tested by Infinispan. -->
+        <stack-file name="default-jgroups-udp" path="default-jgroups-udp.xml"/>
+    </jgroups>
+    
+    
+    <cache-container name="HibernateSearch" default-cache="default" statistics="false" shutdown-hook="DONT_REGISTER">
+
+        <local-cache name="writeThroughToFile">
+	      <persistence passivation="true">
+	         <file-store path="D:\temp\c" shared="true" preload="true" purge="true">
+	          <!--   <write-behind flush-lock-timeout="12321" modification-queue-size="123" shutdown-timeout="321" thread-pool-size="22" /> -->
+	         </file-store>
+	      </persistence>
+   		</local-cache>
+        <!-- 
+        <transport stack="default-jgroups-udp" cluster="infinispan-cluster" node-name="Node-A" machine="m1" rack="r1" site="LON" />
+ -->
+        <!-- Duplicate domains are allowed so that multiple deployments with default configuration
+            of Hibernate Search applications work - if possible it would be better to use JNDI to share
+            the CacheManager across applications -->
+        <jmx duplicate-domains="true"/>
+
+        <!-- *************************************** -->
+        <!--  Cache to store Lucene's file metadata  -->
+        <!-- *************************************** -->
+        <replicated-cache name="LuceneIndexesMetadata" mode="SYNC" remote-timeout="25000">
+            <locking striping="false" acquire-timeout="10000" concurrency-level="500" write-skew="false"/>
+            <transaction mode="NONE"/>
+            <eviction max-entries="-1" strategy="NONE"/>
+            <expiration max-idle="-1"/>
+            <indexing index="NONE"/>
+            <state-transfer enabled="true" timeout="480000" await-initial-transfer="true"/>
+        </replicated-cache>
+
+        <!-- **************************** -->
+        <!--  Cache to store Lucene data  -->
+        <!-- **************************** -->
+        <distributed-cache name="LuceneIndexesData" mode="SYNC" remote-timeout="25000" owners="3" l1-lifespan="600000">
+            <locking striping="false" acquire-timeout="10000" concurrency-level="500" write-skew="false"/>
+            <transaction mode="NONE"/>
+            <eviction max-entries="-1" strategy="NONE"/>
+            <expiration max-idle="-1"/>
+            <indexing index="NONE"/>
+            <state-transfer enabled="true" timeout="480000" await-initial-transfer="true"/>
+        </distributed-cache>
+
+        <!-- ***************************** -->
+        <!--  Cache to store Lucene locks  -->
+        <!-- ***************************** -->
+        <replicated-cache name="LuceneIndexesLocking" mode="SYNC" remote-timeout="25000">
+            <locking striping="false" acquire-timeout="10000" concurrency-level="500" write-skew="false"/>
+            <transaction mode="NONE"/>
+            <eviction max-entries="-1" strategy="NONE"/>
+            <expiration max-idle="-1"/>
+            <indexing index="NONE"/>
+            <state-transfer enabled="true" timeout="480000" await-initial-transfer="true"/>
+        </replicated-cache>
+        <!-- 
+        <local-cache name="writeThroughToFile">
+	      <persistence passivation="true">
+	         <file-store path="D:\temp\" shared="false" preload="true" purge="true">
+	            <write-behind flush-lock-timeout="12321" modification-queue-size="123" shutdown-timeout="321" thread-pool-size="22" />
+	         </file-store>
+	      </persistence>
+	   </local-cache> -->
+    </cache-container>
+    
+</infinispan>

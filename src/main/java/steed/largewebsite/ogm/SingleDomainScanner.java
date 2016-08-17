@@ -29,6 +29,10 @@ public class SingleDomainScanner implements DomainScanner{
 		int len = classesPath.length() - 1;
 		
 		List<File> allFile = new FileUtil().getAllFile(classesPath,null);
+		if (PropertyUtil.getBoolean("devMode")) {
+			allFile.addAll(new FileUtil().getAllFile(classesPath.replaceFirst("classes", "test-classes"),null));
+		}
+		
 		for (File f:allFile) {
 			String absolutePath = f.getAbsolutePath();
 			if (!absolutePath.endsWith(".class")) {
@@ -37,7 +41,8 @@ public class SingleDomainScanner implements DomainScanner{
 			String replaceAll = absolutePath.substring(len).replaceAll("\\\\", "/").replaceAll("\\/", ".");
 			try {
 				String domainClassName = replaceAll.substring(0,replaceAll.length() - 6);
-				Class domainClass = Class.forName(domainClassName);
+				@SuppressWarnings("unchecked")
+				Class<? extends BaseDatabaseDomain> domainClass = (Class<? extends BaseDatabaseDomain>) Class.forName(domainClassName);
 				if (BaseNosqlDomain.class.isAssignableFrom(domainClass)) {
 					if (domainClass.getAnnotation(Entity.class) != null) {
 						list.add(domainClass);

@@ -9,10 +9,6 @@
         <property name="hibernate.ogm.datastore.provider" value="mongodb"/>
         <property name="hibernate.transaction.jta.platform"
                   value="org.hibernate.service.jta.platform.internal.JBossStandAloneJtaPlatform"/>
-        <property name="hibernate.search.default.directory_provider"
-          value="filesystem"/>
-
-	<property name="hibernate.search.default.indexBase" value="D:\temp\indexes2" />
 	
     </properties>
 </persistence-unit>

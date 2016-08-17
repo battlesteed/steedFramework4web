@@ -9,6 +9,7 @@ import steed.domain.BaseDomain;
 import steed.domain.BaseUser;
 import steed.domain.GlobalParam;
 import steed.util.base.DomainUtil;
+import steed.util.base.PathUtil;
 import steed.util.base.StringUtil;
 import steed.util.digest.DigestUtil;
 import steed.util.digest.Md5Util;
@@ -32,6 +33,23 @@ public class AttachmentUtil {
 		FileUtil.copyFile(file, GlobalParam.FOLDER.rootPath+path);
 		return path;
 	}
+	
+	/**
+	 * 保存附件
+	 * @param file
+	 * @param fileName 为null时fileName = file.getName();
+	 * @param relativePath 相对于项目跟目录的相对路径
+	 * @return 相对于项目部署目录的相对路径
+	 */
+	public static String save(File file,String fileName,String relativePath){
+		if (fileName == null) {
+			fileName = file.getName();
+		}
+		String path = PathUtil.mergePath(relativePath, fileName);
+		FileUtil.copyFile(file, PathUtil.mergePath(GlobalParam.FOLDER.rootPath, path));
+		return path;
+	}
+	
 	/**
 	 * 删除附件
 	 * @param path 相对于项目部署目录的相对路径save的返回值

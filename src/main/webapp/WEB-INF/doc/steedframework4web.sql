@@ -1,15 +1,22 @@
 /*
 Navicat MySQL Data Transfer
-Source Host     : localhost:3306
-Source Database : steedframework4web
-Target Host     : localhost:3306
-Target Database : steedframework4web
-Date: 2016-07-26 20:14:58
+
+Source Server         : localhost
+Source Server Version : 50547
+Source Host           : localhost:3306
+Source Database       : steedframework4web
+
+Target Server Type    : MYSQL
+Target Server Version : 50547
+File Encoding         : 65001
+
+Date: 2016-08-17 10:51:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
 -- ----------------------------
--- Table structure for address
+-- Table structure for `address`
 -- ----------------------------
 DROP TABLE IF EXISTS `address`;
 CREATE TABLE `address` (
@@ -3540,7 +3547,7 @@ INSERT INTO `address` VALUES ('810000', '香港特别行政区', null, null);
 INSERT INTO `address` VALUES ('820000', '澳门特别行政区', null, null);
 
 -- ----------------------------
--- Table structure for config
+-- Table structure for `config`
 -- ----------------------------
 DROP TABLE IF EXISTS `config`;
 CREATE TABLE `config` (
@@ -3556,7 +3563,7 @@ INSERT INTO `config` VALUES ('最多登陆错误次数', '5');
 INSERT INTO `config` VALUES ('登陆错误超标重新登陆等待时间', '5');
 
 -- ----------------------------
--- Table structure for information
+-- Table structure for `information`
 -- ----------------------------
 DROP TABLE IF EXISTS `information`;
 CREATE TABLE `information` (
@@ -3577,7 +3584,7 @@ CREATE TABLE `information` (
 INSERT INTO `information` VALUES ('1', '<p>wewqewqewqfdsafdsf<br/></p>', '2016-06-28 15:24:32', 'www', 'admin', '3333');
 
 -- ----------------------------
--- Table structure for loginlog
+-- Table structure for `loginlog`
 -- ----------------------------
 DROP TABLE IF EXISTS `loginlog`;
 CREATE TABLE `loginlog` (
@@ -3625,9 +3632,20 @@ INSERT INTO `loginlog` VALUES ('admin', '0:0:0:0:0:0:0:1', '2016-07-05 10:43:51'
 INSERT INTO `loginlog` VALUES ('admin', '0:0:0:0:0:0:0:1', '2016-07-05 10:49:11', '登录成功', null, null, '3');
 INSERT INTO `loginlog` VALUES ('admin', '0:0:0:0:0:0:0:1', '2016-07-05 10:52:57', '登录成功', null, null, '3');
 INSERT INTO `loginlog` VALUES ('admin', '0:0:0:0:0:0:0:1', '2016-07-25 20:53:16', '登录成功', null, null, '3');
+INSERT INTO `loginlog` VALUES ('admin', '0:0:0:0:0:0:0:1', '2016-07-27 10:17:31', '登录成功', null, null, '3');
+INSERT INTO `loginlog` VALUES ('admin', '0:0:0:0:0:0:0:1', '2016-07-27 10:56:46', '登录成功', null, null, '3');
+INSERT INTO `loginlog` VALUES ('admin', '0:0:0:0:0:0:0:1', '2016-07-27 11:01:52', '登录成功', null, null, '3');
+INSERT INTO `loginlog` VALUES ('admin', '0:0:0:0:0:0:0:1', '2016-07-27 12:55:12', '登录成功', null, null, '3');
+INSERT INTO `loginlog` VALUES ('admin', '0:0:0:0:0:0:0:1', '2016-07-27 12:59:35', '登录成功', null, null, '3');
+INSERT INTO `loginlog` VALUES ('admin', '127.0.0.1', '2016-07-28 09:35:33', '登录成功', null, null, '3');
+INSERT INTO `loginlog` VALUES ('admin', '127.0.0.1', '2016-07-28 10:43:57', '登录成功', null, null, '3');
+INSERT INTO `loginlog` VALUES ('admin', '0:0:0:0:0:0:0:1', '2016-07-29 10:57:08', '登录成功', null, null, '3');
+INSERT INTO `loginlog` VALUES ('admin', '0:0:0:0:0:0:0:1', '2016-08-05 09:07:56', '登录成功', null, null, '3');
+INSERT INTO `loginlog` VALUES ('admin', '0:0:0:0:0:0:0:1', '2016-08-09 10:54:16', '登录成功', null, null, '3');
+INSERT INTO `loginlog` VALUES ('admin', '0:0:0:0:0:0:0:1', '2016-08-17 10:51:23', '登录成功', null, null, '3');
 
 -- ----------------------------
--- Table structure for logisticscompany
+-- Table structure for `logisticscompany`
 -- ----------------------------
 DROP TABLE IF EXISTS `logisticscompany`;
 CREATE TABLE `logisticscompany` (
@@ -3752,7 +3770,7 @@ INSERT INTO `logisticscompany` VALUES ('hkpost', '香港邮政');
 INSERT INTO `logisticscompany` VALUES ('longbanwuliu', '龙邦物流');
 
 -- ----------------------------
--- Table structure for menu
+-- Table structure for `menu`
 -- ----------------------------
 DROP TABLE IF EXISTS `menu`;
 CREATE TABLE `menu` (
@@ -3785,7 +3803,7 @@ INSERT INTO `menu` VALUES ('211', '参数设置', './admin/wechat/config/', null
 INSERT INTO `menu` VALUES ('221', '用户列表', './admin/wechat/wechatUser/index.act', null, '22', '1', '1');
 
 -- ----------------------------
--- Table structure for power
+-- Table structure for `power`
 -- ----------------------------
 DROP TABLE IF EXISTS `power`;
 CREATE TABLE `power` (
@@ -3828,7 +3846,7 @@ INSERT INTO `power` VALUES ('编辑菜单', null);
 INSERT INTO `power` VALUES ('编辑角色', null);
 
 -- ----------------------------
--- Table structure for programa
+-- Table structure for `programa`
 -- ----------------------------
 DROP TABLE IF EXISTS `programa`;
 CREATE TABLE `programa` (
@@ -3844,7 +3862,7 @@ INSERT INTO `programa` VALUES ('3333', 'wwww');
 INSERT INTO `programa` VALUES ('e', 'eee');
 
 -- ----------------------------
--- Table structure for property
+-- Table structure for `property`
 -- ----------------------------
 DROP TABLE IF EXISTS `property`;
 CREATE TABLE `property` (
@@ -3869,7 +3887,7 @@ INSERT INTO `property` VALUES ('d284ee0da7f24f205b81a6b8beb2303c', '0', '战小�
 INSERT INTO `property` VALUES ('d31cfee4600cdcf3a5b118adba1c2d1c', '2', 'battlesteed', '2015-07-27 16:24:27');
 
 -- ----------------------------
--- Table structure for role
+-- Table structure for `role`
 -- ----------------------------
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
@@ -3883,17 +3901,20 @@ CREATE TABLE `role` (
 -- Records of role
 -- ----------------------------
 INSERT INTO `role` VALUES ('超级管理员', '超级权限狗，掉渣天，拥有所有权限，不可删除，不可更改权限。', '');
-INSERT INTO `role` VALUES ('黑名单', '被拉黑的用户', '\0');
-INSERT INTO `role` VALUES ('默认角色', '默认角色', '\0');
+INSERT INTO `role` VALUES ('黑名单', '被拉黑的用户', '');
+INSERT INTO `role` VALUES ('默认角色', '默认角色', '');
 
 -- ----------------------------
--- Table structure for role_power
+-- Table structure for `role_power`
 -- ----------------------------
 DROP TABLE IF EXISTS `role_power`;
 CREATE TABLE `role_power` (
   `role_name` varchar(55) NOT NULL DEFAULT '',
   `power_name` varchar(55) NOT NULL DEFAULT '',
   PRIMARY KEY (`role_name`,`power_name`),
+  KEY `FKc3s4w2isqolba4filsd5hot3i` (`power_name`),
+  CONSTRAINT `FKc3s4w2isqolba4filsd5hot3i` FOREIGN KEY (`power_name`) REFERENCES `power` (`name`),
+  CONSTRAINT `FKk6dbfru5sf5yjfh11boi407ph` FOREIGN KEY (`role_name`) REFERENCES `role` (`name`),
   CONSTRAINT `FK_h86s1rfe2oy87jq7109bmdx8d` FOREIGN KEY (`role_name`) REFERENCES `role` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -3922,8 +3943,6 @@ INSERT INTO `role_power` VALUES ('超级管理员', '管理文章');
 INSERT INTO `role_power` VALUES ('超级管理员', '管理栏目');
 INSERT INTO `role_power` VALUES ('超级管理员', '管理菜单');
 INSERT INTO `role_power` VALUES ('超级管理员', '管理角色');
-INSERT INTO `role_power` VALUES ('超级管理员', '系统参数管理');
-INSERT INTO `role_power` VALUES ('超级管理员', '系统参数设置');
 INSERT INTO `role_power` VALUES ('超级管理员', '编辑个人信息');
 INSERT INTO `role_power` VALUES ('超级管理员', '编辑会员');
 INSERT INTO `role_power` VALUES ('超级管理员', '编辑微信用户');
@@ -3933,7 +3952,7 @@ INSERT INTO `role_power` VALUES ('超级管理员', '编辑菜单');
 INSERT INTO `role_power` VALUES ('超级管理员', '编辑角色');
 
 -- ----------------------------
--- Table structure for terminaluser
+-- Table structure for `terminaluser`
 -- ----------------------------
 DROP TABLE IF EXISTS `terminaluser`;
 CREATE TABLE `terminaluser` (
@@ -3948,7 +3967,7 @@ CREATE TABLE `terminaluser` (
 INSERT INTO `terminaluser` VALUES ('admin', 'BWLlLOlUwLKj24J1ZS7Tww==');
 
 -- ----------------------------
--- Table structure for user
+-- Table structure for `user`
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
@@ -3968,10 +3987,10 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('admin', '战马', 'FT842JP4bTIhq8kmhdKD45cR7RXN7H7Ft9sNXpXQzN1xt6Oc1U4ETrqTLtzkCrpx', '男', '12345677', '1255@qq.com', '0', 'ff3333', '1', '0');
+INSERT INTO `user` VALUES ('admin', '战马', 'YyFQJPLE+vpCZ6EUMRtedaZXNRxdu/FaJCN5XQsFyDBQnX1Qwrg26kWGswz97vPw', '男', '12345677', '1255@qq.com', '0', 'ff3333', '1', '0');
 
 -- ----------------------------
--- Table structure for user_role
+-- Table structure for `user_role`
 -- ----------------------------
 DROP TABLE IF EXISTS `user_role`;
 CREATE TABLE `user_role` (
@@ -3979,6 +3998,8 @@ CREATE TABLE `user_role` (
   `role_name` varchar(55) NOT NULL DEFAULT '',
   PRIMARY KEY (`user_nickName`,`role_name`),
   KEY `FK_bqh5t9251m8rldthbp6567gqe` (`role_name`),
+  CONSTRAINT `FK1a6atdv1vvh3rnh49yqci20lr` FOREIGN KEY (`role_name`) REFERENCES `role` (`name`),
+  CONSTRAINT `FKn4dp82kvmi739n8y0vae71xnx` FOREIGN KEY (`user_nickName`) REFERENCES `user` (`nickName`),
   CONSTRAINT `FK_5mgcks08l1810sgj22rcna5cm` FOREIGN KEY (`user_nickName`) REFERENCES `user` (`nickName`),
   CONSTRAINT `FK_bqh5t9251m8rldthbp6567gqe` FOREIGN KEY (`role_name`) REFERENCES `role` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -3989,7 +4010,7 @@ CREATE TABLE `user_role` (
 INSERT INTO `user_role` VALUES ('admin', '超级管理员');
 
 -- ----------------------------
--- Table structure for wechataccount
+-- Table structure for `wechataccount`
 -- ----------------------------
 DROP TABLE IF EXISTS `wechataccount`;
 CREATE TABLE `wechataccount` (
@@ -4013,7 +4034,7 @@ CREATE TABLE `wechataccount` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for wechatuser
+-- Table structure for `wechatuser`
 -- ----------------------------
 DROP TABLE IF EXISTS `wechatuser`;
 CREATE TABLE `wechatuser` (
@@ -4036,7 +4057,4 @@ CREATE TABLE `wechatuser` (
 -- ----------------------------
 -- Records of wechatuser
 -- ----------------------------
-INSERT INTO `wechatuser` VALUES ('omxe4s5Xf6-sYC5b5VaMmaCXJDAc', null, '1', '深圳市皇族智能数码谢俊', '广东', '深圳', '中国', 'http://wx.qlogo.cn/mmopen/e5TgULticSeWhokV3xbFUHYAFGMEhwxRUAEfaB6UDIf7nFoYm3qGaQeehLZH5Hic1BBhHeRxhwhDSibQjv46ujUx2jpicmrZZMyt/0', null, null, null, null, null);
 INSERT INTO `wechatuser` VALUES ('omxe4s9cr4DdT7pMIH40zgRvOB6o', null, '1', '战马', '广西', '玉林', '中国', '', null, null, '1234', null, null);
-INSERT INTO `wechatuser` VALUES ('omxe4swyAafnAB5PvSkzmXC_Ig0M', null, '1', '老杨', '', '', '中国', 'http://wx.qlogo.cn/mmopen/e5TgULticSeWn4jYta99rjFvpH2ehOdfMNGrxWGmUabez3sib0z4n2XQk8BJnGPcLNGayE4VvxBfGNZrR7BOI5ywoGIAgibDH25/0', null, null, null, null, null);
-INSERT INTO `wechatuser` VALUES ('omxe4sxC8juxjiaCL7YX-haUnbT8', null, '1', '小王', '广东', '深圳', '中国', 'http://wx.qlogo.cn/mmopen/jUJN2hOiaIkDyiccz7aBHbaxqqY2neMKw15TWPxe3ZhG4GrLS7fWczrnicF4mHEfDfEGrJdRJ9Du4QFzsWh7OAl3K6zXAYmiaicQa/0', null, null, null, null, null);

@@ -354,7 +354,7 @@ public class NoSqlDao {
 	public static <T extends BaseNosqlDomain> T smartGet(T domain){
 		return (T) get(domain.getClass(), DomainUtil.getDomainId(domain));
 	}
-	@SuppressWarnings("unchecked")
+	
 	public static <T extends BaseNosqlDomain> T get(Class<T> t,Serializable key){
 		try {
 			T t2 = (T) getSession().get(t, key);
@@ -384,7 +384,6 @@ public class NoSqlDao {
 	
 	
 	
-	@SuppressWarnings("unchecked")
 	public static <T extends BaseNosqlDomain> T load(Class<T> t,Serializable key){
 		try {
 			Session session = OgmUtil.getSession();

@@ -32,10 +32,10 @@
     
     <!-- /hibernate OGM -->
     <!-- Hibernate OGM Infinispan module; pulls in the OGM core module -->
-    <dependency>
+    <!-- <dependency>
         <groupId>org.hibernate.ogm</groupId>
         <artifactId>hibernate-ogm-infinispan</artifactId>
-    </dependency>
+    </dependency> -->
 
     <!-- standard APIs dependencies - provided in a Java EE container -->
     <!-- <dependency>
@@ -416,6 +416,18 @@
 	   <artifactId>infinispan-directory-provider</artifactId>
 	   <version>8.1.0.Final</version>
 	</dependency>
+	
+
+	<dependency>
+	   <groupId>org.hibernate</groupId>
+	   <artifactId>hibernate-search-infinispan</artifactId>
+	   <version>5.5.4.Final</version>
+	</dependency>
+
+	
+	
+	
+	
 	<!-- /hibernate search -->
     
   </dependencies>

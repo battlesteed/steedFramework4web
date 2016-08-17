@@ -65,19 +65,7 @@ public class OgmUtil {
 	private static OgmSessionFactory buildFactory(String configFile) {
 		try {
 			
-			Properties properties = new Properties();
-			String classesPath = PathUtil.getClassesPath();
-			String path = PathUtil.mergePath(classesPath, configFile);
-			try {
-				FileInputStream in = new FileInputStream(path);
-				properties.load(in);
-				in.close();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-				throw new BaseRuntimeException("文件"+path+"不存在",e);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			Properties properties = getSettingProperties(configFile);
 			
 			StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder()
 					.applySetting( OgmProperties.ENABLED, true )
@@ -110,6 +98,23 @@ public class OgmUtil {
 			logger.error("创建sessionFactory失败",e);
 		}
 		return null;
+	}
+
+	private static Properties getSettingProperties(String configFile) {
+		Properties properties = new Properties();
+		String classesPath = PathUtil.getClassesPath();
+		String path = PathUtil.mergePath(classesPath, configFile);
+		try {
+			FileInputStream in = new FileInputStream(path);
+			properties.load(in);
+			in.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			throw new BaseRuntimeException("文件"+path+"不存在",e);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return properties;
 	}
 
 	public static DomainScanner getDomainScanner() {

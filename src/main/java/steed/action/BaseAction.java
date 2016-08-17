@@ -306,7 +306,7 @@ public abstract class BaseAction<SteedDomain extends BaseDatabaseDomain> extends
 	}
 	
 	protected SteedDomain getModelFromDatabase() {
-		return DaoUtil.smartGet(getModel());
+		return getModel().smartGet();
 	}
 	
 	/**

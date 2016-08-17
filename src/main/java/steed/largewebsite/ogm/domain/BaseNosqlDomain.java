@@ -8,6 +8,9 @@ import steed.util.base.BaseUtil;
 import steed.util.base.DomainUtil;
 
 public abstract class BaseNosqlDomain extends BaseDatabaseDomain{
+	private static final long serialVersionUID = -2920147124952496844L;
+
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends BaseDatabaseDomain> T smartGet(){
 		return (T) NoSqlDao.smartGet(this);

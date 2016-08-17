@@ -42,7 +42,7 @@ public class BaseUtil {
 	 * @param prefix 前缀
 	 * @return prefix + "------>" + String.valueOf(o)
 	 */
-	public static String out(Object o,String prefix){
+	public static String out(String prefix,Object o){
 		String x = prefix + "------>" + o;
 		System.out.println(x);
 		return x;
@@ -63,7 +63,7 @@ public class BaseUtil {
 	 * @param o
 	 */
 	public static String out(Object o){
-		return out(o, "");
+		return out("",o);
 	}
 	/**
 	 * 打印 "------------------------"+o+"------------------------"

@@ -1,3 +1,4 @@
+<%@page import="steed.util.dao.DaoUtil"%>
 <%@page import="steed.exception.MessageExceptionInterface"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/jsp/include/head/tagLib.jsp" %>
@@ -7,6 +8,11 @@
 <%
 Exception e = (Exception)request.getAttribute("exception");
 e.printStackTrace();
+try{
+	DaoUtil.rollbackTransaction();
+}catch(NullPointerException ee){
+	
+}
 %>
 <c:if test="${param.ajax != null && param.ajax != '' }">
 	<%

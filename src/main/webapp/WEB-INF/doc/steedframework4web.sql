@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2016-08-17 10:51:52
+Date: 2016-08-17 17:59:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3876,15 +3876,6 @@ CREATE TABLE `property` (
 -- ----------------------------
 -- Records of property
 -- ----------------------------
-INSERT INTO `property` VALUES ('1', '1', '1', null);
-INSERT INTO `property` VALUES ('2d7f95d4a6bfae3f2197297fd6fb046b', '0', '战小马', '2015-07-27 11:54:15');
-INSERT INTO `property` VALUES ('32de8c410e947bd0446d5e62a0f05078', '2', 'battlesteed', '2015-07-27 16:31:25');
-INSERT INTO `property` VALUES ('4815299f12d2333cb1cc6afa3baddb78', '0', 'battlesteed', '2015-07-27 11:51:43');
-INSERT INTO `property` VALUES ('742357f392d295bc956156888bbf5701', '0', 'admin', '2015-07-27 11:51:22');
-INSERT INTO `property` VALUES ('admin33', '0', '7e52e132880971fab703e84e05a79376', '2015-07-06 20:19:30');
-INSERT INTO `property` VALUES ('c71245fb5877315f11bedaab916dfc19', '0', '战小马', '2015-07-27 11:51:56');
-INSERT INTO `property` VALUES ('d284ee0da7f24f205b81a6b8beb2303c', '0', '战小马', '2015-07-27 11:52:06');
-INSERT INTO `property` VALUES ('d31cfee4600cdcf3a5b118adba1c2d1c', '2', 'battlesteed', '2015-07-27 16:24:27');
 
 -- ----------------------------
 -- Table structure for `role`
@@ -3964,7 +3955,7 @@ CREATE TABLE `terminaluser` (
 -- ----------------------------
 -- Records of terminaluser
 -- ----------------------------
-INSERT INTO `terminaluser` VALUES ('admin', 'BWLlLOlUwLKj24J1ZS7Tww==');
+INSERT INTO `terminaluser` VALUES ('admin', '1p2pSAOyEPSB9ziIPVwggA==');
 
 -- ----------------------------
 -- Table structure for `user`

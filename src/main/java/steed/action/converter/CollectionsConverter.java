@@ -27,21 +27,23 @@ import com.opensymphony.xwork2.ActionContext;
  *
  */
 public class CollectionsConverter extends StrutsTypeConverter {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public Object convertFromString(Map context, String[] values, Class toClass) {
 		String name = (String) context.get("conversion.property.fullName");
-		List list = getList(name, values);
+		List<Object> list = getList(name, values);
 		if (toClass.isAssignableFrom(Set.class)) {
-			return new HashSet(list);
+			return new HashSet<>(list);
 		}else if (toClass.isAssignableFrom(List.class)) {
 			return list;
 		}
 		return null;
 	}
 	
-	private List getList(String domainName,String[] values){
+	@SuppressWarnings("unchecked")
+	private List<Object> getList(String domainName,String[] values){
 //		String fullDomainName = getFullDomainName(domainName);
-		List list;
+		List<Object> list;
 		Class<?> domainClass = getDomainNameClass(domainName);
 		if (ReflectUtil.isClassBaseID(domainClass)) {
 			list = evalString2BaseID(domainClass, values);
@@ -51,9 +53,8 @@ public class CollectionsConverter extends StrutsTypeConverter {
 		return list;
 	}
 	
-	@SuppressWarnings("unchecked")
-	private List evalString2BaseID(Class domainClass,String[] eval){
-		List domainList = new ArrayList();
+	private List<Object> evalString2BaseID(Class domainClass,String[] eval){
+		List<Object> domainList = new ArrayList<>();
 		for (String str:eval) {
 			if (!StringUtil.isStringEmpty(str)) {
 				domainList.add(ReflectUtil.string2BaseID(domainClass, str));
@@ -61,9 +62,8 @@ public class CollectionsConverter extends StrutsTypeConverter {
 		}
 		return domainList;
 	}
-	@SuppressWarnings("unchecked")
-	private List evalString2Domain(Class<? extends BaseDatabaseDomain> domainClass,String[] eval){
-		List domainList = new ArrayList();
+	private List<Object> evalString2Domain(Class<? extends BaseDatabaseDomain> domainClass,String[] eval){
+		List<Object> domainList = new ArrayList<>();
 		try {
 			String iDname = DomainUtil.getDomainIDName(domainClass);
 			Field idField = domainClass.getDeclaredField(iDname);
@@ -84,9 +84,9 @@ public class CollectionsConverter extends StrutsTypeConverter {
 		return domainList;
 	}
 
-	private Class getDomainNameClass(String domainName) {
+	private Class<?> getDomainNameClass(String domainName) {
 		
-		BaseAction action = (BaseAction) ActionContext.getContext().getActionInvocation().getAction();
+		BaseAction<?> action = (BaseAction<?>) ActionContext.getContext().getActionInvocation().getAction();
 		Field f;
 		try {
 			f = action.getModel().getClass().getDeclaredField(domainName);
@@ -107,6 +107,7 @@ public class CollectionsConverter extends StrutsTypeConverter {
 		return fullDomainName;*/
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public String convertToString(Map context, Object obj) {
 		return null;

@@ -11,7 +11,9 @@ import steed.util.base.StringUtil;
 /**
  * @author 战马
  */
+@SuppressWarnings("rawtypes")
 public class BooleanConverter extends StrutsTypeConverter {
+	
 	@Override
 	public Object convertFromString(Map context, String[] values, Class toClass) {
 		if (toClass == Boolean.class) {

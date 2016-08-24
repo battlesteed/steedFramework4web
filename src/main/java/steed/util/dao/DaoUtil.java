@@ -123,7 +123,6 @@ public class DaoUtil {
 	
 	
 	public static void setAutoManagTransaction(Boolean selfManagTransaction) {
-		//logger.debug("自动事务----->"+selfManagTransaction);
 		DaoUtil.autoManagTransaction.set(selfManagTransaction);;
 	}
 	/***************************增删查改开始******************************/
@@ -173,7 +172,7 @@ public class DaoUtil {
 	public static boolean saveList(List<? extends BaseRelationalDatabaseDomain> list){
 		Session session = null;
 		try {
-			session = HibernateUtil.getSession();
+			session = getSession();
 			beginTransaction();
 			for (Object obj:list) {
 				session.save(obj);
@@ -199,7 +198,6 @@ public class DaoUtil {
 	public static <T> List<T> listByKeys(Class<? extends BaseRelationalDatabaseDomain> t,String[] ids){
 		try {
 			Map<String, Object> map = new HashMap<String, Object>();
-//			String[] split = ids.split("\\,");
 			Class<? extends Serializable> idClass = DomainUtil.getDomainIDClass(t);
 			Serializable[] serializables;
 			if (idClass == String.class) {
@@ -230,7 +228,7 @@ public class DaoUtil {
 	public static boolean updateList(List<? extends BaseRelationalDatabaseDomain> list){
 		Session session = null;
 		try {
-			session = HibernateUtil.getSession();
+			session = getSession();
 			beginTransaction();
 			for (BaseRelationalDatabaseDomain obj:list ) {
 				session.update(obj);
@@ -265,7 +263,7 @@ public class DaoUtil {
 	}
 	
 	public static void evict(Object obj){
-		HibernateUtil.getSession().evict(obj);
+		getSession().evict(obj);
 		closeSession();
 	}
 	/**
@@ -276,7 +274,7 @@ public class DaoUtil {
 	public static boolean saveOrUpdate(BaseRelationalDatabaseDomain obj){
 		Session session = null;
 		try {
-			session = HibernateUtil.getSession();
+			session = getSession();
 			beginTransaction();
 			if (BaseUtil.isObjEmpty(DomainUtil.getDomainId(obj))) {
 				return save(obj);
@@ -284,7 +282,6 @@ public class DaoUtil {
 				BaseRelationalDatabaseDomain smartGet = smartGet(obj);
 				if (smartGet != null) {
 					session.evict(smartGet);
-//					session.clear();
 					session.update(obj);
 				}else {
 					session.save(obj);
@@ -315,7 +312,7 @@ public class DaoUtil {
 			if(domainSimpleName != null && map != null){
 				appendHqlWhere(domainSimpleName, sb, map);
 			}
-			Query createQuery = HibernateUtil.getSession().createQuery(sb.toString());
+			Query createQuery = getSession().createQuery(sb.toString());
 			if (map != null) {
 				setMapParam(map, createQuery);
 			}
@@ -343,7 +340,7 @@ public class DaoUtil {
 			if (domainSimpleName != null&&map!=null) {
 				appendHqlWhere(domainSimpleName, sb, map);
 			}
-			Query createQuery = HibernateUtil.getSession().createQuery(sb.toString());
+			Query createQuery = getSession().createQuery(sb.toString());
 			if (map != null) {
 				setMapParam(map, createQuery);
 			}
@@ -369,7 +366,7 @@ public class DaoUtil {
 			
 			Long recordCount = getRecordCount(map, sb);
 			
-			Query createQuery = HibernateUtil.getSession().createQuery(sb.toString());
+			Query createQuery = getSession().createQuery(sb.toString());
 			if (map != null) {
 				setMapParam(map, createQuery);
 			}
@@ -389,7 +386,7 @@ public class DaoUtil {
 	@SuppressWarnings("rawtypes")
 	public static List getQueryResultBysql(String sql,Map<String,? extends Object> param){
 		try {
-			Query createQuery = HibernateUtil.getSession().createSQLQuery(sql);
+			Query createQuery = getSession().createSQLQuery(sql);
 			if (param != null) {
 				setMapParam(param, createQuery);
 			}
@@ -405,7 +402,7 @@ public class DaoUtil {
 	@SuppressWarnings("rawtypes")
 	public static List getQueryResult(String hql,Map<String,? extends Object> map,int pageSize,int currentPage){
 		try {
-			Query createQuery = HibernateUtil.getSession().createQuery(hql);
+			Query createQuery = getSession().createQuery(hql);
 			if (map != null) {
 				setMapParam(map, createQuery);
 			}
@@ -422,7 +419,7 @@ public class DaoUtil {
 	@SuppressWarnings("rawtypes")
 	public static List getQueryResult(String hql,Map<String,? extends Object> map){
 		try {
-			Query createQuery = HibernateUtil.getSession().createQuery(hql);
+			Query createQuery = getSession().createQuery(hql);
 			if (map != null) {
 				setMapParam(map, createQuery);
 			}
@@ -439,7 +436,7 @@ public class DaoUtil {
 	private static int executeUpdate(String ql,Map<String,? extends Object> map,int type){
 		Session session = null;
 		try {
-			session = HibernateUtil.getSession();
+			session = getSession();
 			beginTransaction();
 			Query createQuery;
 			if (type == 0) {
@@ -561,7 +558,7 @@ public class DaoUtil {
 	public static boolean delete(BaseRelationalDatabaseDomain obj){
 		Session session = null;
 		try {
-			session = HibernateUtil.getSession();
+			session = getSession();
 			beginTransaction();
 			session.delete(obj);
 			return managTransaction(true);
@@ -591,7 +588,7 @@ public class DaoUtil {
 		}
 		Session session = null;
 		try {
-			session = HibernateUtil.getSession();
+			session = getSession();
 			BaseRelationalDatabaseDomain smartGet = DaoUtil.smartGet(obj);
 			if (smartGet == null) {
 				return true;
@@ -919,7 +916,6 @@ public class DaoUtil {
 	public static <T extends BaseRelationalDatabaseDomain> T smartGet(T domain){
 		return (T) get(domain.getClass(), DomainUtil.getDomainId(domain));
 	}
-	@SuppressWarnings("unchecked")
 	public static <T extends BaseRelationalDatabaseDomain> T get(Class<T> t,Serializable key){
 		try {
 			T t2 = (T) getSession().get(t, key);
@@ -949,10 +945,9 @@ public class DaoUtil {
 	
 	
 	
-	@SuppressWarnings("unchecked")
 	public static <T extends BaseRelationalDatabaseDomain> T load(Class<T> t,Serializable key){
 		try {
-			Session session = HibernateUtil.getSession();
+			Session session = getSession();
 			return (T) session.load(t, key);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1047,7 +1042,7 @@ public class DaoUtil {
 	
 	public static boolean save(BaseRelationalDatabaseDomain obj){
 		try {
-			Session session = HibernateUtil.getSession();
+			Session session = getSession();
 			beginTransaction();
 			session.save(obj);
 			return managTransaction(true);
@@ -1100,7 +1095,7 @@ public class DaoUtil {
 	
 	public static boolean update(BaseRelationalDatabaseDomain obj){
 		try {
-			Session session = HibernateUtil.getSession();
+			Session session = getSession();
 			beginTransaction();
 			session.update(obj);
 			return managTransaction(true);
@@ -1276,13 +1271,16 @@ public class DaoUtil {
 	}
 	
 	protected static Session getSession(){
+		beginTransaction();
 		return HibernateUtil.getSession();
 	}
 	/**
 	 * 根据配置关闭session
 	 */
 	public static void closeSession(){
+		managTransaction(true);
 		if (HibernateUtil.getColseSession() && (autoManagTransaction.get() == null || autoManagTransaction.get())) {
+			managTransaction();
 			HibernateUtil.closeSession();
 		}
 	}

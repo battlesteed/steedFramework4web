@@ -2,7 +2,6 @@ package steed.util.digest;
 
 import java.lang.reflect.Method;
 
-import steed.util.base.PropertyUtil;
 import steed.util.base.StringUtil;
 
 public class Base64Util {
@@ -10,7 +9,7 @@ public class Base64Util {
      * encode by Base64 
      */  
     public static String encodeBase64(byte[]input){  
-        Class clazz;
+        Class<?> clazz;
 		try {
 			clazz = Class.forName("com.sun.org.apache.xerces.internal.impl.dv.util.Base64");
 			Method mainMethod= clazz.getMethod("encode", byte[].class);  
@@ -26,7 +25,7 @@ public class Base64Util {
      * decode by Base64 
      */  
     public static byte[] decodeBase64(String input){  
-        Class clazz;
+        Class<?> clazz;
 		try {
 			clazz = Class.forName("com.sun.org.apache.xerces.internal.impl.dv.util.Base64");
 			Method mainMethod= clazz.getMethod("decode", String.class);  

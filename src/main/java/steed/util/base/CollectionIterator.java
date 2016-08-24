@@ -18,17 +18,17 @@ public class CollectionIterator{
 	public Object collection;
 	private int count;
 	private int current=-1;
-	private Iterator i;
-	private Iterator key;
+	private Iterator<?> i;
+	private Iterator<?> key;
 	private int type;
 	public CollectionIterator(Object collection) {
 		this.collection = collection;
 		count = CollectionsUtil.getCollectionLength(collection);
 		type = CollectionsUtil.getCollectionType(collection);
 		if (type == CollectionsUtil.collection) {
-			i = ((Collection)collection).iterator();
+			i = ((Collection<?>)collection).iterator();
 		}else if(type == CollectionsUtil.map){
-			key = ((Map)collection).keySet().iterator();
+			key = ((Map<?,?>)collection).keySet().iterator();
 		}
 	}
 
@@ -49,7 +49,7 @@ public class CollectionIterator{
 			current++;
 			return Array.get(collection, current);
 		}else {
-			return ((Map)collection).get(key.next());
+			return ((Map<?,?>)collection).get(key.next());
 		}
 	}
 }

@@ -61,11 +61,6 @@ public class CollectionsUtil {
 		}
 		throw new RuntimeException(message);
 	}
-	private static void notAllowNotCollections(Object obj) {
-		if(!isObjCollections(obj)){
-			throwNotCollectionsException(obj);
-		}
-	}
 	
 	public List<Object> map2List(Map<?, ?> map){
 		List<Object> returnList = new ArrayList<Object>();

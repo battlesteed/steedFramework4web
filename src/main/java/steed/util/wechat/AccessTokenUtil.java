@@ -16,24 +16,7 @@ import steed.util.wechat.domain.result.AccessToken;
  */
 public class AccessTokenUtil {
 	private static Logger logger = Logger.getLogger(AccessTokenUtil.class);
-//	private AccessToken data = new AccessToken("", 0L, 0);
 	private static AccessToken accessToken = null;
-//	private static final Map<String, AccessToken> accessTokenMap = new HashMap<String, AccessToken>();
-	/*
-	static{
-		if (!MutiAccountSupportUtil.isSingleMode()) {
-			TaskUtil.startTask(new Runnable() {
-				@Override
-				public void run() {
-					for (Entry<String, AccessToken> temp:accessTokenMap.entrySet()) {
-						if (!isAccessTokenValid(temp.getValue())) {
-							accessTokenMap.remove(temp.getKey());
-						}
-					}
-				}
-			}, 2, TimeUnit.HOURS);
-		}
-	}*/
 	
 	/**
 	 * access_token是否还有效
@@ -60,13 +43,13 @@ public class AccessTokenUtil {
 	 * 获取未过期的access_token
 	 * @return 未过期的access_token,如失败则AccessToken.access_token值为null
 	 */
+	@SuppressWarnings("deprecation")
 	public static AccessToken getAccessToken() {
 		if (MutiAccountSupportUtil.isSingleMode()) {
 			return accessToken = AccessTokenUtil.getAccessToken(accessToken);
 		}else {
 			String appID = MutiAccountSupportUtil.getWechatConfig().getAppID();
 			AccessToken accessToken2 = getAccessToken((AccessToken) DataCacheUtil.getData(appID, "wechatAccessToken"));
-//			accessTokenMap.put(appID, accessToken2);
 			DataCacheUtil.setData(appID, "wechatAccessToken", accessToken2);
 			return accessToken2;
 		}

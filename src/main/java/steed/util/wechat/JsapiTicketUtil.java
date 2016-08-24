@@ -16,7 +16,6 @@ import steed.util.wechat.domain.result.JsapiTicket;
  */
 public class JsapiTicketUtil {
 	private static Logger logger = Logger.getLogger(JsapiTicketUtil.class);
-//	private AccessToken data = new AccessToken("", 0L, 0);
 	private static JsapiTicket jsapiTicket = null;
 	
 	/**
@@ -44,6 +43,7 @@ public class JsapiTicketUtil {
 	 * 获取未过期的JsapiTicket
 	 * @return 未过期的JsapiTicket,如失败则steed.util.wechat.domain.result.JsapiTicket.ticket值为null
 	 */
+	@SuppressWarnings("deprecation")
 	public static JsapiTicket getJsapiTicket() {
 		if (MutiAccountSupportUtil.isSingleMode()) {
 			return jsapiTicket = JsapiTicketUtil.getJsapiTicket(jsapiTicket);

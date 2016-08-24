@@ -11,11 +11,10 @@ public class Md5Util {
 	}
 	
 	public static byte[] Md5Digest(byte[] data){
-		   MessageDigest sha256;
+		   MessageDigest MD5;
 		try {
-			sha256 = MessageDigest.getInstance("MD5");
-			byte[] passHash = sha256.digest(data);
-			return passHash;
+			MD5 = MessageDigest.getInstance("MD5");
+			return MD5.digest(data);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			throw new RuntimeException("获取MD5加密实例失败!!!");

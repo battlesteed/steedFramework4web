@@ -10,7 +10,6 @@ import steed.domain.BaseUser;
 import steed.domain.GlobalParam;
 import steed.util.base.DomainUtil;
 import steed.util.base.PathUtil;
-import steed.util.base.StringUtil;
 import steed.util.digest.DigestUtil;
 import steed.util.digest.Md5Util;
 import steed.util.digest.Sha256Util;

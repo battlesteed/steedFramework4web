@@ -28,6 +28,7 @@ public class StringSplitUtil {
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static <T> T[] convertFromString(String[] ids,Class<T> type){
 		T[] newInstance = (T[]) Array.newInstance(type, ids.length);
 		for (int i = 0; i < ids.length; i++) {

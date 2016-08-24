@@ -93,6 +93,7 @@ public class DomainUtil{
 	 * @param clazz
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public static Class<? extends Serializable> getDomainIDClass(Class<? extends BaseDomain> clazz){
 		/**
 		 * 如果是联合主键实体类则返回domainID，因为联合主键类必须实现getDomainID()方法
@@ -267,7 +268,7 @@ public class DomainUtil{
 	}
 	
 	public static void copyDomainSameField(Object copy,Object copyed){
-		Class clazz = copyed.getClass();
+		Class<?> clazz = copyed.getClass();
 		Field[] fields = clazz.getDeclaredFields();
 		for (Field f:fields) {
 			try {
@@ -295,6 +296,7 @@ public class DomainUtil{
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static <T extends BaseDomain> T copyDomain(T copy){
 		Class<? extends BaseDomain> clazz = copy.getClass();
 		Field[] fields = clazz.getDeclaredFields();
@@ -327,6 +329,7 @@ public class DomainUtil{
 	 * @param clazz
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	private static Field getIDfield(Class<? extends BaseDomain> clazz) {
 		if (clazz.getAnnotation(IdClass.class) != null) {
 			StringBuffer sb = new StringBuffer("按照约定含有");
@@ -349,6 +352,7 @@ public class DomainUtil{
 		return getIDfield((Class<? extends BaseDomain>)clazz.getSuperclass());
 	}
 	
+	@SuppressWarnings("unchecked")
 	private static Method getIDmethod(Class<? extends BaseDomain> clazz) {
 		if (clazz.getAnnotation(IdClass.class) != null) {
 			try {
@@ -396,10 +400,7 @@ public class DomainUtil{
 	 * @return filled
 	 */
 	public static <T> T fillDomain(T filled,T fill,Collection<String> fieldsNotSkip,boolean strictlyMode){
-		Class clazz = fill.getClass();
-		List<Field> allFields = ReflectUtil.getAllFields(fill);
-		Field[] fields = clazz.getDeclaredFields();
-//		Field[] fields = clazz.getDeclaredFields();
+		List<Field> fields = ReflectUtil.getAllFields(fill);
 		try {
 			if(fieldsNotSkip == null){
 				fieldsNotSkip = new ArrayList<String>();
@@ -471,18 +472,12 @@ public class DomainUtil{
 		} catch (NoSuchMethodException e) {
 			e.printStackTrace();
 			throw new FrameworkException(class1+"中没有"+fieldSetterName+"方法", e);
-		} catch (SecurityException e) {
+		} catch (SecurityException
+					| IllegalAccessException 
+					| InvocationTargetException 
+					| IllegalArgumentException e) {
 			e.printStackTrace();
 			throw new FrameworkException(class1+"中的"+fieldSetterName+"方法不是public类型", e);
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-			throw new FrameworkException(class1+"中的"+fieldSetterName+"方法不是public类型", e);
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-			throw new FrameworkException(class1+"中的"+fieldSetterName+"方法不是public类型", e);
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-			throw new FrameworkException(class1+"中的"+fieldSetterName+"方法不是public类型", e);
-		}
+		} 
 	}
 }

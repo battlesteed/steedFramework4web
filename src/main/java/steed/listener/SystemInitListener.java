@@ -18,6 +18,7 @@ import steed.domain.GlobalParam;
 import steed.util.UtilsUtil;
 import steed.util.base.PathUtil;
 import steed.util.base.PropertyUtil;
+import steed.util.base.StringUtil;
 import steed.util.file.FileUtil;
 import steed.util.system.TaskUtil;
 /**
@@ -50,6 +51,7 @@ public class SystemInitListener implements ServletContextListener {
 		GlobalParam.FOLDER.contextPath = servletContext.getContextPath();
 		GlobalParam.FOLDER.serverAddress = PropertyUtil.getConfig("site.rootURL");
 		GlobalParam.FOLDER.contextUrl = GlobalParam.FOLDER.serverAddress + GlobalParam.FOLDER.contextPath;
+		
 		GlobalParam.config.devMode = PropertyUtil.getBoolean("devMode");
 	}
 	

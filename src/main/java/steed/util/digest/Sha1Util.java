@@ -11,11 +11,10 @@ public class Sha1Util {
 	}
 	
 	public static byte[] sha1Digest(byte[] data){
-		   MessageDigest sha256;
+		   MessageDigest sha1;
 		try {
-			sha256 = MessageDigest.getInstance("SHA-1");
-			byte[] passHash = sha256.digest(data);
-			return passHash;
+			sha1 = MessageDigest.getInstance("SHA-1");
+			return sha1.digest(data);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			throw new RuntimeException("获取SHA-1加密实例失败!!!");

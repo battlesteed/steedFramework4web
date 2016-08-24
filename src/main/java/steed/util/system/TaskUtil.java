@@ -21,7 +21,6 @@ public class TaskUtil {
 	private static ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(50);
 	private static final Map<String, Object[]> taskLoop = new HashMap<String, Object[]>();
 	private void startTask(Element element){
-//		scheduledExecutorService.schedule((Runnable) ReflectUtil.newInstance(element.attributeValue("class")), Long.parseLong(element.attributeValue("delay")), getTimeUnit(element.attributeValue("timeUnit")));
 		Runnable runnable = (Runnable) ReflectUtil.newInstance(element.attributeValue("class"));
 		long delay = Long.parseLong(element.attributeValue("delay"));
 		TimeUnit timeUnit = getTimeUnit(element.attributeValue("timeUnit"));
@@ -66,6 +65,7 @@ public class TaskUtil {
 			throw new SystemInitException("在java.util.concurrent.TimeUnit中没有"+timeUint+"类型的枚举变量");
 		}
 	}
+	@SuppressWarnings("unchecked")
 	public void init(){
 		try {
 			Document doc = new SAXReader().read(new File(PathUtil.getClassesPath()+"properties/task.xml"));

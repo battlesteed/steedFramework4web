@@ -30,7 +30,7 @@ public class BaseIndexAction extends BaseAction{
 		HttpServletRequest req = getRequest();
 		HttpServletResponse resp = getResponse();
 		String fileName = GlobalParam.FOLDER.JSPPATH + req.getRequestURI().toString().
-				replaceFirst(GlobalParam.FOLDER.contextPath+"/", "").replace(".act", ".jsp");
+				replaceFirst(req.getContextPath()+"/", "").replace(".act", ".jsp");
 		try {
 			req.getRequestDispatcher(fileName).forward(req, resp);
 		} catch (ServletException e) {

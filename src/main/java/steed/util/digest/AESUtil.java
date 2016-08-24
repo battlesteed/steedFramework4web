@@ -14,6 +14,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import steed.exception.runtime.system.FrameworkException;
+import steed.util.base.BaseUtil;
 import steed.util.base.PropertyUtil;
 import steed.util.base.StringUtil;
 
@@ -45,22 +46,16 @@ public class AESUtil {
 			byte[] enCodeFormat = getSecretKey(key).getEncoded();
 			SecretKeySpec kee = new SecretKeySpec(enCodeFormat, "AES");
 			Cipher cipher = Cipher.getInstance("AES");// 创建密码器
-			// byte[] byteContent =
-			// content.getBytes(ApplicationStaticParam.SYSTEM.CHARACTER_SET);
 			cipher.init(Cipher.ENCRYPT_MODE, kee);// 初始化
-			byte[] result = cipher.doFinal(byteContent);
-			return result; // 加密
-		} catch (NoSuchAlgorithmException e) {
+			return cipher.doFinal(byteContent);
+		} catch (NoSuchAlgorithmException
+				| NoSuchPaddingException 
+				| BadPaddingException
+				| IllegalBlockSizeException
+				| InvalidKeyException e) {
 			e.printStackTrace();
-		} catch (NoSuchPaddingException e) {
-			e.printStackTrace();
-		} catch (InvalidKeyException e) {
-			e.printStackTrace();
-		} catch (IllegalBlockSizeException e) {
-			e.printStackTrace();
-		} catch (BadPaddingException e) {
-			e.printStackTrace();
-		}
+			BaseUtil.getLogger().error("aes加密失败!");
+		} 
 		return null;
 	}
 
@@ -92,25 +87,17 @@ public class AESUtil {
 			SecretKeySpec kee = new SecretKeySpec(enCodeFormat, "AES");
 			Cipher cipher = Cipher.getInstance("AES");// 创建密码器
 			cipher.init(Cipher.DECRYPT_MODE, kee);// 初始化
-			byte[] result = cipher.doFinal(content);
-			return result; // 加密
-		} catch (NoSuchAlgorithmException e) {
+			return cipher.doFinal(content);
+		}  catch (NoSuchAlgorithmException
+				| NoSuchPaddingException 
+				| BadPaddingException
+				| IllegalBlockSizeException
+				| InvalidKeyException e) {
 			e.printStackTrace();
-		} catch (NoSuchPaddingException e) {
-			e.printStackTrace();
-		} catch (InvalidKeyException e) {
-			e.printStackTrace();
-		} catch (IllegalBlockSizeException e) {
-			e.printStackTrace();
-		} catch (BadPaddingException e) {
-			e.printStackTrace();
-		}
+			BaseUtil.getLogger().error("aes解密失败!");
+		} 
 		return null;
 	}
-
-	/*private static SecretKey getSecretKey() {
-		return getSecretKey(getSystemKey());
-	}*/
 
 	private static String getSystemKey() {
 		return PropertyUtil.getConfig("aesKey");
@@ -126,8 +113,7 @@ public class AESUtil {
 		}
 		kgen.init(128,
 				new SecureRandom(StringUtil.getSystemCharacterSetBytes(key)));
-		SecretKey secretKey = kgen.generateKey();
-		return secretKey;
+		return kgen.generateKey();
 	}
 
 	/**
@@ -221,38 +207,5 @@ public class AESUtil {
 	public static String aesEncode(String message, String key) {
 		return Base64Util.base64EncodeByte(aesEncode1(message,key));
 	}
-
-	//
-	// /**将二进制转换成16进制
-	// * @param buf
-	// * @return
-	// */
-	// private static String parseByte2HexStr(byte buf[]) {
-	// StringBuffer sb = new StringBuffer();
-	// for (int i = 0; i < buf.length; i++) {
-	// String hex = Integer.toHexString(buf[i] & 0xFF);
-	// if (hex.length() == 1) {
-	// hex = '0' + hex;
-	// }
-	// sb.append(hex.toUpperCase());
-	// }
-	// return sb.toString();
-	// }
-	//
-	// /**将16进制转换为二进制
-	// * @param hexStr
-	// * @return
-	// */
-	// private static byte[] parseHexStr2Byte(String hexStr) {
-	// if (hexStr.length() < 1)
-	// return null;
-	// byte[] result = new byte[hexStr.length()/2];
-	// for (int i = 0;i< hexStr.length()/2; i++) {
-	// int high = Integer.parseInt(hexStr.substring(i*2, i*2+1), 16);
-	// int low = Integer.parseInt(hexStr.substring(i*2+1, i*2+2), 16);
-	// result[i] = (byte) (high * 16 + low);
-	// }
-	// return result;
-	// }
 
 }

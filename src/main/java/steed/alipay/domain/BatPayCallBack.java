@@ -1,24 +1,8 @@
 package steed.alipay.domain;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.sun.org.apache.regexp.internal.recompile;
-
-import steed.exception.runtime.system.FrameworkException;
-import steed.util.base.BaseUtil;
-import steed.util.base.DateUtil;
-import steed.util.base.PropertyUtil;
-import steed.util.digest.AESUtil;
-import steed.util.system.FlowUtil;
-import steed.util.system.StringSplitUtil;
 
 /**
  * 阿里妈妈批量支付回调实体类

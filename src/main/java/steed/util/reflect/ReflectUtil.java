@@ -20,6 +20,7 @@ import steed.util.base.PropertyUtil;
 import steed.util.base.StringUtil;
 
 public class ReflectUtil {
+	@SuppressWarnings("unchecked")
 	public static <T> T getInstanceFromProperties(String key,String propertiesFile){
 		String className = PropertyUtil.getProperties(propertiesFile).getProperty(key);
 		if (StringUtil.isStringEmpty(className)) {
@@ -42,7 +43,7 @@ public class ReflectUtil {
 	 * @param str
 	 * @return
 	 */
-	public static Serializable string2BaseID(Class baseType,String str){
+	public static Serializable string2BaseID(Class<?> baseType,String str){
 		if (baseType == String.class) {
 			return str;
 		}
@@ -66,7 +67,7 @@ public class ReflectUtil {
 		}
 		throw new RuntimeException(baseType.getName()+"不是基本ID类型");
 	}
-	public static boolean isClassBaseID(Class clazz){
+	public static boolean isClassBaseID(Class<?> clazz){
 		return clazz == String.class || 
 				clazz == Short.class ||
 				clazz == Integer.class||
@@ -75,7 +76,7 @@ public class ReflectUtil {
 				clazz == Character.class ||
 				clazz == Double.class;
 	}
-	public static boolean isClassBaseType(Class clazz){
+	public static boolean isClassBaseType(Class<?> clazz){
 		return clazz == Byte.class || 
 				clazz == Short.class ||
 				clazz == Integer.class||
@@ -106,7 +107,7 @@ public class ReflectUtil {
 		return field2Map(0,obj, map);
 	}
 	public static Map<String, Object> field2Map(int classDdeep,Object obj,Map<String, Object> map){
-		Class tempClass = obj.getClass();
+		Class<?> tempClass = obj.getClass();
 		for (int i = 0; i < classDdeep; i++) {
 			tempClass = tempClass.getSuperclass();
 		}
@@ -248,16 +249,10 @@ public class ReflectUtil {
 		try {
 	        Type mapMainType = f.getGenericType();
 	        if (mapMainType instanceof ParameterizedType) {   
-	            // 执行强制类型转换   
 	            ParameterizedType parameterizedType = (ParameterizedType)mapMainType;   
-	            // 获取基本类型信息，即Map   
-	            Type basicType = parameterizedType.getRawType();   
 	            // 获取泛型类型的泛型参数   
 	            Type[] types = parameterizedType.getActualTypeArguments();   
-	            /*for (int i = 0; i < types.length; i++) {   
-	                System.out.println("第"+(i+1)+"个泛型类型是："+types[i]);   
-	            }  */ 
-	            return (Class) types[0];
+	            return (Class<?>) types[0];
 	        } else {   
 	          throw new RuntimeException(String.format("在%s字段找不到泛型信息！！", f.getName())); 
 	        }   
@@ -296,14 +291,13 @@ public class ReflectUtil {
 	 */
 	public static boolean isObjBaseData(Object obj){
 		return isClassBaseData(obj.getClass());
-//		return isObjBaseType(obj) || obj instanceof String || obj instanceof Date;
 	}
 	/**
 	 * 判断该类型是否是数据库基本数据类型
 	 * @param obj
 	 * @return
 	 */
-	public static boolean isClassBaseData(Class clazz){
+	public static boolean isClassBaseData(Class<?> clazz){
 		return isClassBaseType(clazz) || clazz == String.class || Date.class.isAssignableFrom(clazz);
 	}
 }

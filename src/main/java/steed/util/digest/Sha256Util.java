@@ -18,8 +18,7 @@ public class Sha256Util{
 		   MessageDigest sha256;
 		try {
 			sha256 = MessageDigest.getInstance("SHA-256");
-			byte[] passHash = sha256.digest(data);
-			return passHash;
+			return sha256.digest(data);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			throw new RuntimeException("获取SHA-256加密实例失败!!!");

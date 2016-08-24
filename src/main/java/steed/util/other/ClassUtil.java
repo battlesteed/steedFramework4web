@@ -6,7 +6,7 @@ public class ClassUtil {
 	 * @param t
 	 * @return
 	 */
-	public String getClassSimpleName(Class t){
+	public String getClassSimpleName(Class<?> t){
 		String name = t.getName();
 		return name.substring(name.lastIndexOf(".")+1);
 	}

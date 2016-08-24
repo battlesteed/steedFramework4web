@@ -31,6 +31,10 @@ public class HibernateSearchUtil {
 		}
 	}
 	
+	public static FullTextSession getSession(){
+		return Search.getFullTextSession(OgmUtil.getSession());
+	}
+	
 	/**
 	 * 重新创建所有索引
 	 */

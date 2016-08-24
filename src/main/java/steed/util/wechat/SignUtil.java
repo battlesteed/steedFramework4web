@@ -23,6 +23,7 @@ import steed.util.wechat.domain.sys.PayCallBack;
  * 请求校验工具类 
  *  
  */  
+@SuppressWarnings("deprecation")
 public class SignUtil {  
     /** 
      * 验证签名 
@@ -128,7 +129,8 @@ public class SignUtil {
     public static String signMap(Map<String, Object> map,String signType) {
     	return signMap(map, signType, false);
     }
-    public static String signMap(Map<String, Object> map,String signType,boolean appendMurchKey) {
+    
+	public static String signMap(Map<String, Object> map,String signType,boolean appendMurchKey) {
     	String sortAndAppendMap = sortAndAppendMap(map);
     	if (appendMurchKey) {
 			sortAndAppendMap += "&key="+MutiAccountSupportUtil.getWechatConfig().getWechatMerchant().getKey();

@@ -81,11 +81,11 @@ import com.google.gson.Gson;
  * @author 战马
  *
  */
+@SuppressWarnings("deprecation")
 public class WechatInterfaceInvokeUtil {
 	private static final Logger log = LoggerFactory.getLogger(WechatInterfaceInvokeUtil.class);
 	
 	
-	//private static final String[] suffixAllowed = {".jpg",".MP4",".AMR",".MP3"};
 	/**
 	 * 把AppID，AppSecret,ACCESS_TOKEN装配到url
 	 * @param url
@@ -682,8 +682,6 @@ public class WechatInterfaceInvokeUtil {
 	public static AttachUploadResult uploadAttach(String filePath) {
 		 CloseableHttpClient httpclient = HttpClients.createDefault();
 	        try { 
-	        	//TODO 把上传文件方法提取到httpUtil
-//	        	String url = "https://api.weixin.qq.com/cgi-bin/media/upload?access_token=juezCyyRTkt_E0lWZQaUFYkQuiU6kVE2DkA9uIQjIRWte1FWy15t5rYRUdiatQciDyEdHlhCU46_S_OKhrFrU5hX3AM_yGrsIjUoWTYyoyY&type=image";
 	        	String url = WechatInterfaceInvokeUtil.fitParam2Url(WechatConstantParamter.uploadAttachUrl);
 	        	String attachType;
 //	        	if (isthumb) {

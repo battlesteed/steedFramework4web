@@ -38,11 +38,11 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.Gson;
+
 import steed.exception.runtime.system.FrameworkException;
 import steed.util.base.ExceptionUtil;
 import steed.util.base.StringUtil;
-
-import com.google.gson.Gson;
 
 public class HttpUtil {
 	public static final int http_get = 0;

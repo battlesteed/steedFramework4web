@@ -15,7 +15,6 @@ public class DWZMessage extends BaseDomain{
 	private String callbackType;
 	private Object data;
 	private String title;
-	private Boolean isSuccess;
 	
 	public static final String callbackType_forward = "forward";
 	public static final String callbackType_closeCurrent = "closeCurrent";
@@ -34,7 +33,6 @@ public class DWZMessage extends BaseDomain{
 		return statusCode != null && statusCode == statusCode_success;
 	}
 	public void setIsSuccess(Boolean isSuccess) {
-		this.isSuccess = isSuccess;
 		this.statusCode = isSuccess?200:300;
 	}
 	private void dealType(int type) {

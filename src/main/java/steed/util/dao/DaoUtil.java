@@ -1423,7 +1423,7 @@ public class DaoUtil {
 				}else if (value instanceof BaseRelationalDatabaseDomain 
 						&& !(value instanceof BaseUnionKeyDomain)
 						&& BaseUtil.isObjEmpty(DomainUtil.getDomainId((BaseDomain) value))) {
-					//子查询
+					//实体类级联查询支持,离0hql的伟大构想已经非常接近了!
 					putField2Map(value, map,fieldName +".");
 				}
 			}

@@ -464,7 +464,7 @@ public abstract class BaseAction<SteedDomain extends BaseDatabaseDomain> extends
 	}
 	
 	protected String updateNotNullField(List<String> updateEvenNull){
-		updateNotNullField(updateEvenNull, false);
+		updateNotNullField(updateEvenNull, true);
 		return null;
 	}
 	

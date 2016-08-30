@@ -9,4 +9,3 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="shortcut icon" href="<st:config key="siteImg" />" type="image/x-icon" />	
 	<script type="text/javascript" src="./js/steed/steed.js"></script>
-	<script type="text/javascript" src="./js/beyondstar.js"></script>

@@ -33,7 +33,7 @@ public class TestMongoDBSession {
 		FullTextSession fullTextSession = Search.getFullTextSession(session);
 //		HibernateSearchUtil.rebuildWholeIndex();
 
-		Transaction tx = fullTextSession.beginTransaction();
+//		Transaction tx = fullTextSession.beginTransaction();
 		// create native Lucene query using the query DSL
 		// alternatively you can write the Lucene query using the Lucene query parser
 		// or the Lucene programmatic API. The Hibernate Search DSL is recommended though
@@ -53,8 +53,8 @@ public class TestMongoDBSession {
 		List result = hibQuery.list();
 		BaseUtil.outJson(result.size());
 		
-		tx.commit();
-		session.close();
+//		tx.commit();
+//		session.close();
 	}
 	@Test
 	public void testHibernateSearch2(){

@@ -34,6 +34,8 @@ public class HibernateUtil{
 	private static Map<String, SessionFactory> factoryMap = new HashMap<String, SessionFactory>();
 	public static final String mainFactory = "hibernate.cfg.xml";
 	private static boolean isSignalMode = true;
+	private static FactoryEngine factoryEngine = ReflectUtil.getInstanceFromProperties("dao.factoryEngine", PropertyUtil.configProperties);
+	
 	
 	static {
 		try{
@@ -61,42 +63,9 @@ public class HibernateUtil{
 	}
 
 	private static SessionFactory buildFactory(String configFile) {
-		try {
-			//configuration = new Configuration().configure(configFile);
-//			StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
-//			.applySettings(configuration.getProperties());
-//			SessionFactory factory2 = configuration.buildSessionFactory(builder.build());
-			
-			
-			StandardServiceRegistry standardRegistry = new   StandardServiceRegistryBuilder()
-				    .configure(configFile)
-				    .build();
-
-			MetadataSources metadataSources = new MetadataSources( standardRegistry );
-			
-			DomainScanner instanceFromProperties = getDomainScanner();
-			List<Class<? extends BaseDatabaseDomain>> scan = instanceFromProperties.scan(configFile);
-			for(Class<? extends BaseDatabaseDomain> temp:scan){
-				metadataSources.addAnnotatedClass(temp);
-			}
-			
-		//	new HibernateUtil().scanDomain(metadataSources);
-			
-			Metadata metadata = metadataSources.getMetadataBuilder()
-			    .applyImplicitNamingStrategy( ImplicitNamingStrategyJpaCompliantImpl.INSTANCE )
-			    .build();
-
-			SessionFactory factory2 = metadata.getSessionFactoryBuilder().build();
-		
-			factoryMap.put(configFile, factory2);
-			
-			return factory2;
-			/*ProxoolConnectionProvider aConnectionProvider;*/
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error("创建sessionFactory失败",e);
-		}
-		return null;
+		SessionFactory buildFactory = factoryEngine.buildFactory(configFile);
+		factoryMap.put(configFile, buildFactory);
+		return buildFactory;
 	}
 	
 	public static DomainScanner getDomainScanner() {

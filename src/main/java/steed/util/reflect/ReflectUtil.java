@@ -24,6 +24,7 @@ public class ReflectUtil {
 	public static <T> T getInstanceFromProperties(String key,String propertiesFile){
 		String className = PropertyUtil.getProperties(propertiesFile).getProperty(key);
 		if (StringUtil.isStringEmpty(className)) {
+			BaseUtil.getLogger().warn("找不到{}文件下配置的{}!",propertiesFile,key);
 			return null;
 		}
 		try {

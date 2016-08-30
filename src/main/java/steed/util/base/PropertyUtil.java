@@ -12,7 +12,6 @@ import java.util.Properties;
 import java.util.Set;
 
 import steed.exception.runtime.BaseRuntimeException;
-import steed.ext.domain.system.Config;
 import steed.util.reflect.ReflectUtil;
 
 public class PropertyUtil {
@@ -48,9 +47,6 @@ public class PropertyUtil {
 	/*public static String getConstant(String key){
 		return getProperties("constant.properties").getProperty(key);
 	}*/
-	public static void setConfig(Config config){
-		setProperties(config,configProperties);
-	}
 	@SuppressWarnings("rawtypes")
 	public static void putAllConfig(Map map){
 		putAllProperties(map,configProperties);
@@ -60,10 +56,6 @@ public class PropertyUtil {
 	 */
 	public static void saveConfig(){
 		saveProperties(configProperties);
-	}
-	
-	public static void setProperties(Config config,String relativePath){
-		getProperties(relativePath).setProperty(config.getKee(), config.getValue());
 	}
 	/**
 	 * 保存properties，若想要持久化则要调用saveProperties(String relativePath)

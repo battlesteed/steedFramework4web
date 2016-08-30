@@ -1271,7 +1271,9 @@ public class DaoUtil {
 	}
 	
 	protected static Session getSession(){
-		beginTransaction();
+		if (currentTransaction.get() == null) {
+			currentTransaction.set(HibernateUtil.getSession().beginTransaction());
+		}
 		return HibernateUtil.getSession();
 	}
 	/**
@@ -1408,23 +1410,21 @@ public class DaoUtil {
 				f.setAccessible(true);
 				Object value = f.get(obj);
 				if (!BaseUtil.isObjEmpty(value)) {
-					if (value instanceof BaseRelationalDatabaseDomain 
-							&& !(value instanceof BaseUnionKeyDomain)
-							&& BaseUtil.isObjEmpty(DomainUtil.getDomainId((BaseDomain) value))) {
-						//TODO 子查询支持
-						putField2Map(value, map,fieldName +".");
-					}else {
-						if (value instanceof BaseRelationalDatabaseDomain ) {
-							JoinColumn annotation = ReflectUtil.getAnnotation(JoinColumn.class, objClass, f);
-							if (annotation == null 
-									|| !(!annotation.insertable() 
-											&& !annotation.updatable())) {
-								map.put(prefixName + fieldName, value);
-							}
-						}else {
+					if (value instanceof BaseRelationalDatabaseDomain ) {
+						JoinColumn annotation = ReflectUtil.getAnnotation(JoinColumn.class, objClass, f);
+						if (annotation == null 
+								|| !(!annotation.insertable() 
+										&& !annotation.updatable())) {
 							map.put(prefixName + fieldName, value);
 						}
+					}else {
+						map.put(prefixName + fieldName, value);
 					}
+				}else if (value instanceof BaseRelationalDatabaseDomain 
+						&& !(value instanceof BaseUnionKeyDomain)
+						&& BaseUtil.isObjEmpty(DomainUtil.getDomainId((BaseDomain) value))) {
+					// 子查询支持
+					putField2Map(value, map,fieldName +".");
 				}
 			}
 		} catch (IllegalArgumentException e) {

@@ -1,50 +1,86 @@
 package steed.test;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
 
 import org.junit.Test;
 
 import steed.ext.domain.user.User;
 import steed.util.base.BaseUtil;
-import steed.util.base.test.TestUtil;
 import steed.util.dao.DaoUtil;
-import steed.util.digest.AESUtil;
-import steed.util.http.HttpUtil;
-import steed.util.system.EMailUtil;
-import steed.util.wechat.WechatInterfaceInvokeUtil;
+import steed.util.system.TaskUtil;
 
 public class BaseTest {
 	@Test
-	public void test1(){
-		/*BaseUtil.out(AESUtil.aesEncode("battle_steed@123"));
-		try {
-			EMailUtil.sendEmail("测试", "测试", "1255372919@qq.com");
-		} catch (AddressException e) {
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		}*/
-		String requestString = HttpUtil.getRequestString(HttpUtil.http_get, "https://sp0.baidu.com/9_Q4sjW91Qh3otqbppnN2DJv/pae/channel/data/asyncqury?appid=4001&com=yuantong&nu=881443775034378914", null, null);
-		BaseUtil.out(requestString);
-	}
-	
-	@Test
 	public void test2(){
-//		BaseUtil.outJson(WechatInterfaceInvokeUtil.getTempQrcode(60*10, 1));
-//		BaseUtil.outJson(WechatInterfaceInvokeUtil.getPermanentQrcode("dddd", null));
-//		DaoUtil.get(People.class, key);
 		DaoUtil.listAllObj(User.class, Arrays.asList("nickName","name"), Arrays.asList("sex","phoneNumber"));
 	}
 	
+	 /**
+     * Java代码实现MySQL数据库导出
+     * 
+     * @author GaoHuanjie
+     * @param hostIP MySQL数据库所在服务器地址IP
+     * @param userName 进入数据库所需要的用户名
+     * @param password 进入数据库所需要的密码
+     * @param savePath 数据库导出文件保存路径
+     * @param fileName 数据库导出文件文件名
+     * @param databaseName 要导出的数据库名
+     * @return 返回true表示导出成功，否则返回false。
+     */
+    public static boolean exportDatabaseTool(String dumpexePath,String hostIP, String userName, String password, String savePath, String databaseName) {
+        File saveFile = new File(savePath);
+        saveFile.mkdirs();// 创建文件夹
+        saveFile.delete();
+        
+        String command = String.format("%s --opt -h%s --user=%s --password=%s --lock-all-tables=true --result-file=%s --default-character-set=utf8 %s",
+        		dumpexePath,hostIP,userName,password,savePath,databaseName);
+//        StringBuilder stringBuilder = new StringBuilder();
+//        stringBuilder.append("D:\\JspStudy\\MySQL\\bin\\mysqldump.exe").append(" --opt").append(" -h").append(hostIP);
+//        stringBuilder.append(" --user=").append(userName) .append(" --password=").append(password).append(" --lock-all-tables=true");
+//        stringBuilder.append(" --result-file=").append(savePath + fileName).append(" --default-character-set=utf8 ").append(databaseName);
+        try {
+        	BaseUtil.out(command);
+            Process process = Runtime.getRuntime().exec(command);
+            if (process.waitFor() == 0) {// 0 表示线程正常终止。
+                return true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+ 
+    public static void main(String[] args) throws InterruptedException {
+    	new TaskUtil().init();
+    	Thread.sleep(1000*60*5);
+        /*if (exportDatabaseTool("D:\\JspStudy\\MySQL\\bin\\mysqldump.exe","localhost", "root", "root", "D:\\backupDatabase\\2014-10-134.sql", "test")) {
+            System.out.println("数据库备份成功！！！");
+        } else {
+            System.out.println("数据库备份失败！！！");
+        }*/
+    }
+	
 	@Test
-	public void test3(){
-		BaseUtil.out(TestUtil.getTestText().replaceAll("\n", ""));
-		BaseUtil.out(AESUtil.aesEncode("hzzz@huangzuhome.com"));
-		BaseUtil.out(AESUtil.aesEncode(TestUtil.getTestText().replaceAll("\n", "")));
+	public void testmysqlBackup(){
+		try {
+			String dumpPath = "D:\\JspStudy\\MySQL\\bin\\mysqldump.exe";
+			String userName = "root";
+			String password = "root";
+			String hostIP = "localhost";
+			String fileName = "D:\\backup.sql";
+			StringBuilder stringBuilder = new StringBuilder();
+	        stringBuilder.append(dumpPath).append(" --opt").append(" -h ").append(hostIP);
+	        stringBuilder.append(" --user=").append(userName) .append(" --password=").append(password).append(" --lock-all-tables=true");
+	        stringBuilder.append(" --result-file="+fileName);
+	        BaseUtil.out(stringBuilder);
+//	        Runtime.getRuntime().exec(stringBuilder.toString());
+			Runtime.getRuntime().exec("D:\\JspStudy\\MySQL\\bin\\mysqldump.exe --user=root --password=root --databases test > D:\\backup.sql");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

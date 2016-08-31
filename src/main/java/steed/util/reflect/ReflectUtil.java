@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import steed.domain.BaseDomain;
 import steed.exception.runtime.system.FrameworkException;
 import steed.util.base.BaseUtil;
 import steed.util.base.PropertyUtil;
@@ -38,6 +39,32 @@ public class ReflectUtil {
 		}
 		return null;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T> T copyObj(T copyed){
+		Class<?> clazz = copyed.getClass();
+		T domain;
+		try {
+			domain = (T) clazz.newInstance();
+			for (Field f:getAllFields(copyed)) {
+				f.setAccessible(true);
+				try {
+					Object value = f.get(copyed);
+					f.set(domain, value);
+				} catch (IllegalAccessException e) {
+					BaseUtil.getLogger().debug("copyObj", e);
+				} 
+			}
+			return domain;
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+	
 	/**
 	 * 把string转换成基本ID类型
 	 * @param baseType
@@ -48,23 +75,23 @@ public class ReflectUtil {
 		if (baseType == String.class) {
 			return str;
 		}
-		if (baseType == Integer.class) {
+		if (baseType == Integer.class || baseType == int.class) {
 			return Integer.parseInt(str);
 		}
-		if (baseType == Long.class) {
+		if (baseType == Long.class || baseType == long.class) {
 			return Long.parseLong(str);
 		}
-		if (baseType == Double.class) {
+		if (baseType == Double.class || baseType == double.class) {
 			return Double.parseDouble(str);
 		}
-		if (baseType == Float.class) {
+		if (baseType == Float.class || baseType == float.class) {
 			return Float.parseFloat(str);
 		}
-		if (baseType == Boolean.class) {
-			return Boolean.parseBoolean(str);
-		}
-		if (baseType == Short.class) {
+		if (baseType == Short.class || baseType == short.class) {
 			return Short.parseShort(str);
+		}
+		if (baseType == Boolean.class || baseType == boolean.class) {
+			return Boolean.getBoolean(str);
 		}
 		throw new RuntimeException(baseType.getName()+"不是基本ID类型");
 	}
@@ -134,47 +161,28 @@ public class ReflectUtil {
 	
 	
 	public static void setValue(String fieldName,Object obj,Object value){
-		Throwable throwable;
 		try {
-			Field declaredField = obj.getClass().getDeclaredField(fieldName);
+			Field declaredField = getDeclaredField(obj, fieldName);
+			if (value instanceof String) {
+				value = ReflectUtil.string2BaseID(declaredField.getType(), (String) value);
+			}
 			declaredField.setAccessible(true);
 			declaredField.set(obj, value);
 			return;
-		} catch (NoSuchFieldException e) {
-			e.printStackTrace();
-			throwable = e;
-		} catch (SecurityException e) {
-			e.printStackTrace();
-			throwable = e;
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-			throwable = e;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-			throwable = e;
+		} catch (SecurityException | IllegalArgumentException | IllegalAccessException e) {
+			BaseUtil.getLogger().warn("把"+value+"设置到"+obj.getClass().getName()+"的"+fieldName+"字段失败", e);
 		}
-		throw new FrameworkException(throwable);
 	}
+	
 	public static Object getValue(String fieldName,Object obj){
-		Throwable throwable;
 		try {
-			Field declaredField = obj.getClass().getDeclaredField(fieldName);
+			Field declaredField = getDeclaredField(obj, fieldName);
 			declaredField.setAccessible(true);
 			return declaredField.get(obj);
-		} catch (NoSuchFieldException e) {
-			e.printStackTrace();
-			throwable = e;
-		} catch (SecurityException e) {
-			e.printStackTrace();
-			throwable = e;
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-			throwable = e;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-			throwable = e;
+		} catch (SecurityException | IllegalArgumentException | IllegalAccessException e) {
+			BaseUtil.getLogger().warn("获取"+obj.getClass().getName()+"的"+fieldName+"字段失败", e);
 		}
-		throw new FrameworkException(throwable);
+		return null;
 	}
 	
 	public static Object newInstance(String className){
@@ -271,6 +279,43 @@ public class ReflectUtil {
 			class1 = class1.getSuperclass();
 		}
 		return fieldList;
+	}
+	public static Field getField(Object object,String fieldName){
+		Class<? extends Object> class1 = object.getClass();
+		while (class1 != Object.class) {
+			try {
+				return class1.getField(fieldName);
+			} catch (NoSuchFieldException e) {
+				class1 = class1.getSuperclass();
+				if (class1.equals(Object.class)) {
+					e.printStackTrace();
+					BaseUtil.getLogger().warn(object.getClass().getName()+"中找不到public权限的"+fieldName+"字段", e);
+				}
+			} catch (SecurityException e) {
+				e.printStackTrace();
+				BaseUtil.getLogger().warn("获取"+object.getClass().getName()+"中的"+fieldName+"字段失败",e);
+			}
+		}
+		return null;
+	}
+	
+	public static Field getDeclaredField(Object object,String fieldName){
+		Class<? extends Object> class1 = object.getClass();
+		while (class1 != Object.class) {
+			try {
+				return class1.getDeclaredField(fieldName);
+			} catch (NoSuchFieldException e) {
+				class1 = class1.getSuperclass();
+				if (class1.equals(Object.class)) {
+					e.printStackTrace();
+					BaseUtil.getLogger().warn(object.getClass().getName()+"中找不到"+fieldName+"字段", e);
+				}
+			} catch (SecurityException e) {
+				e.printStackTrace();
+				BaseUtil.getLogger().warn("获取"+object.getClass().getName()+"中的"+fieldName+"字段失败",e);
+			}
+		}
+		return null;
 	}
 	
 	public static Method getDeclaredMethod(Class<?> clazz,String name, Class<?>... parameterTypes){

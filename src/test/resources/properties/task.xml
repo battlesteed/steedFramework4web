@@ -2,4 +2,9 @@
 	<!-- <task class="steed.ext.task.ArticleSummaryTask" delay="22" timeUint="HOURS" /> -->
 	<!-- <task class="steed.ext.market.task.OrderRefreshTask" delay="1" timeUnit="SECONDS" /> -->
 	<!-- <task class="steed.bangbang.RefreshOrderTask" delay="60" timeUnit="SECONDS" /> -->
+	
+	<task class="steed.engine.MysqlBackupEngine" loop="true" delay="10" timeUnit="SECONDS"
+	    dumpexePath="D:\JspStudy\MySQL\bin\mysqldump.exe"
+	    hostIP="localhost" userName="root" password="root" 
+	    databaseName="littlePig2" relativeSavePath="../mysqlBackup"/>
 </tasks>

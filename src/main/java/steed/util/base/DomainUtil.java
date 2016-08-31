@@ -268,8 +268,7 @@ public class DomainUtil{
 	}
 	
 	public static void copyDomainSameField(Object copy,Object copyed){
-		Class<?> clazz = copyed.getClass();
-		Field[] fields = clazz.getDeclaredFields();
+		List<Field> fields = ReflectUtil.getAllFields(copyed);
 		for (Field f:fields) {
 			try {
 				if (!"serialVersionUID".equals(f.getName())) {
@@ -293,34 +292,6 @@ public class DomainUtil{
 			} catch (IllegalAccessException e) {
 				logger.debug("copyDomainSameField", e);
 			}
-		}
-	}
-	
-	@SuppressWarnings("unchecked")
-	public static <T extends BaseDomain> T copyDomain(T copy){
-		Class<? extends BaseDomain> clazz = copy.getClass();
-		Field[] fields = clazz.getDeclaredFields();
-		T domain;
-		try {
-			domain = (T) clazz.newInstance();
-			for (Field f:fields) {
-				f.setAccessible(true);
-				try {
-					Object value = f.get(copy);
-					f.set(domain, value);
-				} catch (IllegalArgumentException e) {
-					logger.debug("copyDomain", e);
-				} catch (IllegalAccessException e) {
-					logger.debug("copyDomain", e);
-				}
-			}
-			return domain;
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
 		}
 	}
 	

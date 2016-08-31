@@ -8,6 +8,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -23,6 +24,17 @@ public class TaskUtil {
 	private void startTask(Element element){
 		Runnable runnable = (Runnable) ReflectUtil.newInstance(element.attributeValue("class"));
 		long delay = Long.parseLong(element.attributeValue("delay"));
+		
+		List<Attribute> attributes = element.attributes();
+		for(Attribute a:attributes){
+			String name = a.getName();
+			if (!"delay".equals(name) 
+					&& !"class".equals(name)
+					&& !"timeUnit".equals(name)) {
+				ReflectUtil.setValue(name, runnable, a.getValue());
+			}
+		}
+		
 		TimeUnit timeUnit = getTimeUnit(element.attributeValue("timeUnit"));
 		taskLoop.put(element.attributeValue("class"), new Object[]{runnable,delay,timeUnit});
 		startTask(runnable, delay, timeUnit);

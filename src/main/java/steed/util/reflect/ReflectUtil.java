@@ -91,7 +91,7 @@ public class ReflectUtil {
 			return Short.parseShort(str);
 		}
 		if (baseType == Boolean.class || baseType == boolean.class) {
-			return Boolean.getBoolean(str);
+			return Boolean.parseBoolean(str);
 		}
 		throw new RuntimeException(baseType.getName()+"不是基本ID类型");
 	}

@@ -12,6 +12,7 @@ public abstract class SimpleTaskEngine implements Runnable{
 			BaseUtil.getLogger().warn("后台任务出错...",e);
 		}finally {
 			if (loop) {
+				BaseUtil.getLogger().debug("任务已完成,重新开始{}任务",this.getClass().getName());
 				TaskUtil.startTask(this.getClass());
 			}
 		}

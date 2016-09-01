@@ -5,6 +5,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.ReferenceCountUtil;
 
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import steed.netty.module.BaseMsg;
@@ -14,6 +15,7 @@ import steed.netty.module.PingMsg;
 import steed.util.base.BaseUtil;
 import steed.util.base.PropertyUtil;
 import steed.util.base.StringUtil;
+import steed.util.system.TaskEngine;
 import steed.util.system.TaskUtil;
 
 
@@ -42,19 +44,26 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<BaseMsg> {
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
        // final EventLoop eventLoop = ctx.channel().eventLoop();    
 //        eventLoop.schedule(, 1L, TimeUnit.SECONDS);  
-        TaskUtil.startTask(new Runnable() {    
-          @Override    
-          public void run() {    
-            try {
-            	System.out.println("链接断开,尝试重连!");
-            	bootstrap.reConnect();
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("重连失败!");
-				TaskUtil.startTask(this, 10, TimeUnit.SECONDS);
-			}
-          }    
-        }, 10, TimeUnit.SECONDS);
+    	  new TaskEngine() {
+          	@Override    
+              public void run() {    
+          		try {
+          			BaseUtil.getLogger().info("链接断开,尝试重连!");
+                	bootstrap.reConnect();
+  	  			} catch (Exception e) {
+  	  				e.printStackTrace();
+  	  				BaseUtil.getLogger().info("重连失败!");
+  	  				start();
+  	  			}
+              }    
+  			
+  			@Override
+  			protected void startUp(ScheduledExecutorService scheduledExecutorService) {
+  				scheduledExecutorService.schedule(this, 10, TimeUnit.SECONDS);
+  			}
+  			
+  		}.start();
+  		
 		super.channelInactive(ctx);
 	}
 	@Override

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import steed.util.base.BaseUtil;
@@ -18,7 +19,7 @@ public class DataCacheUtil {
 	private static Map<String, Long> timeMap = new HashMap<String, Long>();
 	
 	static{
-			TaskUtil.startTask(new Runnable() {
+			new TaskEngine() {
 				@Override
 				public void run() {
 					BaseUtil.getLogger().debug("开始清理缓存数据");
@@ -34,9 +35,14 @@ public class DataCacheUtil {
 					}
 					dataMap = tempDataMap;
 					timeMap = tempTimeMap;
-					TaskUtil.startTask(this, 1, TimeUnit.HOURS);
 				}
-			}, 1, TimeUnit.HOURS);
+				
+				@Override
+				protected void startUp(ScheduledExecutorService scheduledExecutorService) {
+					scheduledExecutorService.scheduleWithFixedDelay(this, 1, 1, TimeUnit.HOURS);
+				}
+				
+			}.start();
 	}
 	
 	public static Object getData(Object key,String prifix){

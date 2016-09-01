@@ -3,12 +3,14 @@ package steed.test;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 
 import steed.ext.domain.user.User;
 import steed.util.base.BaseUtil;
 import steed.util.dao.DaoUtil;
+import steed.util.system.TaskEngine;
 import steed.util.system.TaskUtil;
 
 public class BaseTest {
@@ -63,6 +65,10 @@ public class BaseTest {
             System.out.println("数据库备份失败！！！");
         }*/
     }
+    
+    @Test
+    public void testTask(){
+    }
 	
 	@Test
 	public void testmysqlBackup(){
@@ -83,4 +89,5 @@ public class BaseTest {
 			e.printStackTrace();
 		}
 	}
+	
 }

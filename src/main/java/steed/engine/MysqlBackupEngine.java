@@ -17,14 +17,6 @@ public class MysqlBackupEngine extends SimpleTaskEngine{
 	private String databaseName;
 	private String relativeSavePath;
 	
-	@Override
-	protected void doTask() {
-		String fileName = DateUtil.getStringFormatDate(new Date(), "yyyy-MM-dd-HH-mm-ss")+".sql";
-		boolean exportDatabaseTool = exportDatabaseTool(dumpexePath, hostIP, userName, password, PathUtil.mergePath(relativeSavePath, fileName), databaseName);
-		if (exportDatabaseTool) {
-			BaseUtil.getLogger().debug("数据库备份成功!");
-		}
-	}
 	
 	/**
      * MySQL数据库导出
@@ -57,6 +49,16 @@ public class MysqlBackupEngine extends SimpleTaskEngine{
         BaseUtil.getLogger().warn("数据库备份失败,命令行{}",command);
         return false;
     }
+
+
+	@Override
+	public void run() {
+		String fileName = DateUtil.getStringFormatDate(new Date(), "yyyy-MM-dd-HH-mm-ss")+".sql";
+		boolean exportDatabaseTool = exportDatabaseTool(dumpexePath, hostIP, userName, password, PathUtil.mergePath(relativeSavePath, fileName), databaseName);
+		if (exportDatabaseTool) {
+			BaseUtil.getLogger().debug("数据库备份成功!");
+		}
+	}
 
 
 }

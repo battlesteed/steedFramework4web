@@ -45,6 +45,7 @@ public class ClientFilter implements Filter{
 			FilterChain chain) throws IOException, ServletException {
 		String URI = ((HttpServletRequest) request).getRequestURI();
 		if(URI.endsWith("keepSession.act")){
+			((HttpServletRequest) request).getSession();
 			HttpUtil.writeJson((HttpServletResponse) response, "1");
 		}else if(URI.endsWith("client/getToken.act")){
 			getToken((HttpServletRequest)request, (HttpServletResponse)response);

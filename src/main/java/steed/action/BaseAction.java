@@ -44,6 +44,26 @@ public abstract class BaseAction<SteedDomain extends BaseDatabaseDomain> extends
 	private static final long serialVersionUID = 7774350640186420795L;
 	protected int currentPage = 1;
 	
+	/**
+	 *   ┏┓　　　┏┓
+	 * ┏┛┻━━━┛┻┓
+	 * ┃　　　　　　　┃
+	 * ┃　　　━　　　┃
+	 * ┃　┳┛　┗┳　┃
+	 * ┃　　　　　　　┃
+	 * ┃　　　┻　　　┃
+	 * ┃　　　　　　　┃
+	 * ┗━┓　　　┏━┛Code is far away from bug with the animal protecting
+	 *    ┃　　　┃   神兽保佑
+	 *    ┃　　　┃   代码无BUG!
+	 *    ┃　　　┗━━━┓
+	 *    ┃　　　　　　　┣┓
+	 *    ┃　　　　　　　┏┛
+	 *    ┗┓┓┏━┳┓┏┛
+	 *      ┃┫┫　┃┫┫
+	 *      ┗┻┛　┗┻┛
+	 */
+	
 	protected SteedDomain domain;
 	
 	/**

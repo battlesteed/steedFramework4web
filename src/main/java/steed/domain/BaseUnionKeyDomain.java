@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import steed.domain.annotation.NotQueryCondition;
 import steed.util.base.ExceptionUtil;
+import steed.util.reflect.ReflectUtil;
 
 /**
  * 联合主键基础类，若不想实现UnionKeyDomain可继承该类
@@ -24,20 +25,14 @@ public abstract class BaseUnionKeyDomain extends BaseDatabaseDomain implements U
 	@Override
 	public void setDomainID(Serializable unionKeyDomain) {
 		Class<? extends BaseUnionKeyDomain> domainClass = this.getClass();
-		for (Field f:unionKeyDomain.getClass().getDeclaredFields()) {
+		for (Field f:ReflectUtil.getNotFinalFiles(unionKeyDomain)) {
 			f.setAccessible(true);
 			try {
 				Field declaredField = domainClass.getDeclaredField(f.getName());
 				declaredField.setAccessible(true);
 				try {
-//					declaredField.get
-					if ("serialVersionUID".equals(declaredField.getName())) {
-						continue;
-					}
 					declaredField.set(this, f.get(unionKeyDomain));
-				} catch (IllegalArgumentException e) {
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
+				} catch (IllegalArgumentException | IllegalAccessException e) {
 					e.printStackTrace();
 				}
 			} catch (NoSuchFieldException e) {
@@ -72,36 +67,22 @@ public abstract class BaseUnionKeyDomain extends BaseDatabaseDomain implements U
 		Class<? extends DomainID> domainIDClass = idClass.value();
 		try {
 			DomainID domainID = domainIDClass.newInstance();
-			Field[] fields = domainIDClass.getDeclaredFields();
-			for(Field f:fields){
-				String fieldName = f.getName();
-				if ("serialVersionUID".equals(fieldName)) {
-					continue;
-				}
+			for(Field f:ReflectUtil.getNotFinalFiles(domainIDClass)){
 				try {
-					Field thisField = thisClass.getDeclaredField(fieldName);
+					Field thisField = thisClass.getDeclaredField(f.getName());
 					thisField.setAccessible(true);
 					f.setAccessible(true);
 					f.set(domainID, thisField.get(this));
 				} catch (NoSuchFieldException e) {
-					e.printStackTrace();
-					StringBuffer sb = new StringBuffer(name);
-					sb.append("中没有与");
-					sb.append(domainIDClass.getName());
-					sb.append("对应的");
-					sb.append(fieldName);
-					sb.append("字段!!!");
-					ExceptionUtil.throwRuntimeException(sb, logger);
+					ExceptionUtil.throwRuntimeException(String.format("%s中没有与%s对应的%s字段!!!", name,domainIDClass.getName(),f.getName()), logger);
 				}
 			}
 			return domainID;
 		} catch (InstantiationException e) {
-			e.printStackTrace();
 			StringBuffer sb = new StringBuffer(domainIDClass.getName());
 			sb.append("是抽象的或没有空构造函数,导致无法实例化!!!");
 			ExceptionUtil.throwRuntimeException(sb, logger);
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
 			StringBuffer sb = new StringBuffer(domainIDClass.getName());
 			sb.append("没有public的空构造函数!!!");
 			ExceptionUtil.throwRuntimeException(sb, logger);

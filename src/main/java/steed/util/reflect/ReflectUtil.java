@@ -11,11 +11,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import steed.domain.BaseDomain;
-import steed.exception.runtime.system.FrameworkException;
 import steed.util.base.BaseUtil;
 import steed.util.base.PropertyUtil;
 import steed.util.base.StringUtil;
@@ -30,12 +29,8 @@ public class ReflectUtil {
 		}
 		try {
 			return (T) Class.forName(className).newInstance();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+			BaseUtil.getLogger().warn("实例化"+className+"失败",e);
 		}
 		return null;
 	}
@@ -56,11 +51,8 @@ public class ReflectUtil {
 				} 
 			}
 			return domain;
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+		} catch (InstantiationException | IllegalAccessException e) {
+			BaseUtil.getLogger().error("复制"+copyed.getClass().getName() + "失败!!",e);
 			throw new RuntimeException(e);
 		}
 	}
@@ -131,7 +123,7 @@ public class ReflectUtil {
 		return (field.getModifiers()&Modifier.FINAL)==Modifier.FINAL;
 	}
 	public static Map<String, Object> field2Map(Object obj){
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 		return field2Map(0,obj, map);
 	}
 	public static Map<String, Object> field2Map(int classDdeep,Object obj,Map<String, Object> map){
@@ -188,14 +180,10 @@ public class ReflectUtil {
 	public static Object newInstance(String className){
 		try {
 			return Class.forName(className).newInstance();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		throw new RuntimeException(className+"实例化失败！！");
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+			BaseUtil.getLogger().error(className+"实例化失败！！",e);
+			throw new RuntimeException(className+"实例化失败！！",e);
+		} 
 	}
 	
 	public static <T extends Annotation> T getAnnotation(Class<T> annotationClass,
@@ -213,9 +201,8 @@ public class ReflectUtil {
 			if (annotation2 != null) {
 				return annotation2;
 			}
-		} catch (NoSuchMethodException e) {
-		} catch (SecurityException e) {
-		}
+		} catch (NoSuchMethodException | SecurityException e) {
+		} 
 		
 		String fieldIsMethodName = StringUtil.getFieldIsMethodName(name);
 		try {
@@ -224,30 +211,27 @@ public class ReflectUtil {
 			if (annotation3 != null) {
 				return annotation3;
 			}
-		} catch (NoSuchMethodException e) {
-		} catch (SecurityException e) {
+		} catch (NoSuchMethodException | SecurityException e) {
 		}
 		return null;
 		
 	}
 	public static List<Annotation> getAnnotations(Class<? extends Object> objClass,Field field){
-		List<Annotation> list = new ArrayList<Annotation>();
+		List<Annotation> list = new ArrayList<>();
 		Collections.addAll(list, field.getDeclaredAnnotations());
 		String name = field.getName();
 		String fieldGetterName = StringUtil.getFieldGetterName(name);
 		try {
 			Method declaredMethod = objClass.getDeclaredMethod(fieldGetterName);
 			Collections.addAll(list, declaredMethod.getAnnotations());
-		} catch (NoSuchMethodException e) {
-		} catch (SecurityException e) {
+		} catch (NoSuchMethodException | SecurityException e) {
 		}
 		
 		String fieldIsMethodName = StringUtil.getFieldIsMethodName(name);
 		try {
 			Method declaredMethod3 = objClass.getDeclaredMethod(fieldIsMethodName);
 			Collections.addAll(list, declaredMethod3.getAnnotations());
-		} catch (NoSuchMethodException e) {
-		} catch (SecurityException e) {
+		} catch (NoSuchMethodException | SecurityException e) {
 		}
 		return list;
 		
@@ -271,9 +255,22 @@ public class ReflectUtil {
 		}
 	}
 	
+	public static List<Field> getNotFinalFiles(Object object){
+		List<Field> fieldList = getAllFields(object);
+		Iterator<Field> iterator = fieldList.iterator();
+		while (iterator.hasNext()) {
+			if (isFieldFinal(iterator.next())) {
+				iterator.remove();
+			}
+		}
+		return fieldList;
+	}
 	public static List<Field> getAllFields(Object object){
-		List<Field> fieldList = new ArrayList<Field>();
+		List<Field> fieldList = new ArrayList<>();
 		Class<? extends Object> class1 = object.getClass();
+		if (object instanceof Class) {
+			class1 = (Class<? extends Object>) object;
+		}
 		while (class1 != Object.class) {
 			Collections.addAll(fieldList, class1.getDeclaredFields());
 			class1 = class1.getSuperclass();
@@ -288,11 +285,9 @@ public class ReflectUtil {
 			} catch (NoSuchFieldException e) {
 				class1 = class1.getSuperclass();
 				if (class1.equals(Object.class)) {
-					e.printStackTrace();
 					BaseUtil.getLogger().warn(object.getClass().getName()+"中找不到public权限的"+fieldName+"字段", e);
 				}
 			} catch (SecurityException e) {
-				e.printStackTrace();
 				BaseUtil.getLogger().warn("获取"+object.getClass().getName()+"中的"+fieldName+"字段失败",e);
 			}
 		}
@@ -307,11 +302,9 @@ public class ReflectUtil {
 			} catch (NoSuchFieldException e) {
 				class1 = class1.getSuperclass();
 				if (class1.equals(Object.class)) {
-					e.printStackTrace();
 					BaseUtil.getLogger().warn(object.getClass().getName()+"中找不到"+fieldName+"字段", e);
 				}
 			} catch (SecurityException e) {
-				e.printStackTrace();
 				BaseUtil.getLogger().warn("获取"+object.getClass().getName()+"中的"+fieldName+"字段失败",e);
 			}
 		}

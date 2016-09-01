@@ -1,5 +1,7 @@
 package steed.domain.wechat;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,6 +13,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import steed.domain.BaseRelationalDatabaseDomain;
 import steed.util.base.StringUtil;
+import steed.util.system.FlowUtil;
 import steed.util.wechat.domain.result.WechatResult;
 
 /**
@@ -39,17 +42,7 @@ public class WechatUser extends BaseRelationalDatabaseDomain implements WechatRe
 	private String[] privilege;
 	private String privilegeStr;
 	private Integer subscribe;
-	
-	/*********\皇族数码******/
-	/**
-	 * 推荐码
-	 */
-	private String inviteCode;
 	private Double integration;
-	
-	/*********#皇族数码******/
-//	private WechatUserGroup wechatUserGroup;
-	
 	
 	@Id
 	@GenericGenerator(name="gen1",strategy="assigned")
@@ -93,23 +86,6 @@ public class WechatUser extends BaseRelationalDatabaseDomain implements WechatRe
 	public String getErrmsg() {
 		return errmsg;
 	}
-
-	public String getInviteCode() {
-		return inviteCode;
-	}
-
-	public void setInviteCode(String inviteCode) {
-		this.inviteCode = inviteCode;
-	}
-/*	@ManyToOne
-	public WechatUserGroup getWechatUserGroup() {
-		return wechatUserGroup;
-	}
-
-	public void setWechatUserGroup(WechatUserGroup wechatUserGroup) {
-		this.wechatUserGroup = wechatUserGroup;
-	}
-*/
 	public void setErrmsg(String errmsg) {
 		this.errmsg = errmsg;
 	}
@@ -203,6 +179,11 @@ public class WechatUser extends BaseRelationalDatabaseDomain implements WechatRe
 	@Override
 	public void initializeAll() {
 		initialize();
+	}
+	@Override
+	public boolean save() {
+		nickname = nickname.replace("💝", "?");
+		return super.save();
 	}
 
 	@Override

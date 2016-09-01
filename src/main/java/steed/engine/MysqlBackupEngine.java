@@ -20,7 +20,10 @@ public class MysqlBackupEngine extends SimpleTaskEngine{
 	@Override
 	protected void doTask() {
 		String fileName = DateUtil.getStringFormatDate(new Date(), "yyyy-MM-dd-HH-mm-ss")+".sql";
-		exportDatabaseTool(dumpexePath, hostIP, userName, password, PathUtil.mergePath(relativeSavePath, fileName), databaseName);
+		boolean exportDatabaseTool = exportDatabaseTool(dumpexePath, hostIP, userName, password, PathUtil.mergePath(relativeSavePath, fileName), databaseName);
+		if (exportDatabaseTool) {
+			BaseUtil.getLogger().debug("数据库备份成功!");
+		}
 	}
 	
 	/**

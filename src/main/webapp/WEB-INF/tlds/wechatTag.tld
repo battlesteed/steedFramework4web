@@ -12,7 +12,7 @@
 	<tag>
 		<description>微信jssdk支付</description>
 		<name>chooseWXPay</name>
-		<tag-class>steed.tag.outhtml.wechat.ChooseWXPay</tag-class>
+		<tag-class>steed.tag.wechat.ChooseWXPay</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<description>统一下单接口返回的prepay_id</description>
@@ -35,7 +35,7 @@
 	<tag>
 		<description>微信支付地址共享</description>
 		<name>wechatEditAddress</name>
-		<tag-class>steed.tag.outhtml.wechat.WechatEditAddress</tag-class>
+		<tag-class>steed.tag.wechat.WechatEditAddress</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<description>换取网页授权的code</description>
@@ -52,7 +52,7 @@
 	<tag>
 		<description>微信jsapi初始化</description>
 		<name>wechatJsApiSupport</name>
-		<tag-class>steed.tag.outhtml.wechat.WechatJsApiSupport</tag-class>
+		<tag-class>steed.tag.wechat.WechatJsApiSupport</tag-class>
 		<body-content>JSP</body-content>
 		
 		<attribute>

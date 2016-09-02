@@ -12,7 +12,7 @@
 	<tag>
 		<description>打印空格(nbsp)</description>
 		<name>space</name>
-		<tag-class>steed.tag.outhtml.Space</tag-class>
+		<tag-class>steed.tag.Space</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>spaceCount</name>
@@ -24,7 +24,7 @@
 	<tag>
 		<description>PathUtil.getBrowserPath(relativeUrl)</description>
 		<name>getBrowserPath</name>
-		<tag-class>steed.tag.outhtml.GetBrowserPath</tag-class>
+		<tag-class>steed.tag.GetBrowserPath</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>relativeUrl</name>
@@ -36,7 +36,7 @@
 	<tag>
 		<description>对url进行编码</description>
 		<name>encodUrl</name>
-		<tag-class>steed.tag.outhtml.encodUrl</tag-class>
+		<tag-class>steed.tag.encodUrl</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>url</name>
@@ -47,7 +47,7 @@
 	
 	<tag>
 		<name>testJavaScript</name>
-		<tag-class>steed.tag.outhtml.TestJavaScript</tag-class>
+		<tag-class>steed.tag.TestJavaScript</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>innerString</name>
@@ -56,7 +56,7 @@
 	<tag>
 	<description>获取config.properties中的配置</description>
 		<name>config</name>
-		<tag-class>steed.tag.config.GetConfig</tag-class>
+		<tag-class>steed.tag.GetConfig</tag-class>
 		<body-content>JSP</body-content>		
 		<attribute>
 			<name>key</name>
@@ -65,22 +65,12 @@
 	</tag>
 
 	<tag>
-		<name>url</name>
-		<tag-class>steed.tag.outhtml.Url</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>url</name>
-			<required>true</required>
-		</attribute>
-	</tag>
-	
-	<tag>
 	<description>实现前端代码不用修改，复制即用，不用复制url等功能；
 		例：当前jsp的url为/beyondstar/admin/test/index.act,lastUrl为"delete"
 		则返回/beyondstar/admin/test/delete.act
 	</description>
 		<name>getCurrentUrl</name>
-		<tag-class>steed.tag.outhtml.GetCurrentUrl</tag-class>
+		<tag-class>steed.tag.GetCurrentUrl</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>lastUrl</name>
@@ -89,7 +79,7 @@
 	<tag>
 	<description>把domain中的数据填充到form中</description>
 		<name>FillInputByDomain</name>
-		<tag-class>steed.tag.outhtml.FillInputByDomain</tag-class>
+		<tag-class>steed.tag.FillInputByDomain</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<description>true或者false（是否使实体类id不可编辑）</description>
@@ -116,7 +106,7 @@
 	<tag>
 	<description>自己意会</description>
 		<name>FillInputByParam</name>
-		<tag-class>steed.tag.outhtml.FillInputByParam</tag-class>
+		<tag-class>steed.tag.FillInputByParam</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<description>填充数据的元素的父id(可以为空，默认是document)</description>
@@ -124,45 +114,4 @@
 		</attribute>
 	</tag>
 	
-	<tag>
-		<description>微信jssdk支付</description>
-		<name>chooseWXPay</name>
-		<tag-class>steed.tag.outhtml.wechat.ChooseWXPay</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<description>统一下单接口返回的prepay_id</description>
-			<name>prepay_id</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>signType</name>
-		</attribute>
-		<attribute>
-			<description>fail</description>
-			<name>fail</name>
-		</attribute>
-		<attribute>
-			<description>success</description>
-			<name>success</name>
-		</attribute>
-	</tag>
-	<tag>
-		<description>微信jsapi初始化</description>
-		<name>wechatJsApiSupport</name>
-		<tag-class>steed.tag.outhtml.wechat.WechatJsApiSupport</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<description>true或者false（是否使用所有jsapi）</description>
-			<name>useAllApi</name>
-		</attribute>
-		<attribute>
-			<description>是否开启debug模式</description>
-			<name>debug</name>
-		</attribute>
-		<attribute>
-			<description>要使用的api</description>
-			<name>apiList</name>
-		</attribute>
-	</tag>
 </taglib>

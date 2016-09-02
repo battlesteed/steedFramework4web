@@ -1,4 +1,4 @@
-package steed.tag.outhtml;
+package steed.tag;
 
 import java.io.IOException;
 

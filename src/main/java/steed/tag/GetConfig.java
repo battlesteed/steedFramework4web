@@ -1,4 +1,4 @@
-package steed.tag.config;
+package steed.tag;
 
 import java.io.IOException;
 

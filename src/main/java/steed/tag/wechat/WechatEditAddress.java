@@ -1,4 +1,4 @@
-package steed.tag.outhtml.wechat;
+package steed.tag.wechat;
 
 import java.io.IOException;
 import java.util.Date;

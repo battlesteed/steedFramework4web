@@ -1,21 +1,12 @@
 package steed.util.dao;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.Metadata;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import steed.domain.BaseDatabaseDomain;
 import steed.domain.DomainScanner;
 import steed.util.base.PropertyUtil;
 import steed.util.reflect.ReflectUtil;
@@ -53,7 +44,6 @@ import steed.util.reflect.ReflectUtil;
  * @author 战马
  */
 public class HibernateUtil{
-	private static Logger logger = LoggerFactory.getLogger(HibernateUtil.class);
 	private static ThreadLocal<Session> threadLocal = new ThreadLocal<Session>();
 	private static SessionFactory factory;
 	private static ThreadLocal<Boolean> closeSession = new ThreadLocal<Boolean>();
@@ -148,20 +138,6 @@ public class HibernateUtil{
 	public static void switchDatabase(String configFile){
 		currentDatabase.set(configFile);
 	} 
-	
-	/*public static void change2SqlServer(){
-		threadLocal.set(HibernateUtil4Sqlserver.getSession());
-	}
-	public static void change2MySql(){
-		threadLocal.set(getSession());
-	}*/
-	
-	/*public static SessionFactory getFactory(){
-		if (factory == null) {
-			builtFactory();
-		}
-		return factory;
-	}*/
 	
 	public static void closeSession() {
 		Session session = null;

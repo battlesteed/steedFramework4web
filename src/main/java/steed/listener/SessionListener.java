@@ -8,20 +8,32 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 public class SessionListener implements HttpSessionListener{
-	private Map<String, HttpSession> map = new HashMap<String, HttpSession>();
-	public Map<String, HttpSession> getAllSession() {
+	private Map<Object, HttpSession> map = new HashMap<>();
+	public Map<Object, HttpSession> getAllSession() {
 		return map;
 	}
 
 	@Override
 	public void sessionCreated(HttpSessionEvent event) {
 		HttpSession session = event.getSession();
-		map.put(session.getId(), session);
+		Object sessionID = getSessionID(session);
+		if (sessionID != null) {
+			map.put(sessionID, session);
+		}
 	}
 
 	@Override
 	public void sessionDestroyed(HttpSessionEvent event) {
 		map.remove(event.getSession().getId());
+	}
+	
+	/**
+	 * 获取session的id,你可以重写该方法,返回保存在session中的用户id,实现统计在线人数等
+	 * @param session
+	 * @return
+	 */
+	protected Object getSessionID(HttpSession session) {
+		return session.getId();
 	}
 
 }

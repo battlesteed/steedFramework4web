@@ -47,7 +47,7 @@
 		<property name="show_sql">true</property>
 		<property name="hbm2ddl.auto">update</property>
         <property name="hibernate.cache.region_prefix">hibernate.steed</property>
-        <property name="hibernate.max_fetch_depth">5</property>
+        <property name="hibernate.max_fetch_depth">3</property>
         <property name="hibernate.cache.region.factory_class">org.hibernate.testing.cache.CachingRegionFactory</property>
 		<!-- 使用查询缓存 -->
 		<property name="cache.use_query_cache">true</property>

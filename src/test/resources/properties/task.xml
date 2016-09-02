@@ -1,10 +1,6 @@
 <tasks>
-	<!-- <task class="steed.ext.task.ArticleSummaryTask" delay="22" timeUint="HOURS" /> -->
-	<!-- <task class="steed.ext.market.task.OrderRefreshTask" delay="1" timeUnit="SECONDS" /> -->
-	<!-- <task class="steed.bangbang.RefreshOrderTask" delay="60" timeUnit="SECONDS" /> -->
-	
-	<task class="steed.engine.MysqlBackupEngine" delay="10" timeUnit="SECONDS"
-	    dumpexePath="D:\JspStudy\MySQL\bin\mysqldump.exe" port="3306" validTime="30"
+	<task class="steed.engine.MysqlBackupEngine" delay="1" timeUnit="DAYS"
+	    dumpexePath="D:\JspStudy\MySQL\bin\mysqldump.exe" port="3306" validTime="2592000"
 	    hostIP="localhost" userName="root" password="root" startType="1"
-	    databaseName="littlePig2" relativeSavePath="../mysqlBackup"/>
+	    databaseName="littlePig2" relativeSavePath="../mysqlBackup" />
 </tasks>

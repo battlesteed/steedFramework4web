@@ -1,7 +1,7 @@
 
 steedFramework4web by 战马
 
-超快速开发中小型网站
+超快速开发大中小型网站的全能型web框架
 
 特色:
 

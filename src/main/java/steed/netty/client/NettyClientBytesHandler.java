@@ -52,7 +52,7 @@ public class NettyClientBytesHandler extends SimpleChannelInboundHandler<byte[]>
         
         new TaskEngine() {
         	@Override    
-            public void run() {    
+            public void doTask() {    
         		try {
         			BaseUtil.getLogger().info("链接断开,尝试重连!");
               		bootstrap.reConnect();

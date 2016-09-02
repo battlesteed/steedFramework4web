@@ -46,7 +46,7 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<BaseMsg> {
 //        eventLoop.schedule(, 1L, TimeUnit.SECONDS);  
     	  new TaskEngine() {
           	@Override    
-              public void run() {    
+              public void doTask() {    
           		try {
           			BaseUtil.getLogger().info("链接断开,尝试重连!");
                 	bootstrap.reConnect();

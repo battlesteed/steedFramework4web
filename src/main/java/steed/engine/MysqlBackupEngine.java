@@ -16,7 +16,11 @@ public class MysqlBackupEngine extends SimpleTaskEngine{
 	private String password;
 	private String databaseName;
 	private String relativeSavePath;
-	
+	private int port = 3306;
+	/**
+	 * 备份数据文件有效时间(过期的备份数据将被删除),单位秒,负数表示永不过期
+	 */
+	private long validTime = -1;
 	
 	/**
      * MySQL数据库导出
@@ -29,13 +33,13 @@ public class MysqlBackupEngine extends SimpleTaskEngine{
      * @param databaseName 要导出的数据库名
      * @return 返回true表示导出成功，否则返回false。
      */
-    public boolean exportDatabaseTool(String dumpexePath,String hostIP, String userName, String password, String savePath, String databaseName) {
+    public boolean exportDatabaseTool(String dumpexePath,String hostIP,int port, String userName, String password, String savePath, String databaseName) {
         File saveFile = new File(savePath);
         saveFile.mkdirs();// 创建文件夹
         saveFile.delete();
         
-        String command = String.format("%s --opt -h%s --user=%s --password=%s --lock-all-tables=true --result-file=%s --default-character-set=utf8 %s",
-        		dumpexePath,hostIP,userName,password,savePath,databaseName);
+        String command = String.format("%s --opt -h%s --port=%d --user=%s --password=%s --lock-all-tables=true --result-file=%s --default-character-set=utf8 %s",
+        		dumpexePath,hostIP,port,userName,password,savePath,databaseName);
         try {
             Process process = Runtime.getRuntime().exec(command);
             if (process.waitFor() == 0) {// 0 表示线程正常终止。
@@ -52,11 +56,29 @@ public class MysqlBackupEngine extends SimpleTaskEngine{
 
 
 	@Override
-	public void run() {
+	public void doTask() {
 		String fileName = DateUtil.getStringFormatDate(new Date(), "yyyy-MM-dd-HH-mm-ss")+".sql";
-		boolean exportDatabaseTool = exportDatabaseTool(dumpexePath, hostIP, userName, password, PathUtil.mergePath(relativeSavePath, fileName), databaseName);
+		String relPath = PathUtil.praseRelativePath(relativeSavePath);
+		boolean exportDatabaseTool = exportDatabaseTool(dumpexePath, hostIP,port, userName, password, PathUtil.mergePath(relPath, fileName), databaseName);
 		if (exportDatabaseTool) {
 			BaseUtil.getLogger().debug("数据库备份成功!");
+		}
+		if (validTime >= 0) {
+			deleteExpireBackup(relPath);
+		}
+	}
+	
+	private void deleteExpireBackup(String directory){
+		File file = new File(directory);
+		File[] listFiles = file.listFiles();
+		for(File f:listFiles){
+			if (!f.isDirectory()) {
+				long lastModified = f.lastModified();
+				if (new Date().getTime() > lastModified + validTime*1000) {
+					BaseUtil.getLogger().info("删除无用数据库备份--->{}",f.getAbsolutePath());
+					f.delete();
+				}
+			}
 		}
 	}
 

@@ -21,7 +21,7 @@ public class DataCacheUtil {
 	static{
 			new TaskEngine() {
 				@Override
-				public void run() {
+				public void doTask() {
 					BaseUtil.getLogger().debug("开始清理缓存数据");
 					Map<String, Object> tempDataMap = new HashMap<String, Object>();
 					Map<String, Long> tempTimeMap = new HashMap<String, Long>();

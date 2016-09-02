@@ -36,7 +36,7 @@ public class BaseTest {
         saveFile.mkdirs();// 创建文件夹
         saveFile.delete();
         
-        String command = String.format("%s --opt -h%s --user=%s --password=%s --lock-all-tables=true --result-file=%s --default-character-set=utf8 %s",
+        String command = String.format("%s --opt -h%s --port=3308 --user=%s --password=%s --lock-all-tables=true --result-file=%s --default-character-set=utf8 %s",
         		dumpexePath,hostIP,userName,password,savePath,databaseName);
 //        StringBuilder stringBuilder = new StringBuilder();
 //        stringBuilder.append("D:\\JspStudy\\MySQL\\bin\\mysqldump.exe").append(" --opt").append(" -h").append(hostIP);
@@ -58,8 +58,8 @@ public class BaseTest {
  
     public static void main(String[] args) throws InterruptedException {
     	new TaskUtil().init();
-    	Thread.sleep(1000*60*5);
-        /*if (exportDatabaseTool("D:\\JspStudy\\MySQL\\bin\\mysqldump.exe","localhost", "root", "root", "D:\\backupDatabase\\2014-10-134.sql", "test")) {
+    	Thread.sleep(1000*60*50);
+     /*   if (exportDatabaseTool("D:\\JspStudy\\MySQL\\bin\\mysqldump.exe","localhost", "root", "root", "D:\\backupDatabase\\2014-10-134.sql", "test")) {
             System.out.println("数据库备份成功！！！");
         } else {
             System.out.println("数据库备份失败！！！");

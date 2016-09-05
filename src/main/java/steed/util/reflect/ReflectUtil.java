@@ -35,6 +35,32 @@ public class ReflectUtil {
 		return null;
 	}
 	
+	public static void copySameField(Object copy,Object copyed){
+		List<Field> fields = getAllFields(copyed);
+		for (Field f:fields) {
+			try {
+				if (!"serialVersionUID".equals(f.getName())) {
+					f.setAccessible(true);
+					Object value = f.get(copyed);
+					if (value == null) {
+						continue;
+					}
+					try {
+						Field declaredField = copy.getClass().getDeclaredField(f.getName());
+						declaredField.setAccessible(true);
+						declaredField.set(copy, value);
+					} catch (NoSuchFieldException e) {
+						e.printStackTrace();
+					} catch (SecurityException e) {
+						e.printStackTrace();
+					}
+				}
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				BaseUtil.getLogger().debug("copyDomainSameField", e);
+			} 
+		}
+	}
+	
 	@SuppressWarnings("unchecked")
 	public static <T> T copyObj(T copyed){
 		Class<?> clazz = copyed.getClass();

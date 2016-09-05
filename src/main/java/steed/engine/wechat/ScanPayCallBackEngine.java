@@ -1,4 +1,4 @@
-package steed.ext.engine.wechat;
+package steed.engine.wechat;
 
 import steed.util.wechat.domain.sys.PayCallBack;
 /**

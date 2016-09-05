@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import steed.domain.wechat.WechatAccount;
 import steed.domain.wechat.WechatConfig;
-import steed.ext.engine.wechat.SimpleScanPayCallBackEngine;
+import steed.engine.wechat.SimpleScanPayCallBackEngine;
 import steed.ext.plugin.WechatAccount2WechatConfigPlugin;
 import steed.util.base.BaseUtil;
 import steed.util.base.StringUtil;

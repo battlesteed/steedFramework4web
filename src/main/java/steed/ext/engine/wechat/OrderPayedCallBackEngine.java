@@ -1,6 +1,7 @@
 package steed.ext.engine.wechat;
 
 import steed.domain.wechat.resp.TextMessage;
+import steed.engine.wechat.MessageEngine;
 import steed.util.wechat.MessageUtil;
 import steed.util.wechat.domain.sys.MessageReceive;
 /**

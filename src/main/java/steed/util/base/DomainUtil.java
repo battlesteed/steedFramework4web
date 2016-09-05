@@ -267,33 +267,6 @@ public class DomainUtil{
 		
 	}
 	
-	public static void copyDomainSameField(Object copy,Object copyed){
-		List<Field> fields = ReflectUtil.getAllFields(copyed);
-		for (Field f:fields) {
-			try {
-				if (!"serialVersionUID".equals(f.getName())) {
-					f.setAccessible(true);
-					Object value = f.get(copyed);
-					if (value == null) {
-						continue;
-					}
-					try {
-						Field declaredField = copy.getClass().getDeclaredField(f.getName());
-						declaredField.setAccessible(true);
-						declaredField.set(copy, value);
-					} catch (NoSuchFieldException e) {
-						e.printStackTrace();
-					} catch (SecurityException e) {
-						e.printStackTrace();
-					}
-				}
-			} catch (IllegalArgumentException e) {
-				logger.debug("copyDomainSameField", e);
-			} catch (IllegalAccessException e) {
-				logger.debug("copyDomainSameField", e);
-			}
-		}
-	}
 	
 	/**
 	 * 获取ID字段

@@ -1106,8 +1106,7 @@ public class DaoUtil {
 		List<String> list;
 		if (updateEvenNull == null) {
 			list = new ArrayList<String>();
-			Field[] declaredFields = obj.getClass().getDeclaredFields();
-			for (Field f:declaredFields) {
+			for (Field f:ReflectUtil.getAllFields(obj)) {
 				if (f.getAnnotation(UpdateEvenNull.class) != null) {
 					list.add(f.getName());
 				}

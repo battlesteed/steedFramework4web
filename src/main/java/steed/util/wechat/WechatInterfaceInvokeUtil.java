@@ -605,7 +605,15 @@ public class WechatInterfaceInvokeUtil {
 		SignUtil.signUnifiedOrderSend(unifiedOrderSend);
 		String redPacketSendMessageToXml = MessageUtil.unifiedOrderSendToXml(unifiedOrderSend);
 		try {
-			return MessageUtil.XmlToUnifiedOrderResult(HttpUtil.getRequestString(HttpUtil.http_post,WechatConstantParamter.unifiedOrderUrl, null, null, redPacketSendMessageToXml));
+			UnifiedOrderResult xmlToUnifiedOrderResult = MessageUtil.XmlToUnifiedOrderResult(HttpUtil.getRequestString(HttpUtil.http_post,WechatConstantParamter.unifiedOrderUrl, null, null, redPacketSendMessageToXml));
+			if (xmlToUnifiedOrderResult.isSuccess()) {
+				Property property = new Property();
+				property.setPropertyType("wechatOrder");
+				property.setKee(wechatConfig.getAppID());
+				property.setValue(unifiedOrderSend.getOut_trade_no());
+				property.save();
+			}
+			return xmlToUnifiedOrderResult;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -1,5 +1,6 @@
 package steed.ext.engine.wechat;
 
+import steed.engine.wechat.MessageEngine;
 import steed.util.wechat.domain.sys.MessageReceive;
 /**
  * 扫描事件回复引擎

@@ -13,7 +13,7 @@ public abstract class SimpleTaskEngine extends TaskEngine{
 	/**
 	 * 0,schedule;1,scheduleWithFixedDelay;2,scheduleAtFixedRate
 	 */
-	private int startType = 0;
+	private int startType = 1;
 	/**
 	 * 在这里写定时任务的启动方式,包括执行间隔,执行模式等
 	 * 例子:

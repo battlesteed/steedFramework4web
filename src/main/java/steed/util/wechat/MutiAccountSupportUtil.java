@@ -129,7 +129,7 @@ public class MutiAccountSupportUtil {
 			return mutiAccountSupport.getWechatConfig(appID);
 		}
 	}
-	@Deprecated
+	
 	public static WechatAccount getWechatAccount(String appID){
 		if (singleMode) {
 			WechatConfig wechatConfig = new WechatConfig();

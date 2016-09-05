@@ -1,4 +1,4 @@
-package steed.ext.domain.system;
+package steed.domain.system;
 
 import java.util.Date;
 
@@ -18,7 +18,7 @@ import steed.util.base.StringUtil;
 
 @Entity
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-@IdClass(steed.ext.domain.system.PropertyID.class)
+@IdClass(steed.domain.system.PropertyID.class)
 public class Property extends BaseRelationalDatabaseDomain{
 	private static final long serialVersionUID = 1L;
 	@ValidateReg(reg={RegUtil.CommonUsedReg.chineseAndChar})
@@ -29,12 +29,18 @@ public class Property extends BaseRelationalDatabaseDomain{
 	/**
 	 * 0,找回密码,1自动登录,2修改邮箱
 	 */
-	private Integer propertyType;
+	private String propertyType;
 	@Id
-	public Integer getPropertyType() {
+	public String getPropertyType() {
 		return propertyType;
 	}
-	public void setPropertyType(Integer propertyType) {
+	public Property(String kee, String value, String propertyType) {
+		super();
+		this.kee = kee;
+		this.value = value;
+		this.propertyType = propertyType;
+	}
+	public void setPropertyType(String propertyType) {
 		this.propertyType = propertyType;
 	}
 	public Property() {
@@ -46,9 +52,6 @@ public class Property extends BaseRelationalDatabaseDomain{
 	
 	public Property(String kee) {
 		this.kee = kee;
-	}
-	public Property(int propertyType) {
-		this.propertyType = propertyType;
 	}
 	@Id
 	public String getKee() {
@@ -82,6 +85,7 @@ public class Property extends BaseRelationalDatabaseDomain{
 		createDate = new Date();
 		kee = StringUtil.getSecureRandomString();
 	}
+	
 	@Override
 	public void initializeAll() {
 		initialize();

@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
+import steed.util.base.PropertyUtil;
 import steed.util.base.StringUtil;
 import steed.util.system.DataCacheUtil;
 import steed.util.wechat.domain.result.AccessToken;
@@ -18,6 +19,8 @@ public class AccessTokenUtil {
 	private static Logger logger = Logger.getLogger(AccessTokenUtil.class);
 	private static AccessToken accessToken = null;
 	
+	public static int tokenAdvanceRefreshTime = PropertyUtil.getInteger("wechat.tokenAdvanceRefreshTime");
+	
 	/**
 	 * access_token是否还有效
 	 * @return access_token是否还有效
@@ -27,10 +30,7 @@ public class AccessTokenUtil {
 			return false;
 		}else {
 			long timePastAfterGetAccessToken = new Date().getTime() - data.getAccess_token_getTime();
-			/**
-			 * 这里允许有15分钟的误差
-			 */
-			if (timePastAfterGetAccessToken < (data.getExpires_in()-60*15)*1000) {
+			if (timePastAfterGetAccessToken < (data.getExpires_in()-tokenAdvanceRefreshTime)*1000) {
 				return true;
 			}else {
 				return false;

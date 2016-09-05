@@ -1,4 +1,4 @@
-package steed.ext.domain.system;
+package steed.domain.system;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

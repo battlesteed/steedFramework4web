@@ -10,8 +10,9 @@ import javax.servlet.jsp.tagext.TagSupport;
 import steed.util.base.PathUtil;
 
 /**
- * PathUtil.getBrowserPath(relativeUrl)
+ * PathUtil.getBrowserPath(relativeUrl)标签版
  * @author 战马
+ * @see PathUtil#getBrowserPath(String)
  */
 public class GetBrowserPath extends TagSupport {
 	private static final long serialVersionUID = -1523362354887392103L;

@@ -4,8 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import steed.domain.system.Config;
 import steed.exception.runtime.system.FrameworkException;
-import steed.ext.domain.system.Config;
 import steed.util.base.DateUtil;
 import steed.util.dao.DaoUtil;
 

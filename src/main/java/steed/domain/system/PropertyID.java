@@ -1,4 +1,4 @@
-package steed.ext.domain.system;
+package steed.domain.system;
 
 import steed.domain.DomainID;
 import steed.domain.annotation.ValidateReg;
@@ -8,10 +8,10 @@ public class PropertyID extends DomainID{
 	private static final long serialVersionUID = 1L;
 	@ValidateReg(reg={RegUtil.CommonUsedReg.chineseAndChar})
 	private String kee;
-	private Integer propertyType;	
+	private String propertyType;	
 	public PropertyID() {
 	}
-	public PropertyID(String kee, Integer propertyType) {
+	public PropertyID(String kee, String propertyType) {
 		super();
 		this.kee = kee;
 		this.propertyType = propertyType;
@@ -22,10 +22,10 @@ public class PropertyID extends DomainID{
 	public void setKee(String kee) {
 		this.kee = kee;
 	}
-	public Integer getPropertyType() {
+	public String getPropertyType() {
 		return propertyType;
 	}
-	public void setPropertyType(Integer propertyType) {
+	public void setPropertyType(String propertyType) {
 		this.propertyType = propertyType;
 	}
 }

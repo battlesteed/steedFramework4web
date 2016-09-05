@@ -3,4 +3,6 @@
 	    dumpexePath="D:\JspStudy\MySQL\bin\mysqldump.exe" port="3306" validTime="2592000"
 	    hostIP="localhost" userName="root" password="root" startType="1"
 	    databaseName="littlePig2" relativeSavePath="../mysqlBackup" />
+	<task class="steed.engine.DeleteTempTemplateEngine" delay="1" timeUnit="HOURS" />
+	
 </tasks>

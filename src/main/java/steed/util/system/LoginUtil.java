@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 import steed.domain.GlobalParam;
 import steed.domain.application.DWZMessage;
 import steed.domain.application.Message;
-import steed.ext.domain.system.Config;
+import steed.domain.system.Config;
 import steed.ext.domain.system.LoginLog;
 import steed.ext.domain.user.User;
 import steed.servlet.SecurityCode;

@@ -26,7 +26,10 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.Gson;
+
 import steed.domain.GlobalParam;
+import steed.domain.system.Property;
 import steed.domain.wechat.PageAccessToken;
 import steed.domain.wechat.WechatAccount;
 import steed.domain.wechat.WechatConfig;
@@ -38,6 +41,7 @@ import steed.exception.runtime.wechat.WechatIoException;
 import steed.util.base.BaseUtil;
 import steed.util.base.PathUtil;
 import steed.util.base.StringUtil;
+import steed.util.dao.DaoUtil;
 import steed.util.digest.Md5Util;
 import steed.util.file.FileUtil;
 import steed.util.http.HttpUtil;
@@ -73,8 +77,6 @@ import steed.util.wechat.domain.send.RefundSend;
 import steed.util.wechat.domain.send.SetIndustrySend;
 import steed.util.wechat.domain.send.TemplateMessageSend;
 import steed.util.wechat.domain.send.UnifiedOrderSend;
-
-import com.google.gson.Gson;
 
 /**
  * 微信接口调用工具类
@@ -222,12 +224,46 @@ public class WechatInterfaceInvokeUtil {
 		}
 		TemplateMessageResult invokeWechatInterface = invokeWechatInterface(send, TemplateMessageResult.class, fitParam2Url(WechatConstantParamter.sendTemplateMessageUrl));
 		if (template_id != null) {
-			Map<String, String> map = new HashMap<String, String>();
-			map.put("template_id", template_id);
-			invokeWechatInterface(map, BaseWechatResult.class, fitParam2Url(fitParam2Url(WechatConstantParamter.deleteTemplateMessageUrl)));
+			deleteTemplateEnsureSuccess(template_id);
 		}
 		return invokeWechatInterface;
 	}
+	
+	public static void deleteTemplateEnsureSuccess(final String template_id) {
+		final Map<String, String> map = new HashMap<String, String>();
+		map.put("template_id", template_id);
+		final WechatAccount wechatAccount = MutiAccountSupportUtil.getWechatAccount();
+		new Thread(new Runnable() {
+			public void run() {
+				synchronized ("deleteTemplateEnsureSuccess"+template_id) {
+					MutiAccountSupportUtil.setWechatAccount(wechatAccount);
+					Property property = new Property();
+					property.setPropertyType("tempTemplateID");
+					property.setKee(template_id);
+					property.setValue(wechatAccount.getAppID());
+					property.save();
+					DaoUtil.managTransaction();
+					int count = 1;
+					boolean success = false;
+					while (!success&&count<30) {
+						BaseWechatResult deleteResult = invokeWechatInterface(map, BaseWechatResult.class, fitParam2Url(fitParam2Url(WechatConstantParamter.deleteTemplateMessageUrl)));
+						success = (deleteResult != null && deleteResult.isSuccess());
+						try {
+							Thread.sleep(1000*10*count++);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+					if (!success) {
+						BaseUtil.getLogger().error("删除模板{}失败",template_id);
+					}else {
+						property.delete();
+					}
+				}
+			}
+		}).start();
+	}
+	
 	
 	/*************************#模板消息******************************/
 	/*************************\图文统计******************************/
@@ -337,6 +373,7 @@ public class WechatInterfaceInvokeUtil {
 		String requestString = HttpUtil.getRequestString(HttpUtil.http_post, fitParam2Url(WechatConstantParamter.getQrcodeUrl), null, null, BaseUtil.getJson(map));
 		return BaseUtil.parseJson(requestString, QrcodeResult.class);
 	}
+	
 	/**
 	 * 获取参数二维码scene_str == null时为临时二维码,否则是获取永久二维码
 	action_name 	二维码类型，QR_SCENE为临时,QR_LIMIT_SCENE为永久,QR_LIMIT_STR_SCENE为永久的字符串参数值
@@ -421,7 +458,7 @@ public class WechatInterfaceInvokeUtil {
 			.replaceFirst("#PAGE_ACCESS_TOKEN#", access_token)
 			.replaceFirst("#OPENID#", openid).replaceFirst("#LANG#", lang);
 		String requestString = HttpUtil.getRequestString(HttpUtil.http_get, url, null, null, null);
-		log.debug("拉取到的用户信息--->"+requestString);
+		log.debug("拉取到的用户信息--->{}",requestString);
 		return BaseUtil.parseJson(requestString, WechatUser.class);
 	}
 	/**

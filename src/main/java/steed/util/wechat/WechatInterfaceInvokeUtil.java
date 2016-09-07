@@ -609,8 +609,8 @@ public class WechatInterfaceInvokeUtil {
 			if (xmlToUnifiedOrderResult.isSuccess()) {
 				Property property = new Property();
 				property.setPropertyType("wechatOrder");
-				property.setKee(wechatConfig.getAppID());
-				property.setValue(unifiedOrderSend.getOut_trade_no());
+				property.setKee(unifiedOrderSend.getOut_trade_no());
+				property.setValue(wechatConfig.getAppID());
 				property.save();
 			}
 			return xmlToUnifiedOrderResult;

@@ -19,6 +19,7 @@ public class TestEfficiency {
 	 */
 	public Date begin(){
 		begin = new Date();
+		BaseUtil.getLogger().debug("开始计时...");
 		return begin;
 	}
 	/**

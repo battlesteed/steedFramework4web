@@ -28,7 +28,7 @@ public class OrderRefreshEngine extends SimpleTaskEngine{
 		for(Property p:listAllObj){
 			MutiAccountSupportUtil.setWechatAccount(MutiAccountSupportUtil.getWechatAccount(p.getValue()));
 			OrderQuerySend send = new OrderQuerySend();
-			send.setOut_trade_no(p.getValue());
+			send.setOut_trade_no(p.getKee());
 			OrderQueryResult queryOrder = WechatInterfaceInvokeUtil.queryOrder(send);
 			if (queryOrder.isSuccess()) {
 				if ("SUCCESS".equals(queryOrder.getTrade_state())) {

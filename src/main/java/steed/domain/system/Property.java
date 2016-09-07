@@ -87,6 +87,11 @@ public class Property extends BaseRelationalDatabaseDomain{
 	}
 	
 	@Override
+	public boolean save() {
+		createDate = new Date();
+		return super.save();
+	}
+	@Override
 	public void initializeAll() {
 		initialize();
 	}

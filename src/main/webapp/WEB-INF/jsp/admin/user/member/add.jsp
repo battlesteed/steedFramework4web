@@ -79,13 +79,13 @@
 		<dl class="nowrap">
 			<dt>用户组：</dt>
 			<dd>
-				<s:iterator value="%{#request.roleNameList }" var="temp" status="status">
+				<c:forEach items="${roleNameList }" var="temp" varStatus="status">
 				<input type="checkbox" name="roleSet" value="${temp }"/>
-				${temp } <st:space spaceCount="3" />
+				${temp } &nbsp;&nbsp;&nbsp;
 				<c:if test="${status.count % 3 == 0 }">
 					<br />
 				</c:if>
-			</s:iterator>
+				</c:forEach>
 			</dd>
 		</dl>
 	<%-- 	<dl class="nowrap">

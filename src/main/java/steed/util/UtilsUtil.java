@@ -38,6 +38,6 @@ public class UtilsUtil {
 		MutiAccountSupportUtil.relese();
 		DaoUtil.relese();
 		//TODO ogm与上层工具类解耦
-		OgmUtil.release();
+		//OgmUtil.release();
 	}
 }

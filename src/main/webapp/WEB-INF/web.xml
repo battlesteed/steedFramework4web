@@ -28,7 +28,7 @@
 		<!-- <welcome-file>index.jsp</welcome-file> -->
 	</welcome-file-list>
 	<listener>
-		<listener-class>steed.ext.listener.BeyondstarInitListener</listener-class>
+		<listener-class>steed.ext.listener.SteedExtInitListener</listener-class>
 	</listener>
 	<listener>
 		<listener-class>steed.listener.SessionListener</listener-class>

@@ -3,6 +3,8 @@
 
 # 超快速开发大中小型网站的全能型web框架
 
+[部署教程](http://v.youku.com/v_show/id_XMTcxNjg1Njc0NA==.html?beta&)
+
 ## 特色:
 
 * 1.还在烦mybatis的mapper文件?还在为hibernate的hql头痛?该框架全自动生成hql,不用手写任何hql或sql,彻底解决您的烦恼.

@@ -11,7 +11,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import steed.domain.BaseRelationalDatabaseDomain;
+import steed.domain.BaseUnionKeyDomain;
 import steed.domain.annotation.ValidateReg;
 import steed.util.base.RegUtil;
 import steed.util.base.StringUtil;
@@ -19,7 +19,7 @@ import steed.util.base.StringUtil;
 @Entity
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 @IdClass(steed.domain.system.PropertyID.class)
-public class Property extends BaseRelationalDatabaseDomain{
+public class Property extends BaseUnionKeyDomain{
 	private static final long serialVersionUID = 1L;
 	@ValidateReg(reg={RegUtil.CommonUsedReg.chineseAndChar})
 	private String kee;

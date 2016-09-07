@@ -24,10 +24,11 @@ import steed.util.dao.DaoUtil;
  *        battle_steed@163.com
  * @company 深圳市星超越科技有限公司
  */
-public class BeyondstarInitListener extends SystemInitListener{
+public class SteedExtInitListener extends SystemInitListener{
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
 		super.contextInitialized(event);
+		DaoUtil.setAutoManagTransaction(false);
 		try{
 			ServletContext servletContext = event.getServletContext();
 			List<Path_Power> path_PowerList = getPath_PowerList(servletContext);
@@ -38,6 +39,8 @@ public class BeyondstarInitListener extends SystemInitListener{
 			}
 		}catch(Error e){
 			e.printStackTrace();
+		}finally {
+			DaoUtil.managTransaction();
 		}
 		
 	}

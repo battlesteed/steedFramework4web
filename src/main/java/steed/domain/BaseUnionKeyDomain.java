@@ -10,14 +10,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import steed.domain.annotation.NotQueryCondition;
+import steed.util.base.BaseUtil;
 import steed.util.base.ExceptionUtil;
+import steed.util.dao.DaoUtil;
 import steed.util.reflect.ReflectUtil;
 
 /**
  * 联合主键基础类，若不想实现UnionKeyDomain可继承该类
  * @author 战马
  */
-public abstract class BaseUnionKeyDomain extends BaseDatabaseDomain implements UnionKeyDomain{
+public abstract class BaseUnionKeyDomain extends BaseRelationalDatabaseDomain implements UnionKeyDomain{
 	private static final long serialVersionUID = 7359662643996245180L;
 	@NotQueryCondition
 	private static Logger logger = LoggerFactory.getLogger(BaseUnionKeyDomain.class);
@@ -49,8 +51,7 @@ public abstract class BaseUnionKeyDomain extends BaseDatabaseDomain implements U
 			}
 		}
 	}
-
-
+	
 	@Override
 	@Id
 	public DomainID getDomainID(){

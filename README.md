@@ -3,7 +3,10 @@
 
 # 超快速开发大中小型网站的全能型web框架
 
-[部署教程](http://v.youku.com/v_show/id_XMTcxNjg1Njc0NA==.html?beta&)
+ 
+
+ **[部署教程](http://v.youku.com/v_show/id_XMTcxNjg1Njc0NA==.html?beta&)** 
+
 
 ## 特色:
 

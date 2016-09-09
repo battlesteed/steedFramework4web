@@ -43,15 +43,16 @@ public class AccessTokenUtil {
 	 * 获取未过期的access_token
 	 * @return 未过期的access_token,如失败则AccessToken.access_token值为null
 	 */
-	@SuppressWarnings("deprecation")
 	public static AccessToken getAccessToken() {
-		if (MutiAccountSupportUtil.isSingleMode()) {
-			return accessToken = AccessTokenUtil.getAccessToken(accessToken);
-		}else {
-			String appID = MutiAccountSupportUtil.getWechatConfig().getAppID();
-			AccessToken accessToken2 = getAccessToken((AccessToken) DataCacheUtil.getData(appID, "wechatAccessToken"));
-			DataCacheUtil.setData(appID, "wechatAccessToken", accessToken2);
-			return accessToken2;
+		String appID = MutiAccountSupportUtil.getWechatAccount().getAppID();
+		synchronized("getAccessToken"+appID){
+			if (MutiAccountSupportUtil.isSingleMode()) {
+				return accessToken = AccessTokenUtil.getAccessToken(accessToken);
+			}else {
+				AccessToken accessToken2 = getAccessToken((AccessToken) DataCacheUtil.getData(appID, "wechatAccessToken"));
+				DataCacheUtil.setData(appID, "wechatAccessToken", accessToken2);
+				return accessToken2;
+			}
 		}
 	}
 	

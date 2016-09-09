@@ -41,17 +41,18 @@ public class JsapiTicketUtil {
 
 	/**
 	 * 获取未过期的JsapiTicket
-	 * @return 未过期的JsapiTicket,如失败则steed.util.wechat.domain.result.JsapiTicket.ticket值为null
+	 * @return 未过期的JsapiTicket
 	 */
-	@SuppressWarnings("deprecation")
 	public static JsapiTicket getJsapiTicket() {
-		if (MutiAccountSupportUtil.isSingleMode()) {
-			return jsapiTicket = JsapiTicketUtil.getJsapiTicket(jsapiTicket);
-		}else {
-			String appID = MutiAccountSupportUtil.getWechatConfig().getAppID();
-			JsapiTicket jsapiTicket2 = getJsapiTicket((JsapiTicket) DataCacheUtil.getData(appID, "wechatJsapiTicket"));
-			DataCacheUtil.setData(appID, "wechatJsapiTicket", jsapiTicket2);
-			return jsapiTicket2;
+		String appID = MutiAccountSupportUtil.getWechatAccount().getAppID();
+		synchronized ("getJsapiTicket"+appID) {
+			if (MutiAccountSupportUtil.isSingleMode()) {
+				return jsapiTicket = JsapiTicketUtil.getJsapiTicket(jsapiTicket);
+			}else {
+				JsapiTicket jsapiTicket2 = getJsapiTicket((JsapiTicket) DataCacheUtil.getData(appID, "wechatJsapiTicket"));
+				DataCacheUtil.setData(appID, "wechatJsapiTicket", jsapiTicket2);
+				return jsapiTicket2;
+			}
 		}
 	}
 	

@@ -43,6 +43,7 @@ public class SimpleHqlGenerator implements HqlGenerator{
 		for(Entry<String, ? extends Object> e:map.entrySet()){
 			appendSingleWhereCondition(domainSimpleName, hql, removedEntry, e,put);
 		}
+		map.putAll((Map) put);
 		for (String temp:removedEntry) {
 			map.remove(temp);
 		}

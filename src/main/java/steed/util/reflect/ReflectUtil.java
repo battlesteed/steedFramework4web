@@ -34,6 +34,9 @@ public class ReflectUtil {
 		}
 		return null;
 	}
+	public static <T> T getInstanceFromProperties(String key){
+		return getInstanceFromProperties(key,PropertyUtil.configProperties);
+	}
 	
 	public static void copySameField(Object copy,Object copyed){
 		List<Field> fields = getAllFields(copyed);

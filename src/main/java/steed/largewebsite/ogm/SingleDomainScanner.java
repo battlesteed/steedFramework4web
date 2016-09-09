@@ -44,7 +44,7 @@ public class SingleDomainScanner implements DomainScanner{
 			
 			try {
 				String domainClassName = replaceAll.substring(0,replaceAll.length() - 6);
-				BaseUtil.out("扫描",domainClassName);
+				BaseUtil.getLogger().debug("扫描{}",domainClassName);
 				
 				@SuppressWarnings("unchecked")
 				Class<? extends BaseDatabaseDomain> domainClass = (Class<? extends BaseDatabaseDomain>) Class.forName(domainClassName);

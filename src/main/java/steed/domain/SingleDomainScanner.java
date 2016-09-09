@@ -44,11 +44,11 @@ public class SingleDomainScanner implements DomainScanner{
 			String replaceAll = absolutePath.substring(absolutePath.indexOf("classes")+"classes.".length()).replaceAll("\\\\", "/").replaceAll("\\/", ".");
 			try {
 				String domainClassName = replaceAll.substring(0,replaceAll.length() - 6);
-				BaseUtil.out("扫描",domainClassName);
-				Class domainClass = Class.forName(domainClassName);
+				BaseUtil.getLogger().debug("扫描{}",domainClassName);
+				Class<?> domainClass = Class.forName(domainClassName);
 				if (BaseRelationalDatabaseDomain.class.isAssignableFrom(domainClass)) {
 					if (domainClass.getAnnotation(Entity.class) != null) {
-						list.add(domainClass);
+						list.add((Class<? extends BaseDatabaseDomain>) domainClass);
 					}
 				}
 			} catch (Exception e) {

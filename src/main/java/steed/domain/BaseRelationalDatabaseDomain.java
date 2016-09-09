@@ -3,17 +3,37 @@ package steed.domain;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Transient;
+
 import org.hibernate.Hibernate;
 
 import steed.util.base.BaseUtil;
 import steed.util.base.DomainUtil;
 import steed.util.dao.DaoUtil;
+import steed.util.dao.HqlGenerator;
 /**
  * 关系型数据库基础实体类
  * @author 战马
  *
  */
 public class BaseRelationalDatabaseDomain extends BaseDatabaseDomain{
+	
+	private static final long serialVersionUID = -3084039108845387366L;
+	private HqlGenerator personalHqlGenerator;
+	
+	@Transient
+	public HqlGenerator getPersonalHqlGenerator() {
+		return personalHqlGenerator;
+	}
+	
+	/**
+	 * 设置属于本实体类的个性化的hql生成器
+	 * @param personalHqlGenerator
+	 * @see steed.util.dao.SimpleHqlGenerator
+	 */
+	public void setPersonalHqlGenerator(HqlGenerator personalHqlGenerator) {
+		this.personalHqlGenerator = personalHqlGenerator;
+	}
 	public void initialize(){
 		Hibernate.initialize(this);
 	}

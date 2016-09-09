@@ -1,5 +1,6 @@
 package steed.engine.task;
 
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -7,6 +8,7 @@ import org.junit.Test;
 import steed.domain.system.Property;
 import steed.engine.wechat.SimpleScanPayCallBackEngine;
 import steed.util.base.BaseUtil;
+import steed.util.base.DateUtil;
 import steed.util.dao.DaoUtil;
 import steed.util.reflect.ReflectUtil;
 import steed.util.system.SimpleTaskEngine;
@@ -24,6 +26,7 @@ public class OrderRefreshEngine extends SimpleTaskEngine{
 	public void doTask() {
 		Property property = new Property();
 		property.setPropertyType("wechatOrder");
+		property.setCreateDate_min_1(DateUtil.getLastday(30, new Date()));
 		List<Property> listAllObj = DaoUtil.listAllObj(property);
 		for(Property p:listAllObj){
 			MutiAccountSupportUtil.setWechatAccount(MutiAccountSupportUtil.getWechatAccount(p.getValue()));

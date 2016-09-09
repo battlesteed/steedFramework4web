@@ -22,7 +22,7 @@ public class NettyChannelMap {
     	return map;
     }
     public static void remove(SocketChannel socketChannel){
-        for (Map.Entry entry:map.entrySet()){
+        for (Map.Entry<?,?> entry:map.entrySet()){
             if (entry.getValue()==socketChannel){
             	BaseUtil.getLogger().debug("客户端{}{}", entry.getKey(),"断线");
                 map.remove(entry.getKey());

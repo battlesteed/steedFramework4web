@@ -5,7 +5,8 @@ package steed.netty.module;
  * 登录验证类型的消息
  */
 public class LoginMsg extends BaseMsg {
-    private String userName;
+	private static final long serialVersionUID = -2627794115185225788L;
+	private String userName;
     private String password;
     public LoginMsg() {
         super();

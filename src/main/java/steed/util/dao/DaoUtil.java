@@ -491,11 +491,8 @@ public class DaoUtil {
 	 * @param updated 存放更新的 字段---值
 	 * @return 更新的记录数，失败返回-1
 	 */
-	@SuppressWarnings("unchecked")
 	public static int updateByQuery(Object queryCondition,Map<String, Object> updated){
-		Map<String, Object> map = new HashMap<String, Object>();
-		putField2Map(queryCondition, map, "");
-		return updateByQuery((Class<Object>) queryCondition.getClass(), map, updated);
+		return updateByQuery(queryCondition.getClass(), putField2Map(queryCondition), updated);
 	}
 	
 	/**
@@ -504,7 +501,7 @@ public class DaoUtil {
 	 * @param updated 存放更新的字段-值
 	 * @return 更新的记录数，失败返回-1
 	 */
-	public static int updateByQuery(Class<? extends Object> clazz,Map<String, Object> queryCondition,Map<String, Object> updated){
+	public static int updateByQuery(Class<?> clazz,Map<String, Object> queryCondition,Map<String, Object> updated){
 		try {
 			beginTransaction();
 			
@@ -1391,8 +1388,10 @@ public class DaoUtil {
 	 * @param obj
 	 * @param map
 	 */
-	public static void putField2Map(Object obj,Map<String, Object> map) {
+	public static Map<String, Object> putField2Map(Object obj) {
+		Map<String, Object> map = new HashMap<>();
 		putField2Map(obj, map, "");
+		return map;
 	}
 	/**
 	 * 把obj中非空字段放到map

@@ -1,13 +1,12 @@
 package steed.netty.client;
 
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.ReferenceCountUtil;
-
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
 import steed.netty.module.BaseMsg;
 import steed.netty.module.CommonMsg;
 import steed.netty.module.MsgType;
@@ -16,7 +15,6 @@ import steed.util.base.BaseUtil;
 import steed.util.base.PropertyUtil;
 import steed.util.base.StringUtil;
 import steed.util.system.TaskEngine;
-import steed.util.system.TaskUtil;
 
 
 public class NettyClientHandler extends SimpleChannelInboundHandler<BaseMsg> {

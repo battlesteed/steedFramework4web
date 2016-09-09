@@ -1,18 +1,13 @@
 package steed.netty.client;
 
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.handler.timeout.IdleStateEvent;
-
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import steed.netty.module.BaseMsg;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.handler.timeout.IdleStateEvent;
 import steed.util.base.BaseUtil;
-import steed.util.base.PropertyUtil;
-import steed.util.base.StringUtil;
 import steed.util.system.TaskEngine;
-import steed.util.system.TaskUtil;
 
 
 public class NettyClientBytesHandler extends SimpleChannelInboundHandler<byte[]> {

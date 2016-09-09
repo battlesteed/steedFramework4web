@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.Transient;
 
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.Cache;
@@ -26,6 +27,9 @@ public class Property extends BaseUnionKeyDomain{
 	@ValidateReg(reg={RegUtil.CommonUsedReg.chineseAndChar})
 	private String value;
 	private Date createDate;
+	
+	private Date createDate_min_1;
+	private Date createDate_max_1;
 	/**
 	 * 0,找回密码,1自动登录,2修改邮箱
 	 */
@@ -33,6 +37,20 @@ public class Property extends BaseUnionKeyDomain{
 	@Id
 	public String getPropertyType() {
 		return propertyType;
+	}
+	@Transient
+	public Date getCreateDate_min_1() {
+		return createDate_min_1;
+	}
+	public void setCreateDate_min_1(Date createDate_min_1) {
+		this.createDate_min_1 = createDate_min_1;
+	}
+	@Transient
+	public Date getCreateDate_max_1() {
+		return createDate_max_1;
+	}
+	public void setCreateDate_max_1(Date createDate_max_1) {
+		this.createDate_max_1 = createDate_max_1;
 	}
 	public Property(String kee, String value, String propertyType) {
 		super();
@@ -77,13 +95,6 @@ public class Property extends BaseUnionKeyDomain{
 	}
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
-	}
-	/**
-	 * 初始化
-	 */
-	public void init(){
-		createDate = new Date();
-		kee = StringUtil.getSecureRandomString();
 	}
 	
 	@Override

@@ -27,7 +27,6 @@ public class SingleDomainScanner implements DomainScanner{
 			return list;
 		}
 		String classesPath = PathUtil.getClassesPath();
-		int len = classesPath.length() - 1;
 		
 		List<File> allFile = new FileUtil().getAllFile(classesPath,null);
 		if (PropertyUtil.getBoolean("devMode")) {

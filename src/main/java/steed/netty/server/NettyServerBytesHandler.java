@@ -5,8 +5,6 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.socket.SocketChannel;
 import steed.util.base.BaseUtil;
-import steed.util.base.PropertyUtil;
-import steed.util.base.StringUtil;
 
 /**
  * Created by yaozb on 15-4-11.

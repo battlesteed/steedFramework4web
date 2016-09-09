@@ -4,7 +4,10 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import javax.tools.DocumentationTool.DocumentationTask;
 
+import steed.util.UtilsUtil;
 import steed.util.base.BaseUtil;
+import steed.util.dao.DaoUtil;
+import steed.util.dao.HibernateUtil;
 
 public abstract class TaskEngine implements Runnable{
 	
@@ -12,9 +15,13 @@ public abstract class TaskEngine implements Runnable{
 	@Override
 	public void run() {
 		try{
+			DaoUtil.setAutoManagTransaction(false);
 			doTask();
 		}catch (Exception e) {
 			BaseUtil.getLogger().error("后台定时任务出错!",e);
+		}finally{
+			DaoUtil.managTransaction();
+			UtilsUtil.releaseUtils();
 		}
 	}
 	

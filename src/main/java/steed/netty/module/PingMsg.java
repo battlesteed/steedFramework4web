@@ -5,7 +5,9 @@ package steed.netty.module;
  * 心跳检测的消息类型
  */
 public class PingMsg extends BaseMsg {
-    public PingMsg() {
+	private static final long serialVersionUID = 4314910546601238812L;
+
+	public PingMsg() {
         super();
         setType(MsgType.PING);
     }

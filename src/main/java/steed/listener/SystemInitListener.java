@@ -18,8 +18,6 @@ import steed.domain.GlobalParam;
 import steed.util.UtilsUtil;
 import steed.util.base.PathUtil;
 import steed.util.base.PropertyUtil;
-import steed.util.base.StringUtil;
-import steed.util.dao.DaoUtil;
 import steed.util.file.FileUtil;
 import steed.util.system.TaskUtil;
 /**
@@ -87,7 +85,7 @@ public class SystemInitListener implements ServletContextListener {
 			if (absolutePath.endsWith("Action.class")) {
 				String replaceAll = absolutePath.substring(len).replaceAll("\\\\", "/").replaceAll("\\/", ".");
 				try {
-					Class actionClass = Class.forName(replaceAll.substring(0,replaceAll.length() - 6));
+					Class<?> actionClass = Class.forName(replaceAll.substring(0,replaceAll.length() - 6));
 					Power power = (Power) actionClass.getAnnotation(Power.class);
 					Namespace nameSpace = (Namespace)actionClass.getAnnotation(Namespace.class);
 					if (nameSpace == null) {

@@ -1,5 +1,9 @@
 package steed.netty.server;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Map.Entry;
+import java.util.concurrent.TimeUnit;
+
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
@@ -11,15 +15,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.DelimiterBasedFrameDecoder;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.serialization.ClassResolvers;
-import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
-
-import java.io.UnsupportedEncodingException;
-import java.util.Map.Entry;
-import java.util.concurrent.TimeUnit;
-
 import steed.netty.module.CommonMsg;
 import steed.util.base.PropertyUtil;
 
@@ -28,7 +24,7 @@ import steed.util.base.PropertyUtil;
  */
 public class NettyServerBootstrap {
     private int port;
-    private SocketChannel socketChannel;
+//    private SocketChannel socketChannel;
     public NettyServerBootstrap(int port) throws InterruptedException {
         this.port = port;
         bind();
@@ -70,7 +66,7 @@ public class NettyServerBootstrap {
         return null;
     }
     public static void main(String []args) throws InterruptedException {
-        NettyServerBootstrap bootstrap = new NettyServerBootstrap(PropertyUtil.getInteger("netty.serverPort"));
+//        NettyServerBootstrap bootstrap = new NettyServerBootstrap(PropertyUtil.getInteger("netty.serverPort"));
         CommonMsg commonMsg = new CommonMsg(121);
         commonMsg.setContent("dddddd");
         byte[] bytes = {0x3A,(byte) 0xA2,0x04,0x00,0x00,02,0x00,0x44,0x0D};

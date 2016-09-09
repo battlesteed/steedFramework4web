@@ -22,7 +22,7 @@ public class TestSonQuery {
 //		programa.setName("3333");
 		programa.setDescription("wwww");
 		obj.setPrograma(programa);
-		DaoUtil.putField2Map(obj, map);
+//		DaoUtil.putField2Map(obj, map);
 		DaoUtil.getHql(Information.class, map, null, null, "");
 		BaseUtil.out(DaoUtil.listAllObj(obj).size());
 	}

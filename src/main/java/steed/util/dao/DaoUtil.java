@@ -90,7 +90,7 @@ public class DaoUtil {
 	/**
 	 * 查询条件后缀
 	 */
-	private static final String[] indexSuffix = {"_max_1","_min_1","_like_1","_not_in_1","_not_equal_1","_not_join","_not_null","_not_compile_param"};
+	private static final String[] indexSuffix = {"_max_1","_min_1","_like_1","_not_in_1","_not_equal_1","_not_join","_not_null","_not_compile_param",SimpleHqlGenerator.personalHqlGeneratorKey};
 	/***********\异常提示专用************/
 	
 	/*//TODO 完善异常类型

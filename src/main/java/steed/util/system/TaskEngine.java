@@ -2,12 +2,9 @@ package steed.util.system;
 
 import java.util.concurrent.ScheduledExecutorService;
 
-import javax.tools.DocumentationTool.DocumentationTask;
-
 import steed.util.UtilsUtil;
 import steed.util.base.BaseUtil;
 import steed.util.dao.DaoUtil;
-import steed.util.dao.HibernateUtil;
 
 public abstract class TaskEngine implements Runnable{
 	

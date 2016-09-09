@@ -39,27 +39,28 @@ public class DataCacheUtil {
 				
 				@Override
 				protected void startUp(ScheduledExecutorService scheduledExecutorService) {
-					scheduledExecutorService.scheduleWithFixedDelay(this, 1, 1, TimeUnit.HOURS);
+					scheduledExecutorService.scheduleWithFixedDelay(this, 1, 20, TimeUnit.MINUTES);
 				}
 				
 			}.start();
 	}
 	
-	public static Object getData(Object key,String prifix){
-		String key2 = key.toString()+"_steed_dataCache_"+prifix;
+	public static Object getData(Object key,String prefix){
+		String key2 = key.toString()+"_steed_dataCache_"+prefix;
 		Long time = timeMap.get(key2);
 		if (time != null && new Date().getTime() > time) {
 			return null;
 		}
 		return dataMap.get(key2);
 	}
-	public static void setData(Object key,String prifix,Object value){
-		String key2 = key.toString()+"_steed_dataCache_"+prifix;
+	
+	public static void setData(Object key,String prefix,Object value){
+		String key2 = key.toString()+"_steed_dataCache_"+prefix;
 		dataMap.put(key2, value);
 		timeMap.put(key2,new Date().getTime() + 1000*60*60*2);
 	}
-	public static void setData(Object key,String prifix,Object value,Long lifeTime){
-		String key2 = key.toString()+"_steed_dataCache_"+prifix;
+	public static void setData(Object key,String prefix,Object value,Long lifeTime){
+		String key2 = key.toString()+"_steed_dataCache_"+prefix;
 		dataMap.put(key2, value);
 		timeMap.put(key2,new Date().getTime()+lifeTime);
 	}

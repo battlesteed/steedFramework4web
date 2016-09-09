@@ -3,8 +3,10 @@ package steed.test;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import org.hibernate.hql.ast.origin.hql.parse.HQLParser.new_key_return;
 import org.junit.Test;
 
 import steed.ext.domain.user.User;
@@ -17,6 +19,30 @@ public class BaseTest {
 	@Test
 	public void test2(){
 		DaoUtil.listAllObj(User.class, Arrays.asList("nickName","name"), Arrays.asList("sex","phoneNumber"));
+	}
+	
+	@Test
+	public void test32(){
+		new Thread(new Runnable() {
+			public void run() {
+				new Run().p("aa");
+				new Run().p("aa");
+			}
+		}).start();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Run.p("a2a");
+		Run.p("a2a");
+		new Run().p("aa");
+	}
+	@SuppressWarnings("deprecation")
+	@Test
+	public void testWeek(){
+		BaseUtil.out(new Date().getDay());
 	}
 	
 	 /**

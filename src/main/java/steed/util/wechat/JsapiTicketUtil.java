@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 
 import steed.util.base.StringUtil;
 import steed.util.system.DataCacheUtil;
+import steed.util.system.SynchronizedKeyGenerator;
 import steed.util.wechat.domain.result.JsapiTicket;
 
 /**
@@ -45,7 +46,7 @@ public class JsapiTicketUtil {
 	 */
 	public static JsapiTicket getJsapiTicket() {
 		String appID = MutiAccountSupportUtil.getWechatAccount().getAppID();
-		synchronized ("getJsapiTicket"+appID) {
+		synchronized (SynchronizedKeyGenerator.getKey("steed.util.wechat.JsapiTicketUtil.getJsapiTicket()", appID)) {
 			if (MutiAccountSupportUtil.isSingleMode()) {
 				return jsapiTicket = JsapiTicketUtil.getJsapiTicket(jsapiTicket);
 			}else {

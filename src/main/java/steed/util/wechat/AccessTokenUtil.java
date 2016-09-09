@@ -4,9 +4,11 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
+import steed.util.base.BaseUtil;
 import steed.util.base.PropertyUtil;
 import steed.util.base.StringUtil;
 import steed.util.system.DataCacheUtil;
+import steed.util.system.SynchronizedKeyGenerator;
 import steed.util.wechat.domain.result.AccessToken;
 
 /**
@@ -45,7 +47,7 @@ public class AccessTokenUtil {
 	 */
 	public static AccessToken getAccessToken() {
 		String appID = MutiAccountSupportUtil.getWechatAccount().getAppID();
-		synchronized("getAccessToken"+appID){
+		synchronized(SynchronizedKeyGenerator.getKey("steed.util.wechat.AccessTokenUtil.getAccessToken()", appID)){
 			if (MutiAccountSupportUtil.isSingleMode()) {
 				return accessToken = AccessTokenUtil.getAccessToken(accessToken);
 			}else {

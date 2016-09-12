@@ -70,7 +70,7 @@ public class ReflectUtil {
 		T domain;
 		try {
 			domain = (T) clazz.newInstance();
-			for (Field f:getAllFields(copyed)) {
+			for (Field f:getNotFinalFiles(copyed)) {
 				f.setAccessible(true);
 				try {
 					Object value = f.get(copyed);

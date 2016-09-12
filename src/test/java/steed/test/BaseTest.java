@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import steed.ext.domain.user.User;
 import steed.util.base.BaseUtil;
+import steed.util.base.test.TestUtil;
 import steed.util.dao.DaoUtil;
 import steed.util.system.TaskUtil;
 import steed.util.wechat.AccessTokenUtil;
@@ -34,7 +35,7 @@ public class BaseTest {
 	}
 	@Test
 	public void testddd(){
-		BaseUtil.out(100%1000);
+		BaseUtil.out(TestUtil.getTestText().substring(141));
 	}
 	
 	 /**

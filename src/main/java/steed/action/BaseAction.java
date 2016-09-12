@@ -36,8 +36,8 @@ import com.opensymphony.xwork2.ModelDriven;
 /**
  * 基础action类，所以action均需继承该类
  * @author 战马
- *
- * @email battle_steed@163.com
+ * Email battle_steed@163.com
+ * http://git.oschina.net/battle_steed/steedFramework4web
  */
 @SuppressWarnings("rawtypes")
 public abstract class BaseAction<SteedDomain extends BaseDatabaseDomain> extends ActionSupport implements ModelDriven{

@@ -17,7 +17,7 @@ public class DeleteTempTemplateEngine extends SimpleTaskEngine{
 		property.setPropertyType("tempTemplateID");
 		List<Property> listAllObj = DaoUtil.listAllObj(property);
 		for(Property p:listAllObj){
-			BaseUtil.getLogger().debug("删除模板{}...",p.getKee());
+			BaseUtil.getLogger().debug("开始删除模板{}...",p.getKee());
 			MutiAccountSupportUtil.setWechatAccount(MutiAccountSupportUtil.getWechatAccount(p.getValue()));
 			WechatInterfaceInvokeUtil.deleteTemplateEnsureSuccess(p.getKee());
 		}

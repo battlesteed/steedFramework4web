@@ -159,7 +159,6 @@ public class DaoUtil {
 	/***************************增删查改开始******************************/
 	/**
 	 */
-	@SuppressWarnings("rawtypes")
 	public static <T> Page<T> listObj(int pageSize,int currentPage, Class<? extends BaseRelationalDatabaseDomain> t){
 		try {
 			StringBuffer hql = getSelectHql(t,null,null,null);
@@ -167,7 +166,8 @@ public class DaoUtil {
 			Query query = getSession().createQuery(hql.toString());
 			
 			faging(pageSize,currentPage, query);
-			List list = query.list();
+			@SuppressWarnings("unchecked")
+			List<T> list = query.list();
 			
 			return setPage(currentPage, recordCount, pageSize, list);
 		} catch (Exception e) {
@@ -386,7 +386,7 @@ public class DaoUtil {
 			closeSession();
 		}
 	}
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static Page getQueryResult(String hql,String domainSimpleName,
 			Map<String,Object> map,int pageSize,int currentPage){
 		try {
@@ -532,20 +532,27 @@ public class DaoUtil {
 			closeSession();
 		}
 	}
+	
 	/**
 	 * 以obj为查询条件删除数据库记录
 	 * @param obj 查询条件
 	 * @return 删除的记录数（失败返回-1）
 	 */
-	public static int deleteByQuery(Object obj){
+	public static int deleteByQuery(BaseRelationalDatabaseDomain obj){
+		Map<String, Object> queryCondition = new HashMap<String, Object>();
+		putField2Map(obj, queryCondition, "");
+		return deleteByQuery(obj.getClass(), queryCondition);
+	}
+	
+	/**
+	 * 以query为查询条件删除数据库记录
+	 * @return 删除的记录数（失败返回-1）
+	 */
+	public static int deleteByQuery(Class<? extends BaseRelationalDatabaseDomain> clazz,Map<String, Object> queryCondition){
 		try {
 			beginTransaction();
-			Map<String, Object> map = new HashMap<String, Object>();
-			putField2Map(obj, map, "");
-			
-			Query query = createQuery(map, getDeleteHql(obj.getClass(), map));
+			Query query = createQuery(queryCondition, getDeleteHql(clazz, queryCondition));
 			int count = query.executeUpdate();
-			
 			if(managTransaction(true)){
 				return count;
 			}else {
@@ -578,6 +585,21 @@ public class DaoUtil {
 	}
 	
 	
+	/**
+	 * 删除数据库记录
+	 * @return
+	 */
+	public static boolean delete(Class<? extends BaseRelationalDatabaseDomain> clazz,Serializable key){
+		BaseRelationalDatabaseDomain newInstance;
+		try {
+			newInstance = clazz.newInstance();
+			DomainUtil.setDomainId(newInstance, key);
+			return delete(newInstance);
+		} catch (InstantiationException | IllegalAccessException e) {
+			BaseUtil.getLogger().error(clazz+"实例化失败！！",e);
+			throw new RuntimeException(clazz+"实例化失败！！",e);
+		}
+	}
 	/**
 	 * 删除obj对应的数据库记录
 	 * @param obj
@@ -704,7 +726,6 @@ public class DaoUtil {
 	 * @param asc 需要升序排列的字段 可以为null
 	 * @return
 	 */
-	@SuppressWarnings("rawtypes")
 	public static <T> Page<T> listObj(Class<T> t,int pageSize,int currentPage,List<String> desc,List<String> asc){
 		try {
 			StringBuffer hql = getSelectHql(t, null, desc, asc);
@@ -713,7 +734,8 @@ public class DaoUtil {
 			
 			Query query = createQuery(null, hql);
 			faging(pageSize,currentPage, query);
-			List list = query.list();
+			@SuppressWarnings("unchecked")
+			List<T> list = query.list();
 			
 			Page<T> page = setPage(currentPage, recordCount, pageSize, list);
 			return page;
@@ -913,7 +935,6 @@ public class DaoUtil {
 			closeSession();
 		}
 	}
-	@SuppressWarnings("rawtypes")
 	public static <T> Page<T> listObj(Class<T> t,int pageSize,int currentPage,Map<String, Object> map,List<String> desc,List<String> asc){
 		try {
 			StringBuffer hql = getSelectHql(t, map, desc, asc);
@@ -922,7 +943,8 @@ public class DaoUtil {
 			Query query = createQuery(map,hql);
 			
 			faging(pageSize,currentPage, query);
-			List list = query.list();
+			@SuppressWarnings("unchecked")
+			List<T> list = query.list();
 			
 			return setPage(currentPage, recordCount, pageSize, list);
 		} catch (Exception e) {
@@ -976,7 +998,7 @@ public class DaoUtil {
 	public static <T extends BaseRelationalDatabaseDomain> T load(Class<T> t,Serializable key){
 		try {
 			Session session = getSession();
-			return (T) session.load(t, key);
+			return session.load(t, key);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -1191,9 +1213,10 @@ public class DaoUtil {
 	 * @param map 查询数据
 	 * @return 拼好的hql
 	 */
-	public static <T> StringBuffer getDeleteHql(Class<T> t,Map<String, Object> map) {
+	public static StringBuffer getDeleteHql(Class<? extends BaseRelationalDatabaseDomain> t,Map<String, Object> map) {
 		return getHql(t, map, null, null,"delete");
 	}
+	
 	/**
 	 * 获取查询用的hql
 	 * 除了t其它均可为null
@@ -1303,31 +1326,7 @@ public class DaoUtil {
 		}
 		return HibernateUtil.getSession();
 	}
-	/**
-	 * 根据配置关闭session
-	 */
-	public static void closeSession(){
-		managTransaction(true);
-		if (HibernateUtil.getColseSession() && (autoManagTransaction.get() == null || autoManagTransaction.get())) {
-			managTransaction();
-			HibernateUtil.closeSession();
-		}
-	}
-	/***************************数据库工具结束********************************/
 	
-	
-	
-	/***************************内部方法开始********************************/
-	
-	/**
-	 * 获取domain的简称用作查询时的别名
-	 * @param fullClassName 全类名
-	 * @return
-	 */
-	private static String getDomainSimpleName(String fullClassName) {
-		String domainSimpleName = StringUtil.firstChar2LowerCase(StringUtil.getClassSimpleName(fullClassName)+"_steed_00");
-		return domainSimpleName;
-	}
 	/**
 	 * 组装hql的order by 部分
 	 * @param hql
@@ -1336,7 +1335,7 @@ public class DaoUtil {
 	 * @param domainSimpleName
 	 * @return
 	 */
-	private static StringBuffer appendHqlOrder(StringBuffer hql,List<String> desc,List<String> asc,String domainSimpleName){
+	public static StringBuffer appendHqlOrder(StringBuffer hql,List<String> desc,List<String> asc,String domainSimpleName){
 		boolean hasOrderByAppened = false;
 		if (desc != null && !desc.isEmpty()) {
 			for (String name:desc) {
@@ -1368,6 +1367,33 @@ public class DaoUtil {
 		}
 		return hql;
 	}
+	
+	/**
+	 * 根据配置关闭session
+	 */
+	public static void closeSession(){
+		managTransaction(true);
+		if (HibernateUtil.getColseSession() && (autoManagTransaction.get() == null || autoManagTransaction.get())) {
+			managTransaction();
+			HibernateUtil.closeSession();
+		}
+	}
+	/***************************数据库工具结束********************************/
+	
+	
+	
+	/***************************内部方法开始********************************/
+	
+	/**
+	 * 获取domain的简称用作查询时的别名
+	 * @param fullClassName 全类名
+	 * @return
+	 */
+	private static String getDomainSimpleName(String fullClassName) {
+		String domainSimpleName = StringUtil.firstChar2LowerCase(StringUtil.getClassSimpleName(fullClassName)+"_steed_00");
+		return domainSimpleName;
+	}
+	
 	@SuppressWarnings("unused")
 	private static StringBuffer appendHqlGroupBy(StringBuffer hql,List<String> groupBy,String domainSimpleName){
 		boolean hasOrderByAppened = false;
@@ -1456,9 +1482,7 @@ public class DaoUtil {
 					putField2Map(value, map,fieldName +".");
 				}
 			}
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
+		} catch (IllegalArgumentException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
 	}
@@ -1478,7 +1502,7 @@ public class DaoUtil {
 	}
 	
 	/**
-	 * 往map里面put("personalHqlGenerator",SimpleHqlGenerator);
+	 * 往map里面put("personalHqlGenerator",steed.util.dao.HqlGenerator);
 	 * 即可跳过默认的HqlGenerator,用个性化HqlGenerator生成hql
 	 * 
 	 * 组装map参数到hql的where部分
@@ -1534,9 +1558,8 @@ public class DaoUtil {
 	 * @param list
 	 * @return
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private static <T> Page<T> setPage(int currentPage, Long recordCount,
-			int pageSize, List list) {
+			int pageSize, List<T> list) {
 		Page<T> page = new Page<T>();
 		page.setCurrentPage(currentPage);
 		page.setPageSize(pageSize);
@@ -1579,7 +1602,6 @@ public class DaoUtil {
 	 * @return
 	 */
 	public static void faging(int pageSize,int currentPage, Query query) {
-//		int pageSize = PropertyUtil.getConfig("page.size", Integer.class);
 		query.setFirstResult((currentPage-1)*pageSize);
 		query.setMaxResults(pageSize);
 	}

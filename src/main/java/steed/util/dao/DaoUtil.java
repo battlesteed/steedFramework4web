@@ -71,6 +71,7 @@ public class DaoUtil {
 	// 具体的错误提示用
 	private static final ThreadLocal<Exception> exception = new ThreadLocal<>();
 	private static final ThreadLocal<Transaction> currentTransaction = new ThreadLocal<>();
+	public static final String personalHqlGeneratorKey = "personalHqlGenerator";
 	/**
 	 * 是否自动提交或回滚事务
 	 * 自助事务步骤：
@@ -90,7 +91,7 @@ public class DaoUtil {
 	/**
 	 * 查询条件后缀
 	 */
-	private static final String[] indexSuffix = {"_max_1","_min_1","_like_1","_not_in_1","_not_equal_1","_not_join","_not_null","_not_compile_param",SimpleHqlGenerator.personalHqlGeneratorKey};
+	private static final String[] indexSuffix = {"_max_1","_min_1","_like_1","_not_in_1","_not_equal_1","_not_join","_not_null","_not_compile_param",personalHqlGeneratorKey};
 	/***********\异常提示专用************/
 	
 	/*//TODO 完善异常类型
@@ -1477,13 +1478,23 @@ public class DaoUtil {
 	}
 	
 	/**
+	 * 往map里面put("personalHqlGenerator",SimpleHqlGenerator);
+	 * 即可跳过默认的HqlGenerator,用个性化HqlGenerator生成hql
+	 * 
 	 * 组装map参数到hql的where部分
+	 * 
+	 * @see #personalHqlGeneratorKey
 	 * @param domainSimpleName
 	 * @param hql
 	 * @param map
 	 */
 	public static StringBuffer appendHqlWhere(String domainSimpleName, StringBuffer hql,
 			Map<String, ? extends Object> map) {
+		Object object = map.get(personalHqlGeneratorKey);
+		if (object != null && object instanceof HqlGenerator) {
+			map.remove(personalHqlGeneratorKey);
+			return ((HqlGenerator)object).appendHqlWhere(domainSimpleName, hql, map);
+		}
 		return hqlGenerator.appendHqlWhere(domainSimpleName, hql, map);
 	}
 	

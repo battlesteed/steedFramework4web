@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import steed.domain.BaseRelationalDatabaseDomain;
 
 public class Path_Power extends BaseRelationalDatabaseDomain{
+	private static final long serialVersionUID = -7618602732432015406L;
 	private String path;
 	private String power;
 
@@ -52,10 +53,6 @@ public class Path_Power extends BaseRelationalDatabaseDomain{
 			}
 		}
 		sonList.add(son);
-	}
-	@Override
-	public boolean equals(Object obj) {
-		return super.equals(obj);
 	}
 	
 	

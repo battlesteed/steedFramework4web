@@ -42,9 +42,10 @@ public class ForwardIntercepter extends AbstractInterceptor {
 
 	private void forWard(ActionInvocation invocation) throws ServletException,
 			IOException {
-		BaseAction action = (BaseAction) invocation.getAction();
+		BaseAction<?> action = (BaseAction<?>) invocation.getAction();
 		HttpServletRequest request = action.getRequest();
 		StringBuffer path = new StringBuffer("/WEB-INF/jsp");
+		@SuppressWarnings("rawtypes")
 		Class<? extends BaseAction> actionClass = action.getClass();
 		Namespace namespace = actionClass.getAnnotation(Namespace.class);
 		String folder; 

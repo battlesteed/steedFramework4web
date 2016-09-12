@@ -78,6 +78,7 @@ public class SteedExtInitListener extends SystemInitListener{
 		return list;
 	}
 
+	@SuppressWarnings("unchecked")
 	public Map<String, Path_Power> evalPath_Power2Domain(ServletContext servletContext) {
 		Map<String, Path_Power> map = new HashMap<String, Path_Power>();
 		Map<String, String> scanActionPower = (Map<String, String>)servletContext.getAttribute("path_powerMap");

@@ -20,24 +20,12 @@ import steed.util.base.StringUtil;
  * @see steed.domain.BaseRelationalDatabaseDomain#setPersonalHqlGenerator(HqlGenerator)
  */
 public class SimpleHqlGenerator implements HqlGenerator{
-	public static final String personalHqlGeneratorKey = "personalHqlGenerator";
 
-	/**
-	 * 往map里面put("personalHqlGenerator",SimpleHqlGenerator);
-	 * 即可跳过默认的HqlGenerator,用个性化HqlGenerator生成hql
-	 * @see steed.util.dao.SimpleHqlGenerator#personalHqlGeneratorKey
-	 */
 	@Override
-	public StringBuffer appendHqlWhere(String domainSimpleName, StringBuffer hql, Map<String, ? extends Object> map) {
+	public StringBuffer appendHqlWhere(String domainSimpleName, StringBuffer hql, Map<String, ?> map) {
 		if (CollectionsUtil.isCollectionsEmpty(map)) {
 			return hql;
 		}
-		Object object = map.get(personalHqlGeneratorKey);
-		if (object != null && object instanceof HqlGenerator) {
-			map.remove(personalHqlGeneratorKey);
-			return ((HqlGenerator)object).appendHqlWhere(domainSimpleName, hql, map);
-		}
-		
 		List<String> removedEntry = new ArrayList<String>();
 		Map<String, ? extends Object> put = new HashMap<>();
 		for(Entry<String, ? extends Object> e:map.entrySet()){

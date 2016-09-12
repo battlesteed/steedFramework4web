@@ -17,7 +17,7 @@ import steed.util.base.RegUtil;
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class Power extends BaseRelationalDatabaseDomain{
 	private static final long serialVersionUID = 8841822962310540390L;
-	@ValidateReg(reg={RegUtil.CommonUsedReg.chineseAndChar})
+	@ValidateReg(reg={RegUtil.regChineseAndChar})
 	private String name;
 	private String description;
 	public Power() {

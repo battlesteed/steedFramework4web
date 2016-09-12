@@ -49,7 +49,7 @@ public class User extends BaseRelationalDatabaseDomain implements BaseUser{
 	 * 做查询条件时表明要查找的people实体类的name字段一定要等于该值
 	 */
 	private String name;
-	@ValidateReg(reg={RegUtil.CommonUsedReg.chineseAndChar})
+	@ValidateReg(reg={RegUtil.regChineseAndChar})
 	private String nickName;
 	private String phoneNumber;
 	private String description;
@@ -81,7 +81,7 @@ public class User extends BaseRelationalDatabaseDomain implements BaseUser{
 	 */
 	private Set<Role> roleSet_not_in_1;
 	
-	@ValidateReg(reg={RegUtil.CommonUsedReg.notStrictEmail})
+	@ValidateReg(reg={RegUtil.regNotStrictEmail})
 	private String e_mail;
 	private String password;
 	/**

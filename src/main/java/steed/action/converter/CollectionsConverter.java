@@ -1,8 +1,6 @@
 package steed.action.converter;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -11,15 +9,14 @@ import java.util.Set;
 
 import org.apache.struts2.util.StrutsTypeConverter;
 
+import com.opensymphony.xwork2.ActionContext;
+
 import steed.action.BaseAction;
 import steed.domain.BaseDatabaseDomain;
 import steed.exception.runtime.system.FrameworkException;
-import steed.util.base.BaseUtil;
 import steed.util.base.DomainUtil;
 import steed.util.base.StringUtil;
 import steed.util.reflect.ReflectUtil;
-
-import com.opensymphony.xwork2.ActionContext;
 /**
  * 把传来的string数组转换成domain多对多或一对多中的set
  * set必须含有泛型
@@ -53,7 +50,7 @@ public class CollectionsConverter extends StrutsTypeConverter {
 		return list;
 	}
 	
-	private List<Object> evalString2BaseID(Class domainClass,String[] eval){
+	private List<Object> evalString2BaseID(Class<?> domainClass,String[] eval){
 		List<Object> domainList = new ArrayList<>();
 		for (String str:eval) {
 			if (!StringUtil.isStringEmpty(str)) {
@@ -70,7 +67,7 @@ public class CollectionsConverter extends StrutsTypeConverter {
 			idField.setAccessible(true);
 			for (String str:eval) {
 				if (!StringUtil.isStringEmpty(str)) {
-					Object domain = domainClass.getConstructor(null).newInstance(null);
+					Object domain = domainClass.getConstructor().newInstance(null);
 					Class<?> fieldType = idField.getType();
 					Object ID = ReflectUtil.string2BaseID(fieldType, str);
 					idField.set(domain, ID);

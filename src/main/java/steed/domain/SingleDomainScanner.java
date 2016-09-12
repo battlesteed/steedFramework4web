@@ -6,10 +6,6 @@ import java.util.List;
 
 import javax.persistence.Entity;
 
-import org.apache.poi.ss.formula.functions.EDate;
-
-import steed.domain.DomainScanner;
-import steed.largewebsite.ogm.domain.BaseNosqlDomain;
 import steed.util.base.BaseUtil;
 import steed.util.base.PathUtil;
 import steed.util.base.PropertyUtil;
@@ -22,13 +18,13 @@ import steed.util.file.FileUtil;
  */
 public class SingleDomainScanner implements DomainScanner{
 	
+	@SuppressWarnings("unchecked")
 	public List<Class<? extends BaseDatabaseDomain>> scan(String configFile){
 		List<Class<? extends BaseDatabaseDomain>> list = new ArrayList<>();
 		if(!PropertyUtil.getBoolean("isSignalDatabase")){
 			return list;
 		}
 		String classesPath = PathUtil.getClassesPath();
-		int len = classesPath.length() - 1;
 		
 		List<File> allFile = new FileUtil().getAllFile(classesPath,null);
 		if (PropertyUtil.getBoolean("devMode")) {

@@ -13,9 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import steed.domain.BaseUser;
 import steed.domain.GlobalParam;
 import steed.domain.application.Message;
@@ -29,8 +26,6 @@ import steed.util.base.PropertyUtil;
  *
  */
 public abstract class BaseAdminFilter implements Filter {
-	
-	private Logger log = LoggerFactory.getLogger(BaseAdminFilter.class);
 	
 	@Override
 	public void destroy() {

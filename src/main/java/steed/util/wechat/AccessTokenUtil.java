@@ -4,7 +4,6 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
-import steed.util.base.BaseUtil;
 import steed.util.base.PropertyUtil;
 import steed.util.base.StringUtil;
 import steed.util.system.DataCacheUtil;

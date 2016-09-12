@@ -10,7 +10,6 @@ import steed.ext.domain.information.Programa;
 import steed.util.UtilsUtil;
 import steed.util.base.BaseUtil;
 import steed.util.dao.DaoUtil;
-import steed.util.dao.HibernateUtil;
 
 public class TestSonQuery {
 	@Test

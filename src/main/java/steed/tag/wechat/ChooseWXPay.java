@@ -45,7 +45,7 @@ public class ChooseWXPay extends TagSupport{
 			JspWriter out = pageContext.getOut();
 			
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("appId", MutiAccountSupportUtil.getWechatConfig().getAppID());
+			map.put("appId", MutiAccountSupportUtil.getWechatAccount().getAppID());
 			Long value = (Long)(new Date().getTime()/1000);
 			map.put("timeStamp", value);
 			String nonceStr = Md5Util.Md5Digest(value+"steedFramwork");

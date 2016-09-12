@@ -17,7 +17,8 @@ import steed.alipay.domain.PayDetail;
 @ParentPackage(value="steed")
 @InterceptorRefs({@InterceptorRef(value="mydefault")})
 public class DemoAction extends BaseAction{
-	
+	private static final long serialVersionUID = 1L;
+
 	@Action("demo")
 	public String demo(){
 		BatPay batPay = new BatPay();

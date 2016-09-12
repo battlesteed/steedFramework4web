@@ -1,15 +1,10 @@
 package steed.action.intercepter;
 
-import org.apache.log4j.Logger;
-
-import steed.action.BaseAction;
-import steed.exception.ValidateException;
-import steed.exception.runtime.system.AttackedExeception;
-import steed.util.base.BaseUtil;
-import steed.util.system.ValidateUtil;
-
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
+
+import steed.exception.ValidateException;
+import steed.util.base.BaseUtil;
 /**
  * 在拦截器栈中引用该拦截器后，action中的方法只要加了@Action注解
  * 即可被“Namespace+方法名+struts后缀”所调用，本来打算@Action注解都不用加的，
@@ -21,7 +16,7 @@ public class MethodInvokIntercepter extends AbstractInterceptor {
 	private static final long serialVersionUID = -5530892141722204927L;
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception{
-		BaseAction baseAction = (BaseAction) invocation.getAction();
+//		BaseAction<?> baseAction = (BaseAction<?>) invocation.getAction();
 		try {
 			BaseUtil.out("MethodInvokIntercepter");
 //			ValidateUtil.validateObj(baseAction);

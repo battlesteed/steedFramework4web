@@ -19,7 +19,7 @@ import steed.util.dao.HqlGenerator;
 public class BaseRelationalDatabaseDomain extends BaseDatabaseDomain{
 	
 	private static final long serialVersionUID = -3084039108845387366L;
-	private HqlGenerator personalHqlGenerator;
+	protected HqlGenerator personalHqlGenerator;
 	
 	@Transient
 	public HqlGenerator getPersonalHqlGenerator() {
@@ -72,6 +72,7 @@ public class BaseRelationalDatabaseDomain extends BaseDatabaseDomain{
 		initialize();
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends BaseDatabaseDomain> T smartGet(){
 		return (T) DaoUtil.smartGet(this);

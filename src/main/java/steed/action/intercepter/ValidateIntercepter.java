@@ -20,7 +20,7 @@ public class ValidateIntercepter extends AbstractInterceptor {
 
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception{
-		BaseAction baseAction = (BaseAction) invocation.getAction();
+		BaseAction<?> baseAction = (BaseAction<?>) invocation.getAction();
 		try {
 			ValidateUtil.validateObj(baseAction);
 		} catch (ValidateException e) {

@@ -13,8 +13,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.httpclient.methods.multipart.FilePartSource;
 import org.apache.commons.httpclient.methods.multipart.PartSource;
 
-import steed.alipay.config.AlipayConfig;
-
 /* *
  *类名：AlipayFunction
  *功能：支付宝接口公用函数类

@@ -35,34 +35,6 @@ public  class RegUtil {
 	public final static String mobilePhoneNumber = "1\\d{10}";
 	
 	/**
-	 * 常用正则表达式
-	 * @author 战马
-	 *
-	 */
-	@Deprecated
-	public static class CommonUsedReg{
-		/**
-		 * 中文和字母数字
-		 */
-		public final static String chineseAndChar = "^([\\u4E00-\\u9FA5]*\\w*_*)*$";
-		/**
-		 * 中文
-		 */
-		public final static String chinese = "^[\\u4E00-\\u9FFF]+$";
-		/**
-		 * ip地址
-		 */
-		public final static String ipAddress = "^\\d+\\.\\d+\\.\\d+\\.\\d+$";
-		/**
-		 * 邮箱地址
-		 */
-		public final static String email = "^\\S+\\@\\S+\\.\\S+$";
-		/**
-		 * 不严格的邮箱地址
-		 */
-		public final static String notStrictEmail = "^\\S+\\@\\S+$";
-	}
-	/**
 	 * 校验字符串,reg不需要^开头和$结尾,validate会自动加上
 	 * @param reg
 	 * @param str

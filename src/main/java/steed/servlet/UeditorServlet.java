@@ -41,20 +41,9 @@ public class UeditorServlet extends BaseServlet {
 		logger.debug("rootPath----->"+rootPath);
 		PrintWriter out = resp.getWriter();
 		
-		String action = req.getParameter("action");
+//		String action = req.getParameter("action");
 		JSONObject config;
 		StringBuffer sb = IOUtil.file2StringBuffer(PathUtil.getClassesPath()+"config.json");
-		/*String path = PathUtil.getClassesPath()+"config.json";
-//		logger.debug("path--->"+path);
-		FileReader fileReader = new FileReader(new File(path));
-		BufferedReader reader = new BufferedReader(fileReader);
-		StringBuffer sb = new StringBuffer();
-		String temp;
-		while((temp = reader.readLine())!=null){
-			sb.append(temp);
-		}
-		reader.close();
-		fileReader.close();*/
 		
 		config = new JSONObject(sb.toString().replaceAll("/\\*[\\s\\S]*?\\*/",""));
 		BaseUser user = (BaseUser) req.getSession().getAttribute(GlobalParam.attribute.user);

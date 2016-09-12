@@ -1,7 +1,5 @@
 package steed.ext.engine.wechat;
 
-import java.util.Properties;
-
 import steed.domain.wechat.resp.TextMessage;
 import steed.engine.wechat.MessageEngine;
 import steed.util.base.PropertyUtil;

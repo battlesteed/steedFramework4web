@@ -15,16 +15,15 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import steed.domain.BaseUnionKeyDomain;
 import steed.domain.annotation.ValidateReg;
 import steed.util.base.RegUtil;
-import steed.util.base.StringUtil;
 
 @Entity
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 @IdClass(steed.domain.system.PropertyID.class)
 public class Property extends BaseUnionKeyDomain{
 	private static final long serialVersionUID = 1L;
-	@ValidateReg(reg={RegUtil.CommonUsedReg.chineseAndChar})
+	@ValidateReg(reg={RegUtil.regChineseAndChar})
 	private String kee;
-	@ValidateReg(reg={RegUtil.CommonUsedReg.chineseAndChar})
+	@ValidateReg(reg={RegUtil.regChineseAndChar})
 	private String value;
 	private Date createDate;
 	

@@ -59,7 +59,7 @@ public class WechatJsApiSupport extends TagSupport{
 			out.write("debug: ");
 			out.write(debug+",\n");
 			out.write("appId: '");
-			out.write(MutiAccountSupportUtil.getWechatConfig().getAppID()+"',\n");
+			out.write(MutiAccountSupportUtil.getWechatAccount().getAppID()+"',\n");
 			out.write("timestamp: ");
 			out.write(value+",\n");
 			out.write("nonceStr: '");

@@ -26,9 +26,9 @@ import steed.util.base.RegUtil;
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class Config extends BaseRelationalDatabaseDomain{
 	private static final long serialVersionUID = 1L;
-	@ValidateReg(reg={RegUtil.CommonUsedReg.chineseAndChar})
+	@ValidateReg(reg={RegUtil.regChineseAndChar})
 	private String kee;
-	@ValidateReg(reg={RegUtil.CommonUsedReg.chineseAndChar})
+	@ValidateReg(reg={RegUtil.regChineseAndChar})
 	private String value;
 	
 	public Config() {

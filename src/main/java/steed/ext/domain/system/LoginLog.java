@@ -26,13 +26,13 @@ public class LoginLog extends BaseRelationalDatabaseDomain{
 //	@ValidateReg(reg={RegUtil.CommonUseReg.chineseAndChar})
 	private String nickName;
 //	private People user;
-	@ValidateReg(reg={RegUtil.CommonUsedReg.ipAddress})
+	@ValidateReg(reg={RegUtil.regIpAddress})
 	private String remoteAddr;
 	private Date loginDate;
 	private Date loginDate_max_1;
 	private Date loginDate_min_1;
 	private String message;
-	@ValidateReg(reg={RegUtil.CommonUsedReg.chineseAndChar})
+	@ValidateReg(reg={RegUtil.regChineseAndChar})
 	private String address;
 	private String area;
 	private Integer loginResult;

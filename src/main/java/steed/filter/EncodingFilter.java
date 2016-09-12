@@ -129,7 +129,7 @@ public class EncodingFilter implements Filter {
 	 * 把查询字符串存放到map中
 	 * @param queryString
 	 * @return
-	 */
+	 
 	private Map<String, String> queryString2map(String queryString){
 		Map<String, String> map = new HashMap<String, String>();
 		String[] split = queryString.split("&");
@@ -138,7 +138,7 @@ public class EncodingFilter implements Filter {
 			map.put(paramMap[0], paramMap[1]);
 		}
 		return map;
-	}
+	}*/
 	/**
 	 * 把查询字符串的key存放到list中
 	 * @param queryString

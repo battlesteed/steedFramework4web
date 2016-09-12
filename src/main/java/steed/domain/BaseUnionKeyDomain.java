@@ -10,9 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import steed.domain.annotation.NotQueryCondition;
-import steed.util.base.BaseUtil;
 import steed.util.base.ExceptionUtil;
-import steed.util.dao.DaoUtil;
 import steed.util.reflect.ReflectUtil;
 
 /**

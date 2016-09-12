@@ -6,13 +6,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
-import org.hibernate.Hibernate;
 
 import steed.util.base.BaseUtil;
 import steed.util.base.DomainUtil;
-import steed.util.dao.DaoUtil;
 public abstract class BaseDatabaseDomain extends BaseDomain{
 	private static final long serialVersionUID = -6872283825535497093L;
 

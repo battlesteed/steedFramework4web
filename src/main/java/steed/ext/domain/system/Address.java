@@ -16,11 +16,11 @@ import steed.util.base.RegUtil;
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class Address extends BaseRelationalDatabaseDomain{
 	private static final long serialVersionUID = 6175558172411441441L;
-	@ValidateReg(reg={RegUtil.CommonUsedReg.chineseAndChar})
+	@ValidateReg(reg={RegUtil.regChineseAndChar})
 	private String province;
-	@ValidateReg(reg={RegUtil.CommonUsedReg.chineseAndChar})
+	@ValidateReg(reg={RegUtil.regChineseAndChar})
 	private String city;
-	@ValidateReg(reg={RegUtil.CommonUsedReg.chineseAndChar})
+	@ValidateReg(reg={RegUtil.regChineseAndChar})
 	private String area;
 	private Integer id;
 	private Integer fatherID;

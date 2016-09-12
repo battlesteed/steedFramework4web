@@ -1,7 +1,5 @@
 package steed.domain.wechat;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,7 +11,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import steed.domain.BaseRelationalDatabaseDomain;
 import steed.util.base.StringUtil;
-import steed.util.system.FlowUtil;
 import steed.util.wechat.domain.result.WechatResult;
 
 /**

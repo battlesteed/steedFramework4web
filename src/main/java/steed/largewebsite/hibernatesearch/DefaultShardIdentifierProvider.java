@@ -3,22 +3,12 @@ package steed.largewebsite.hibernatesearch;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
 import org.apache.lucene.document.Document;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Property;
-import org.hibernate.search.engine.service.spi.ServiceManager;
-import org.hibernate.search.hcore.impl.HibernateSessionFactoryService;
 import org.hibernate.search.spi.BuildContext;
 import org.hibernate.search.store.ShardIdentifierProviderTemplate;
-
-import steed.test.ogm.domain.Animal;
 
 public class DefaultShardIdentifierProvider extends ShardIdentifierProviderTemplate {
 

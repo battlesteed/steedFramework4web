@@ -22,7 +22,7 @@ public class JurisdictionIntercepter extends AbstractInterceptor {
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {
 		ActionProxy proxy = invocation.getProxy();
-		BaseAction action = (BaseAction) proxy.getAction();
+		BaseAction<?> action = (BaseAction<?>) proxy.getAction();
 		action.getRequest().getRequestURI();
 		Class<? extends Object> actionClass = action.getClass();
 		BaseUser user = action.getLoginUser();

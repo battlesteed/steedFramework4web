@@ -6,7 +6,7 @@ import steed.util.base.RegUtil;
 
 public class PropertyID extends DomainID{
 	private static final long serialVersionUID = 1L;
-	@ValidateReg(reg={RegUtil.CommonUsedReg.chineseAndChar})
+	@ValidateReg(reg={RegUtil.regChineseAndChar})
 	private String kee;
 	private String propertyType;	
 	public PropertyID() {

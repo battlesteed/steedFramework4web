@@ -9,13 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import steed.domain.GlobalParam;
 import steed.domain.wechat.WechatAccount;
-import steed.domain.wechat.WechatConfig;
 import steed.exception.runtime.system.FrameworkException;
 import steed.ext.engine.wechat.MessageEngineFactory;
 import steed.ext.plugin.WechatAccount2WechatConfigPlugin;
@@ -33,6 +31,9 @@ import steed.util.wechat.encrt.WXBizMsgCrypt;
 /** 
  * 微信servlet
  * @author 战马
+ * Email battle_steed@163.com
+ * 
+ * http://git.oschina.net/battle_steed/steedFramework4web
  */  
 public class WechatServlet extends HttpServlet{
     private static final long serialVersionUID = 4440739483644821986L; 
@@ -80,7 +81,7 @@ public class WechatServlet extends HttpServlet{
     				messageReceive = MessageUtil.getMessageRecive(result2);
     			} catch (AesException e) {
     				e.printStackTrace();
-    				FrameworkException frameworkException = new FrameworkException(MutiAccountSupportUtil.getWechatConfig().getAppID()
+    				FrameworkException frameworkException = new FrameworkException(MutiAccountSupportUtil.getWechatAccount().getAppID()
     						+"微信号EncodingAESKey参数配置出错！！");
     				logger.error("艹", frameworkException);
     				throw frameworkException;
@@ -119,7 +120,7 @@ public class WechatServlet extends HttpServlet{
 
 	private WXBizMsgCrypt getWxBizMsgCrypt()
 			throws AesException {
-		WechatConfig wechatConfig = MutiAccountSupportUtil.getWechatConfig();
+		WechatAccount wechatConfig = MutiAccountSupportUtil.getWechatAccount();
 		WXBizMsgCrypt pc = new WXBizMsgCrypt(wechatConfig.getToken(), wechatConfig.getEncodingAESKey(), wechatConfig.getAppID());
 		return pc;
 	}

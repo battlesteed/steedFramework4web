@@ -3,7 +3,6 @@ package steed.test;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Date;
 
 import org.junit.Test;
 
@@ -33,9 +32,9 @@ public class BaseTest {
 			e.printStackTrace();
 		}
 	}
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testddd(){
+		BaseUtil.out(100%1000);
 	}
 	
 	 /**

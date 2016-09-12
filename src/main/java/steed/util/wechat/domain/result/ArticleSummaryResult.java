@@ -2,9 +2,6 @@ package steed.util.wechat.domain.result;
 
 import java.util.List;
 
-import steed.util.wechat.domain.send.Button;
-import steed.util.wechat.domain.send.Menu;
-
 public class ArticleSummaryResult extends BaseWechatResult{
 	private List<ArticleSummaryResultItem> list;
 

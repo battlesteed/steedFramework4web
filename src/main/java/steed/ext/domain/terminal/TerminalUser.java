@@ -20,7 +20,8 @@ import steed.util.base.RegUtil;
 @Entity
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class TerminalUser extends BaseRelationalDatabaseDomain{
-	@ValidateReg(reg={RegUtil.CommonUsedReg.chineseAndChar})
+	private static final long serialVersionUID = 2116904725088930211L;
+	@ValidateReg(reg={RegUtil.regChineseAndChar})
 	private String userid;
 	/**
 	 * 由于不能明文存但又不能进行不可逆加密，所以该字段会经过AES加密

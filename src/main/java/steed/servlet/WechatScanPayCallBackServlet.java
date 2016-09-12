@@ -2,7 +2,6 @@ package steed.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,18 +12,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import steed.domain.wechat.WechatAccount;
-import steed.domain.wechat.WechatConfig;
 import steed.engine.wechat.SimpleScanPayCallBackEngine;
 import steed.ext.plugin.WechatAccount2WechatConfigPlugin;
 import steed.util.base.BaseUtil;
-import steed.util.base.StringUtil;
 import steed.util.dao.DaoUtil;
 import steed.util.wechat.MessageUtil;
 import steed.util.wechat.MutiAccountSupportUtil;
 import steed.util.wechat.SignUtil;
 import steed.util.wechat.domain.sys.PayCallBack;
-import steed.util.wechat.encrt.AesException;
-import steed.util.wechat.encrt.WXBizMsgCrypt;
 
 
 /** 
@@ -62,23 +57,6 @@ public class WechatScanPayCallBackServlet extends HttpServlet{
         out.close();  
         logger.debug("回复xml--->"+message);
     }
-    
-    private String encrypt(String xml){
-		try {
-			WXBizMsgCrypt pc = getWxBizMsgCrypt();
-			return pc.encryptMsg(xml, new Date().getTime()+"", StringUtil.getSecureRandomString());
-		} catch (AesException e) {
-			e.printStackTrace();
-		}
-		return xml;
-    }
-
-	private WXBizMsgCrypt getWxBizMsgCrypt()
-			throws AesException {
-		WechatConfig wechatConfig = MutiAccountSupportUtil.getWechatConfig();
-		WXBizMsgCrypt pc = new WXBizMsgCrypt(wechatConfig.getToken(), wechatConfig.getEncodingAESKey(), wechatConfig.getAppID());
-		return pc;
-	}
     
 
 	private void supportMutiAccount(HttpServletRequest request) {

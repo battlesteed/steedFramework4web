@@ -3,8 +3,6 @@ package steed.engine.task;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.Test;
-
 import steed.domain.system.Property;
 import steed.engine.wechat.SimpleScanPayCallBackEngine;
 import steed.util.base.BaseUtil;

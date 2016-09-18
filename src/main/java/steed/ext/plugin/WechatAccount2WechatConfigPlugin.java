@@ -1,8 +1,8 @@
 package steed.ext.plugin;
 
 import steed.domain.wechat.WechatAccount;
-import steed.domain.wechat.WechatConfig;
-import steed.domain.wechat.WechatMerchant;
+import steed.util.wechat.domain.sys.WechatConfig;
+import steed.util.wechat.domain.sys.WechatMerchant;
 
 public class WechatAccount2WechatConfigPlugin {
 	public WechatConfig getWechatConfig(WechatAccount wechatAccount){

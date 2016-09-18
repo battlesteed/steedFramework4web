@@ -30,10 +30,7 @@ import com.google.gson.Gson;
 
 import steed.domain.GlobalParam;
 import steed.domain.system.Property;
-import steed.domain.wechat.PageAccessToken;
 import steed.domain.wechat.WechatAccount;
-import steed.domain.wechat.WechatConfig;
-import steed.domain.wechat.WechatMerchant;
 import steed.domain.wechat.WechatUser;
 import steed.exception.runtime.system.FrameworkException;
 import steed.exception.runtime.wechat.AttachTypeNotSupportedException;
@@ -77,6 +74,9 @@ import steed.util.wechat.domain.send.RefundSend;
 import steed.util.wechat.domain.send.SetIndustrySend;
 import steed.util.wechat.domain.send.TemplateMessageSend;
 import steed.util.wechat.domain.send.UnifiedOrderSend;
+import steed.util.wechat.domain.sys.PageAccessToken;
+import steed.util.wechat.domain.sys.WechatConfig;
+import steed.util.wechat.domain.sys.WechatMerchant;
 
 /**
  * 微信接口调用工具类

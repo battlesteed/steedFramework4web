@@ -11,7 +11,6 @@ import org.apache.struts2.convention.annotation.InterceptorRefs;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 
-import steed.domain.wechat.PageAccessToken;
 import steed.domain.wechat.WechatUser;
 import steed.util.base.ContextUtil;
 import steed.util.base.StringUtil;
@@ -20,6 +19,7 @@ import steed.util.document.QRCodeUtil;
 import steed.util.system.DataCacheUtil;
 import steed.util.wechat.MutiAccountSupportUtil;
 import steed.util.wechat.WechatInterfaceInvokeUtil;
+import steed.util.wechat.domain.sys.PageAccessToken;
 
 import com.google.zxing.WriterException;
 /**

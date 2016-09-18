@@ -11,6 +11,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import steed.domain.BaseRelationalDatabaseDomain;
 import steed.ext.domain.user.User;
+import steed.util.wechat.domain.sys.WechatConfig;
 
 
 /** 微信公众号 */

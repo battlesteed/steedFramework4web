@@ -11,7 +11,6 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import steed.domain.wechat.PageAccessToken;
 import steed.exception.runtime.system.FrameworkException;
 import steed.util.base.PathUtil;
 import steed.util.base.StringUtil;
@@ -19,6 +18,7 @@ import steed.util.digest.Md5Util;
 import steed.util.system.DataCacheUtil;
 import steed.util.wechat.SignUtil;
 import steed.util.wechat.WechatInterfaceInvokeUtil;
+import steed.util.wechat.domain.sys.PageAccessToken;
 /**
  * 微信支付地址共享
  * @author 战马

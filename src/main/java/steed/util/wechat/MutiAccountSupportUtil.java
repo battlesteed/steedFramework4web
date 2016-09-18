@@ -1,10 +1,10 @@
 package steed.util.wechat;
 
 import steed.domain.wechat.WechatAccount;
-import steed.domain.wechat.WechatConfig;
 import steed.ext.plugin.WechatAccount2WechatConfigPlugin;
 import steed.util.base.ContextUtil;
 import steed.util.dao.DaoUtil;
+import steed.util.wechat.domain.sys.WechatConfig;
 
 /**
  * 微信多账号支持工具类

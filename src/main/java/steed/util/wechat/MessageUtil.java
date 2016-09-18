@@ -14,11 +14,11 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-import steed.domain.wechat.resp.Article;
-import steed.domain.wechat.resp.BaseMessage;
-import steed.domain.wechat.resp.MusicMessage;
-import steed.domain.wechat.resp.NewsMessage;
-import steed.domain.wechat.resp.TextMessage;
+import steed.util.wechat.domain.resp.Article;
+import steed.util.wechat.domain.resp.BaseMessage;
+import steed.util.wechat.domain.resp.MusicMessage;
+import steed.util.wechat.domain.resp.NewsMessage;
+import steed.util.wechat.domain.resp.TextMessage;
 import steed.util.wechat.domain.result.RedPacketResult;
 import steed.util.wechat.domain.result.UnifiedOrderResult;
 import steed.util.wechat.domain.send.RedPacketSend;

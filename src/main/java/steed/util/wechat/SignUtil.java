@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import steed.domain.wechat.WechatConfig;
 import steed.exception.runtime.system.FrameworkException;
 import steed.util.base.StringUtil;
 import steed.util.digest.Md5Util;
@@ -18,6 +17,7 @@ import steed.util.wechat.domain.result.UnifiedOrderResult;
 import steed.util.wechat.domain.send.RedPacketSend;
 import steed.util.wechat.domain.send.UnifiedOrderSend;
 import steed.util.wechat.domain.sys.PayCallBack;
+import steed.util.wechat.domain.sys.WechatConfig;
 
 /** 
  * 请求校验工具类 

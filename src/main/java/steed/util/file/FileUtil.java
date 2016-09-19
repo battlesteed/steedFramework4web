@@ -2,6 +2,7 @@ package steed.util.file;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -54,13 +55,13 @@ public class FileUtil {
 			while ((len = bufferedInputStream.read(buffer)) != -1) {
 				bufferedOutputStream.write(buffer, 0, len);
 			}
-			io.closeInputStream();
-			io.closeOutputStream();
 			return true;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}catch (IOException e) {
 			e.printStackTrace();
+		}finally {
+			io.close();
 		}
 		return false;
 	}
@@ -82,35 +83,6 @@ public class FileUtil {
 	 */
 	public static String getFileSuffix(String fileName){
 		return fileName.substring(fileName.lastIndexOf('.'));
-	}
-	
-	public static String readFile(File file){
-		StringBuffer sb = new StringBuffer();
-		IOUtil io = new IOUtil();
-		try {
-			io.getBufferedReader(file);
-			String temp;
-			while ((temp = io.readLine()) != null) {
-				sb.append(temp);
-				sb.append("\n");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally{
-			io.closeReader();
-		}
-		return sb.toString();
-	}
-	public static void saveFile(String str,String path){
-		IOUtil io = new IOUtil();
-		try {
-			BufferedWriter bufferedWriter = io.getBufferedWriter(path);
-			bufferedWriter.write(str);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally{
-			io.closeWriter();
-		}
 	}
 	
 	/**

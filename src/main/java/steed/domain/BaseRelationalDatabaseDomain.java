@@ -1,5 +1,7 @@
 package steed.domain;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -7,10 +9,12 @@ import javax.persistence.Transient;
 
 import org.hibernate.Hibernate;
 
+import steed.domain.annotation.UpdateEvenNull;
 import steed.util.base.BaseUtil;
 import steed.util.base.DomainUtil;
 import steed.util.dao.DaoUtil;
 import steed.util.dao.HqlGenerator;
+import steed.util.reflect.ReflectUtil;
 /**
  * 关系型数据库基础实体类
  * @author 战马
@@ -115,7 +119,18 @@ public class BaseRelationalDatabaseDomain extends BaseDatabaseDomain{
 	
 	@Override
 	public boolean updateNotNullField(List<String> updateEvenNull,boolean strictlyMode){
-		return DaoUtil.updateNotNullField(this, updateEvenNull,strictlyMode);
+		List<String> list;
+		if (updateEvenNull == null) {
+			list = new ArrayList<String>();
+			for (Field f:ReflectUtil.getAllFields(this)) {
+				if (f.getAnnotation(UpdateEvenNull.class) != null) {
+					list.add(f.getName());
+				}
+			}
+		}else {
+			list = updateEvenNull;
+		}
+		return DomainUtil.fillDomain(this.smartGet(), this,list,strictlyMode).update();
 	}
 	/*public void initializeAll(){
 		this.initialize();

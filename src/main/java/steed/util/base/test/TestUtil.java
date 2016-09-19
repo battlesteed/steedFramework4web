@@ -2,8 +2,9 @@ package steed.util.base.test;
 
 import java.io.File;
 
+import steed.util.base.IOUtil;
 import steed.util.base.PathUtil;
-import steed.util.file.FileUtil;
+import steed.util.base.StringUtil;
 /**
  * 测试工具
  * @author 战马
@@ -15,6 +16,6 @@ public class TestUtil {
 	 * @return
 	 */
 	public static String getTestText(){
-		return FileUtil.readFile(new File(PathUtil.getClassesPath()+"test.txt"));
+		return IOUtil.file2StringBuffer(new File(PathUtil.getClassesPath()+"test.txt"), StringUtil.getCharacterSet()).toString();
 	}
 }

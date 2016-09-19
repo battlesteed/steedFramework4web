@@ -4,161 +4,73 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.Flushable;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 /**
  * io工具类
  * @author 战马
  *
  */
-public class IOUtil {
-	private BufferedReader reader;
-	private FileReader fileReader;
+public class IOUtil implements Closeable{
 	
-	private BufferedWriter writer;
-	private FileWriter fileWriter;
+	private List<Closeable> waitToClose = new ArrayList<>();
 	
-	private FileOutputStream outputStream;
-	private BufferedOutputStream bufferedOutputStream;
-	
-	private FileInputStream inputStream;
-	private BufferedInputStream bufferedInputStream;
-	
-	private void closeBufferedReader(){
+	public BufferedReader getBufferedReader(File file,String charsetName) throws FileNotFoundException{
 		try {
-			if (reader != null) {
-				reader.close();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
+			FileInputStream in = new FileInputStream(file);
+			InputStreamReader inputStreamReader = new InputStreamReader(in,charsetName);
+			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+			waitToClose.add(bufferedReader);
+			return bufferedReader;
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
 		}
 	}
 	
-	private void closeFileReader(){
-		try {
-			if (fileReader != null) {
-				fileReader.close();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public BufferedReader getBufferedReader(String filePath,String charsetName) throws FileNotFoundException{
+		return getBufferedReader(new File(filePath), charsetName);
 	}
 	
-	
-	private void closeBufferedWriter(){
-			if (writer != null) {
-				try {
-					writer.flush();
-					writer.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-	}
-	private void closeFileWriter(){
-			if (fileWriter != null) {
-				try {
-					fileWriter.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-	}
-	private void closeBufferedInputStream(){
-		if (bufferedInputStream != null) {
-			try {
-				bufferedInputStream.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	private void closeFileInputStream(){
-		if (inputStream != null) {
-			try {
-				inputStream.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	private void closeBufferedOutputStream(){
-		if (bufferedOutputStream != null) {
-			try {
-				bufferedOutputStream.flush();
-				bufferedOutputStream.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	private void closeFileOutputStream(){
-		if (outputStream != null) {
-			try {
-				outputStream.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	public void closeReader(){
-		closeBufferedReader();
-		closeFileReader();
-	}
-	public void closeWriter(){
-		closeBufferedWriter();
-		closeFileWriter();
-	}
-	public void closeInputStream(){
-		closeBufferedInputStream();
-		closeFileInputStream();
-	}
-	/**
-	 * flush并关闭BufferedOutputStream和OutputStream
-	 */
-	public void closeOutputStream(){
-		closeBufferedOutputStream();
-		closeFileOutputStream();
-	}
-	/**
-	 * 关闭所有用IOUtil获取的输入输出流
-	 */
-	public void closeIO(){
-		closeInputStream();
-		closeOutputStream();
-		closeReader();
-		closeWriter();
-	}
-	
-	public BufferedReader getBufferedReader(String path) throws FileNotFoundException{
-		return getBufferedReader(new File(path));
-	}
-	public BufferedReader getBufferedReader(File file) throws FileNotFoundException{
-		fileReader = new FileReader(file);
-		reader = new BufferedReader(fileReader);
-		return reader;
-	}
-	public BufferedWriter getBufferedWriter(String path) throws IOException{
+/*	public BufferedWriter getBufferedWriter(String path) throws IOException{
 		return getBufferedWriter(getFileAndMakeDirs(path));
 	}
+	
 	public BufferedWriter getBufferedWriter(File file) throws IOException{
-		fileWriter = new FileWriter(file);
-		writer = new BufferedWriter(fileWriter);
+		FileWriter fileWriter = new FileWriter(file);
+		BufferedWriter writer = new BufferedWriter(fileWriter);
+		waitToClose.add(writer);
 		return writer;
+	}*/
+	public BufferedWriter getBufferedWriter(File file,String charsetName) throws IOException{
+		OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(file), charsetName);
+		BufferedWriter writer = new BufferedWriter(out);
+		waitToClose.add(writer);
+		return writer;
+	}
+	public BufferedWriter getBufferedWriter(String path,String charsetName) throws IOException{
+		return getBufferedWriter(getFileAndMakeDirs(path), charsetName);
 	}
 	
 	public BufferedOutputStream getBufferedOutputStream(String path) throws FileNotFoundException {
 		return getBufferedOutputStream(getFileAndMakeDirs(path));
 	}
 	public BufferedOutputStream getBufferedOutputStream(File file) throws FileNotFoundException {
-		outputStream = new FileOutputStream(file);
-		bufferedOutputStream = new BufferedOutputStream(outputStream);
+		FileOutputStream outputStream = new FileOutputStream(file);
+		BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream);
+		waitToClose.add(bufferedOutputStream);
 		return bufferedOutputStream;
 	}
 	
@@ -172,12 +84,10 @@ public class IOUtil {
 	 * @throws FileNotFoundException
 	 */
 	public BufferedInputStream getBufferedInputStream(File file) throws FileNotFoundException {
-		inputStream = new FileInputStream(file);
-		bufferedInputStream = new BufferedInputStream(inputStream);
+		FileInputStream inputStream = new FileInputStream(file);
+		BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+		waitToClose.add(bufferedInputStream);
 		return bufferedInputStream;
-	}
-	public String readLine() throws IOException{
-		return reader.readLine();
 	}
 	
 	public static void copyFile(String copyedPath,String copyToPath) throws IOException{
@@ -202,9 +112,10 @@ public class IOUtil {
 			while ((len = in.read(buffer)) != -1) {
 				out.write(buffer, 0, len);
 			}
-			io.closeIO();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		}finally {
+			io.close();
 		}
 		
 	}
@@ -213,21 +124,54 @@ public class IOUtil {
 	 * @param path 文本路径
 	 * @return
 	 */
-	public static StringBuffer file2StringBuffer(String path){
+	public static StringBuffer file2StringBuffer(String path,String charsetName){
+		return file2StringBuffer(new File(path), charsetName);
+	}
+	
+	/**
+	 * saveString
+	 * @return
+	 */
+	public static void saveString(String path,String charsetName,String content){
+		saveString(getFileAndMakeDirs(path), charsetName, content);
+	}
+	/**
+	 * @return
+	 */
+	public static void saveString(File file,String charsetName,String content){
+		IOUtil io = new IOUtil();
+		try {
+			BufferedWriter bufferedWriter = io.getBufferedWriter(file,charsetName);
+			bufferedWriter.write(content);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			io.close();
+		}
+		
+	}
+	
+	/**
+	 * 把文件中的字符读到string中
+	 * @param path 文本路径
+	 * @return
+	 */
+	public static StringBuffer file2StringBuffer(File file,String charsetName){
 		StringBuffer sb = new StringBuffer();
 		IOUtil io = new IOUtil();
 		try {
-			io.getBufferedReader(path);
+			BufferedReader bufferedReader = io.getBufferedReader(file,charsetName);
 			String temp;
-			while ((temp = io.readLine()) != null) {
+			while ((temp = bufferedReader.readLine()) != null) {
 				sb.append(temp);
+				sb.append("\n");
 			}
 			return sb;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}finally{
-			io.closeReader();
+			io.close();
 		}
 	}
 	
@@ -243,5 +187,21 @@ public class IOUtil {
 			file.delete();
 		}
 		return file;
+	}
+	@Override
+	public void close(){
+		Iterator<Closeable> iterator = waitToClose.iterator();
+		while (iterator.hasNext()) {
+			try {
+				Closeable next = iterator.next();
+				if (next instanceof Flushable) {
+					((Flushable)next).flush();
+				}
+				next.close();
+			} catch (IOException e) {
+//				e.printStackTrace();
+			}
+			iterator.remove();
+		}
 	}
 }

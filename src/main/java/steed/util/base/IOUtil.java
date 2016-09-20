@@ -4,13 +4,12 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.Flushable;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -174,6 +173,28 @@ public class IOUtil implements Closeable{
 			io.close();
 		}
 	}
+	
+	
+	 //获得指定文件的byte数组 
+    public static byte[] file2Bytes(File file){  
+        byte[] buffer = null;  
+        try {  
+            FileInputStream fis = new FileInputStream(file);  
+            ByteArrayOutputStream bos = new ByteArrayOutputStream(1000);  
+            
+            byte[] b = new byte[1000];  
+            int n;  
+            while ((n = fis.read(b)) != -1) {  
+                bos.write(b, 0, n);  
+            }  
+            fis.close();  
+            bos.close();  
+            buffer = bos.toByteArray();  
+        } catch (IOException e) {  
+            e.printStackTrace();  
+        }  
+        return buffer;  
+    }
 	
 	/**
 	 * 获取file并创建其所有上级目录

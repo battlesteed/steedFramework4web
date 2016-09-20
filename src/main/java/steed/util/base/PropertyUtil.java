@@ -123,10 +123,9 @@ public class PropertyUtil {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		/*if () {
-			
-		}*/
-		propertiesMap.put(relativePath, properties);
+		if ("true".equals(properties.getProperty("cache"))) {
+			propertiesMap.put(relativePath, properties);
+		}
 		return properties;
 	}
 }

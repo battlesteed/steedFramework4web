@@ -3,6 +3,7 @@ package steed.engine.wechat;
 
 import steed.domain.system.Property;
 import steed.util.dao.DaoUtil;
+import steed.util.system.SynchronizedKeyGenerator;
 import steed.util.wechat.MessageUtil;
 import steed.util.wechat.domain.sys.PayCallBack;
 import steed.util.wechat.domain.sys.ScanPayCallBackResult;
@@ -14,7 +15,7 @@ public class SimpleScanPayCallBackEngine implements ScanPayCallBackEngine{
 	public String getMessage(PayCallBack scanPayCallBack) {
 		//TODO 在这里写充值成功逻辑,以下是例子
 		//一定要同步,微信一个订单会通知多次
-		synchronized ("SimpleScanPayCallBackEngine"+scanPayCallBack.getOut_trade_no()) {
+		synchronized (SynchronizedKeyGenerator.getKey("SimpleScanPayCallBackEngine",scanPayCallBack.getOut_trade_no())) {
 			Property property = new Property();
 			property.setPropertyType("wechatOrder");
 			property.setKee(scanPayCallBack.getOut_trade_no());

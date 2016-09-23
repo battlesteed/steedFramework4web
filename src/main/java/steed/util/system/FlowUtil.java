@@ -61,7 +61,7 @@ public class FlowUtil {
 	 */
 	public static String getFlowString(String key,
 			int flowLength,boolean includeTimestamp){
-		synchronized (key) {
+		synchronized (SynchronizedKeyGenerator.getKey("steed.util.system.FlowUtil.getFlowString", key)) {
 			Config config2 = DaoUtil.get(Config.class, key);
 			if (config2 == null) {
 				config2 = new Config(key, "201603140");

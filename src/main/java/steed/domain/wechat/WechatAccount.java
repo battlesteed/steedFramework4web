@@ -90,6 +90,7 @@ public class WechatAccount extends BaseRelationalDatabaseDomain{
 	public void setUser_nickName(java.lang.String user_nickName) {
 		this.user_nickName = user_nickName;
 	}*/
+	
 	@ManyToOne
 	@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 	public User getUser() {

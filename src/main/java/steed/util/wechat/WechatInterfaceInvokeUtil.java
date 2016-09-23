@@ -44,6 +44,7 @@ import steed.util.file.FileUtil;
 import steed.util.http.HttpUtil;
 import steed.util.system.DataCacheUtil;
 import steed.util.system.FlowUtil;
+import steed.util.system.SynchronizedKeyGenerator;
 import steed.util.wechat.domain.result.AccessToken;
 import steed.util.wechat.domain.result.ArticleSummaryResult;
 import steed.util.wechat.domain.result.AttachUploadResult;
@@ -235,7 +236,7 @@ public class WechatInterfaceInvokeUtil {
 		final WechatAccount wechatAccount = MutiAccountSupportUtil.getWechatAccount();
 		new Thread(new Runnable() {
 			public void run() {
-				synchronized ("deleteTemplateEnsureSuccess"+template_id) {
+				synchronized (SynchronizedKeyGenerator.getKey("deleteTemplateEnsureSuccess", template_id)) {
 					MutiAccountSupportUtil.setWechatAccount(wechatAccount);
 					Property property = new Property();
 					property.setPropertyType("tempTemplateID");

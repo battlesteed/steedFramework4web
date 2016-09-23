@@ -51,12 +51,6 @@ try{
     		</c:if>
 			}, 2000);
     	</script>
-    	<%-- <button style="cursor: pointer;" onclick="javascript:<c:if test='${requestScope.exception.msg.url != null }'>
-    		window.location.href='${requestScope.exception.msg.url }';
-    	</c:if>
-    	<c:if test='${requestScope.exception.msg.url == null }'>
-    		navTab.closeCurrentTab();
-    	</c:if>">确定</button> --%>
   </div>
   </body>
   </html>

@@ -74,33 +74,11 @@
      </interceptors>
 	<global-results>
 	     <result name="message">/WEB-INF/jsp/public/message.jsp</result>
-	     <result name="message2">/WEB-INF/jsp/public/message2.jsp</result>
 	 </global-results>
 	 <global-exception-mappings>
            <exception-mapping exception="java.lang.Exception" result="message2"/>
-           <exception-mapping exception="steed.exception.MessageExceptionInterface" result="message"/>
-           <exception-mapping exception="steed.exception.MessageException" result="message"/>
-           <exception-mapping exception="steed.exception.runtime.MessageRuntimeException" result="message"/>
-	 </global-exception-mappings>
+     </global-exception-mappings>
 	 
-	 <!-- <action method="test" name="test" class="cn.com.beyondstar.action.Test">
-        定义处理结果字符串和资源之间的映射关系
-            <result name="success">/success.jsp</result>
-            <result name="error">/error.jsp</result>
-        </action> -->
    </package>
-
    
- <!--   <package name="default" extends="struts-default">
-	   <default-action-ref name="notFound" />
-	   <action name="notFound">
-	   	 <result>/WEB-INF/jsp/public/jspForward.jsp</result>
-	   </action>
-	</package> -->
- 
-	<!-- <package name="admin" extends="struts-default" namespace="/admin">
-		<action name="index" class="com.in.action.AdminAction" method="index">
-			<result name="success">/WEB-INF/jsp/admin/admin.jsp</result>
-		</action>
-	</package> -->
 </struts>

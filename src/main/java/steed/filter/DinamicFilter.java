@@ -1,7 +1,6 @@
 package steed.filter;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,21 +12,16 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import steed.domain.application.DWZMessage;
-import steed.exception.MessageExceptionInterface;
 import steed.util.UtilsUtil;
 import steed.util.base.PropertyUtil;
-import steed.util.base.StringUtil;
 import steed.util.dao.DaoUtil;
 import steed.util.dao.HibernateUtil;
-import steed.util.http.HttpUtil;
 /**
  * 动态过滤器，过滤所有动态url
  * @author 战马
@@ -73,25 +67,9 @@ public class DinamicFilter implements Filter {
 			}
 			chain.doFilter(request, response);
 		} catch (Exception e) {
-			e.printStackTrace();
-			HttpServletRequest req = (HttpServletRequest)request;
 			request.setAttribute("exception", e);
-			boolean isAjax = !StringUtil.isStringEmpty(req.getParameter("ajax"));
-			if (e instanceof MessageExceptionInterface) {
-				if (isAjax) {
-					responseExceptionJson(response, e);
-				}else {
-					request.getRequestDispatcher("/WEB-INF/jsp/public/message.jsp").forward(request, response);
-					logger.debug(e.getMessage(),e);
-				}
-			}else {
-				if (isAjax) {
-					responseExceptionJson(response, e);
-				}else {
-					request.getRequestDispatcher("/WEB-INF/jsp/public/message2.jsp").forward(request, response);
-					logger.error(e.getMessage(),e);
-				}
-			}
+			request.getRequestDispatcher("/WEB-INF/jsp/public/message.jsp").forward(request, response);
+			logger.debug("捕捉到未处理异常",e);
 		}finally{
 			try {
 				if (PropertyUtil.getBoolean("wholeManagTransaction")
@@ -99,20 +77,11 @@ public class DinamicFilter implements Filter {
 						&& DaoUtil.getTransaction() != null) {
 					DaoUtil.managTransaction();
 				}
-			} catch (Exception e2) {
-				e2.printStackTrace();
+			}finally{
+				UtilsUtil.releaseUtils();
+				threadLocal.remove();
 			}
-			UtilsUtil.releaseUtils();
-			threadLocal.remove();
 		}
-	}
-	private void responseExceptionJson(ServletResponse response, Exception e)
-			throws IOException, UnsupportedEncodingException {
-		DWZMessage dwzMessage = new DWZMessage();
-		dwzMessage.setStatusCode(300);
-		dwzMessage.setTitle("出错啦！！");
-		dwzMessage.setMessage(e.getMessage());
-		HttpUtil.writeJson((HttpServletResponse) response, dwzMessage);
 	}
 	
 	private void listParam(ServletRequest req) {

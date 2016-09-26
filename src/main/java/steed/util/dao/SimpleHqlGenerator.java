@@ -29,7 +29,7 @@ public class SimpleHqlGenerator implements HqlGenerator{
 		List<String> removedEntry = new ArrayList<String>();
 		Map<String, ? extends Object> put = new HashMap<>();
 		for(Entry<String, ? extends Object> e:map.entrySet()){
-			appendSingleWhereCondition(domainSimpleName, hql, removedEntry, e,put);
+			appendSingleWhereCondition(domainSimpleName, hql, removedEntry, map, e,put);
 		}
 		map.putAll((Map) put);
 		for (String temp:removedEntry) {
@@ -47,7 +47,7 @@ public class SimpleHqlGenerator implements HqlGenerator{
 	 * @param e
 	 */
 	protected void appendSingleWhereCondition(String domainSimpleName, StringBuffer hql,
-			List<String> removedEntry, Entry<String, ? extends Object> e,Map<String, ? extends Object> put) {
+			List<String> removedEntry, Map<String, ?> query,Entry<String, ? extends Object> e,Map<String, ? extends Object> put) {
 		String key = e.getKey();
 		if ((e.getValue() instanceof Collection || e.getValue().getClass().isArray()) 
 				&& !key.endsWith("_not_join")) {

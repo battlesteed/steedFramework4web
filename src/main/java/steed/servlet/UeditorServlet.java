@@ -21,6 +21,7 @@ import steed.util.base.DomainUtil;
 import steed.util.base.IOUtil;
 import steed.util.base.PathUtil;
 import steed.util.base.PropertyUtil;
+import steed.util.base.StringUtil;
 import steed.util.digest.DigestUtil;
 import steed.util.digest.Md5Util;
 import steed.util.digest.Sha256Util;
@@ -43,7 +44,7 @@ public class UeditorServlet extends BaseServlet {
 		
 //		String action = req.getParameter("action");
 		JSONObject config;
-		StringBuffer sb = IOUtil.file2StringBuffer(PathUtil.getClassesPath()+"config.json");
+		StringBuffer sb = IOUtil.file2StringBuffer(PathUtil.getClassesPath()+"config.json",StringUtil.getCharacterSet());
 		
 		config = new JSONObject(sb.toString().replaceAll("/\\*[\\s\\S]*?\\*/",""));
 		BaseUser user = (BaseUser) req.getSession().getAttribute(GlobalParam.attribute.user);

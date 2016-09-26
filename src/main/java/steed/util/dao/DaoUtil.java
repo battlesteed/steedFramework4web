@@ -769,9 +769,14 @@ public class DaoUtil {
 		return listOne(t,null,null);
 	}
 	
-	public static <T> T listOne(T t,List<String> desc,List<String> asc){
+	public static <T> T listOne(Class<T> t,Map<String, Object> queryMap,List<String> desc,List<String> asc){
 		try {
-			List<T> list = (List<T>) listObj(1, 1, t,desc,asc).getDomainCollection();
+			StringBuffer hql = getSelectHql(t, queryMap, desc, asc);
+			
+			Query query = createQuery(queryMap,hql);
+			
+			@SuppressWarnings("unchecked")
+			List<T> list = query.list();
 			if (list.isEmpty()) {
 				return null;
 			}
@@ -783,6 +788,12 @@ public class DaoUtil {
 			closeSession();
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T> T listOne(T t,List<String> desc,List<String> asc){
+		return (T) listOne(t.getClass(), putField2Map(t), desc, asc);
+	}
+	
 	/**
 	 * 比如说，文章里有个用户实体类，
 	 * 但是前台传过来的只有用户的id，我想获取用户的其他信息就要查数据库，

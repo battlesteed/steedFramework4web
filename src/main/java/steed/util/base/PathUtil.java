@@ -29,6 +29,7 @@ public class PathUtil {
 	public static String getContextPath(){
 		return GlobalParam.FOLDER.contextPath;
 	}
+	
 	/**
 	 * 合并路径,防止出现双斜杠或者没有斜杠
 	 * @return
@@ -46,6 +47,7 @@ public class PathUtil {
 			return path1 + path2;
 		}
 	}
+	
 	/**
 	 * 获取浏览器能访问到的路径
 	 * @return
@@ -58,6 +60,15 @@ public class PathUtil {
 		}*/
 		return mergePath(GlobalParam.FOLDER.contextUrl, resouresRelativePath);
 	}
+	
+	/**
+	 * 浏览器能访问到的相对路径路径转换为文件的全路径
+	 * @return 相对路径
+	 */
+	public static String relativePath2AbslutePath(String relativePath){
+		return mergePath(GlobalParam.FOLDER.rootPath, relativePath);
+	}
+	
 	/**
 	 * 获取工程根目录,特殊情况获取不到
 	 * @return

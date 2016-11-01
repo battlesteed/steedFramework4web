@@ -1525,6 +1525,9 @@ public class DaoUtil {
 	 */
 	public static StringBuffer appendHqlWhere(String domainSimpleName, StringBuffer hql,
 			Map<String, ? extends Object> map) {
+		if (map == null) {
+			return hql;
+		}
 		Object object = map.get(personalHqlGeneratorKey);
 		if (object != null && object instanceof HqlGenerator) {
 			map.remove(personalHqlGeneratorKey);

@@ -5,6 +5,9 @@
 	    databaseName="littlePig2" relativeSavePath="../mysqlBackup" />
 	
 	<task class="steed.engine.task.DeleteTempTemplateEngine" delay="1" timeUnit="HOURS" />
+	
 	<task class="steed.engine.task.OrderRefreshEngine" delay="1" timeUnit="HOURS" />
+	
+	<task class="steed.engine.task.DeleteLogEngine" delay="1" timeUnit="HOURS" />
 	
 </tasks>

@@ -420,8 +420,7 @@ public class DomainUtil{
 					| IllegalAccessException 
 					| InvocationTargetException 
 					| IllegalArgumentException e) {
-			e.printStackTrace();
-			throw new FrameworkException(class1+"中的"+fieldSetterName+"方法不是public类型", e);
+			throw new FrameworkException(class1+"中的"+fieldSetterName+"方法有误", e);
 		} 
 	}
 }

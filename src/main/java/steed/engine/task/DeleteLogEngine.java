@@ -37,6 +37,7 @@ public class DeleteLogEngine extends SimpleTaskEngine{
 	
 	@Override
 	public void doTask() {
+		BaseUtil.getLogger().debug("开始清理日志任务.....");
 		List<File> allFile = new FileUtil().getAllFile(log_dir, null);
 		if (remainTime >= 0) {
 			deleteOverdueFile(allFile);
@@ -45,16 +46,18 @@ public class DeleteLogEngine extends SimpleTaskEngine{
 	}
 
 	protected void keepSpaceSave(List<File> allFile) {
-		long totalSpace = new File(log_dir).getTotalSpace();
+		long totalSpace = new File(log_dir).getFreeSpace();
 		if (totalSpace < minSpaceRemain*1024*1024) {
 			BaseUtil.getLogger().warn("硬盘空间不足{}MB,开始删除未过期日志!!!",minSpaceRemain);
 			long spaceNeedToDelete = minSpaceRemain*1024*1024 - totalSpace;
+			
 			Collections.sort(allFile, new Comparator<File>() {
 				@Override
 				public int compare(File o1, File o2) {
 					return (int) (o1.lastModified() - o2.lastModified());
 				}
 			});
+			
 			for(File temp:allFile){
 				if (spaceNeedToDelete < 0) {
 					BaseUtil.getLogger().debug("日志删除完毕,硬盘剩余空间已达安全值");

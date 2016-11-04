@@ -6,6 +6,7 @@
 ## 看了部署说明还不会部署的同学请看下面的部署教程
 
  **[部署教程](http://v.youku.com/v_show/id_XMTcxNjg1Njc0NA==.html?beta&)** 
+ **[steedFrameword4web交流qq群](http://shang.qq.com/wpa/qunwpa?idkey=3a090653940907189c6c7bc9503247a2ff3b7b4603d8e2c58b49665583bfe133)**
 
 ##之前项目推荐一直在审核....终于审核通过了,有动力更新了,文档我会慢慢完善的(其实根本不需要什么文档,对着例子,看看注释基本都会用了的),麻烦大家耐心等待.
 ## 特色:

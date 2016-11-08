@@ -21,14 +21,10 @@ import steed.util.dao.DaoUtil;
 @steed.action.annotation.Power("管理角色")
 public class RoleAction extends DwzAdminAction<Role>{
 	private static final long serialVersionUID = 7839375284635130117L;
-//	@Model
-//	private Role role = DomainFactory.getDomain(Role.class);
 	
 	@Action("add")
 	@Power("添加角色")
 	public String add(){
-//		List<Menu> menuList = BaseDao.listAllObj(Menu.class);
-//		setRequestAttribute("unCheckedmenuList", menuList);
 		return steed_forward;
 	}
 	@Action("index")
@@ -59,7 +55,7 @@ public class RoleAction extends DwzAdminAction<Role>{
 			}
 		}
 		writeObjectMessage(message);
-		 return null;
+		return null;
 	}
 	@Action(value="update")
 	@Power("编辑角色")

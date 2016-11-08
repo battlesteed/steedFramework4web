@@ -65,9 +65,9 @@ public abstract class DwzAdminAction<SteedDomain extends BaseDatabaseDomain> ext
 	}
 	
 	private Menu getActionMenu() {
-		Menu menu = getMenu("/index.act");
+		Menu menu = getMenu("/index.act%");
 		if (menu == null) {
-			menu = getMenu("/");
+			menu = getMenu("/%");
 		}
 		return menu;
 	}

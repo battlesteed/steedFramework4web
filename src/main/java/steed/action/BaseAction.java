@@ -209,7 +209,7 @@ public abstract class BaseAction<SteedDomain extends BaseDatabaseDomain> extends
 	}
 
 	/**
-	 * 通过model注解获取action中的model
+	 * 通过泛型获取action对应的model
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")

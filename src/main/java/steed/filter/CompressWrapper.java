@@ -34,7 +34,7 @@ public class CompressWrapper extends HttpServletResponseWrapper {
 					stream.write(b);
 				}
 				 /**
-				  * j2ee1.7及以上才能用
+				  * 貌似servlet api 2.5 版本及以上才能用,如果你的servlet api版本过低,请把该方法注释掉
 				  * @param arg0
 				  */
 				@Override

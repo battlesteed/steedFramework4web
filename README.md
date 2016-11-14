@@ -61,7 +61,7 @@ jdk1.8(要用1.7的改一下hibernate版本,最新hibernate不支持1.7,那些�
 
 ## 部署:
 
-* -1.请自己手动添加servlet容器jar包和junit jar包.
+* -1.请自己手动添加servlet容器jar包(如果你的servlet api版本过低,请手动删除steed.filter.CompressWrapper类里面的setWriteListener方法)和junit jar包.
 
 * 0.把项目编码改为UTF-8.
 

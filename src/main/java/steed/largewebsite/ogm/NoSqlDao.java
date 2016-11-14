@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
 import steed.domain.BaseDomain;
 import steed.domain.BaseUnionKeyDomain;
 import steed.domain.annotation.NotQueryCondition;
-import steed.domain.annotation.UpdateEvenNull;
 import steed.largewebsite.ogm.domain.BaseNosqlDomain;
 import steed.util.base.BaseUtil;
 import steed.util.base.DomainUtil;
@@ -522,9 +521,7 @@ public class NoSqlDao {
 			list = new ArrayList<String>();
 			Field[] declaredFields = obj.getClass().getDeclaredFields();
 			for (Field f:declaredFields) {
-				if (f.getAnnotation(UpdateEvenNull.class) != null) {
-					list.add(f.getName());
-				}
+				list.add(f.getName());
 			}
 		}else {
 			list = updateEvenNull;

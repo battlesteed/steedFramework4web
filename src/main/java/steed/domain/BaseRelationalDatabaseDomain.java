@@ -9,7 +9,6 @@ import javax.persistence.Transient;
 
 import org.hibernate.Hibernate;
 
-import steed.domain.annotation.UpdateEvenNull;
 import steed.util.base.BaseUtil;
 import steed.util.base.DomainUtil;
 import steed.util.dao.DaoUtil;
@@ -123,9 +122,7 @@ public class BaseRelationalDatabaseDomain extends BaseDatabaseDomain{
 		if (updateEvenNull == null) {
 			list = new ArrayList<String>();
 			for (Field f:ReflectUtil.getAllFields(this)) {
-				if (f.getAnnotation(UpdateEvenNull.class) != null) {
 					list.add(f.getName());
-				}
 			}
 		}else {
 			list = updateEvenNull;

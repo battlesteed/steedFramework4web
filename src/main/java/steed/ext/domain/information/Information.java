@@ -15,7 +15,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import steed.domain.BaseRelationalDatabaseDomain;
 import steed.domain.annotation.CleanXss;
-import steed.domain.annotation.UpdateEvenNull;
 import steed.ext.domain.user.User;
 import steed.util.digest.Base64Util;
 /**
@@ -32,7 +31,6 @@ public class Information extends BaseRelationalDatabaseDomain{
 	private String title;
 	private String title_like_1;
 	@CleanXss
-	@UpdateEvenNull
 	private String content;
 	/**
 	 * 发布日期

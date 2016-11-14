@@ -29,7 +29,6 @@ import steed.domain.BaseDomain;
 import steed.domain.BaseRelationalDatabaseDomain;
 import steed.domain.BaseUnionKeyDomain;
 import steed.domain.annotation.NotQueryCondition;
-import steed.domain.annotation.UpdateEvenNull;
 import steed.domain.application.Page;
 import steed.util.base.BaseUtil;
 import steed.util.base.CollectionsUtil;
@@ -774,13 +773,8 @@ public class DaoUtil {
 			StringBuffer hql = getSelectHql(t, queryMap, desc, asc);
 			
 			Query query = createQuery(queryMap,hql);
-			
-			@SuppressWarnings("unchecked")
-			List<T> list = query.list();
-			if (list.isEmpty()) {
-				return null;
-			}
-			return (T) list.get(0);
+			faging(1, 1, query);
+			return (T) query.uniqueResult();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -1143,9 +1137,7 @@ public class DaoUtil {
 		if (updateEvenNull == null) {
 			list = new ArrayList<String>();
 			for (Field f:ReflectUtil.getAllFields(obj)) {
-				if (f.getAnnotation(UpdateEvenNull.class) != null) {
-					list.add(f.getName());
-				}
+				list.add(f.getName());
 			}
 		}else {
 			list = updateEvenNull;

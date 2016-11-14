@@ -71,7 +71,7 @@ jdk1.8(要用1.7的改一下hibernate版本,最新hibernate不支持1.7,那些�
 
 * 3.修改/src/main/resources/properties/config.properties 中的serverEncoding和site.rootURL和aesKey(可以不修改,建议修改).
  
-* 4.如果修改了aeskey(test包下面的config.properties,数据库连接池配置也要改,因为是在test目录下面运行的,当然你可以直接把正式目录的所有配置文件全部复制到test目录)请运行steed.test.DatabaseTest.aesInit()(运行之前请手动添加junit jar包).
+* 4.如果修改了aeskey(test包下面的config.properties,因为是在test目录下面运行的)请运行steed.test.DatabaseTest.aesInit()(运行之前请手动添加junit jar包).
 
 * 5.部署运行,默认账号:admin,密码:123456
 

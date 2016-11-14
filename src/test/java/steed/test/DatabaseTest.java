@@ -1,13 +1,12 @@
 package steed.test;
 
 
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Date;
 
 import org.junit.Test;
 
 import steed.domain.system.Property;
+import steed.ext.domain.information.Information;
 import steed.ext.domain.information.Programa;
 import steed.ext.domain.terminal.TerminalUser;
 import steed.ext.domain.user.User;
@@ -15,7 +14,6 @@ import steed.util.base.BaseUtil;
 import steed.util.base.test.TestEfficiency;
 import steed.util.dao.DaoUtil;
 import steed.util.dao.HibernateUtil;
-import steed.util.dao.SimpleHqlGenerator;
 import steed.util.digest.AESUtil;
 import steed.util.digest.Md5Util;
 
@@ -32,26 +30,27 @@ public class DatabaseTest{
 	}
 	
 	@Test
-	public void testOrQuery(){
-		Programa programa = new Programa();
-		programa.setDescription("ddd");
-		programa.setPersonalHqlGenerator(new SimpleHqlGenerator(){
-
-			@Override
-			protected void appendSingleWhereCondition(String domainSimpleName, StringBuffer hql,
-					List<String> removedEntry, Entry<String, ? extends Object> e, Map<String, ? extends Object> put) {
-				if ("description".equals(e.getKey())) {
-					hql.append("and "+domainSimpleName+".description is not null ");
-					removedEntry.add(e.getKey());
-				}else{
-					super.appendSingleWhereCondition(domainSimpleName, hql, removedEntry, e, put);
-				}
-			}
-			
-		});
-		List<Programa> listAllObj = DaoUtil.listAllObj(programa);
-		BaseUtil.out(listAllObj.size());
-		//and (aa = :aa or bb = :bb) 
+	public void testListOne(){
+		Information information = new Information();
+//		information.setPublishDate(new Date());
+		BaseUtil.out(DaoUtil.listOne(information));
+	}
+	
+	
+	@Test
+	public void testFlush(){
+		DaoUtil.setAutoManagTransaction(false);
+		User user = DaoUtil.get(User.class, "admin");
+		DaoUtil.managTransaction();
+		DaoUtil.relese();
+		HibernateUtil.release();
+		
+		DaoUtil.setAutoManagTransaction(false);
+		user.setName("ad444444");
+		user.setNickName("994448888");
+		user.save();
+		BaseUtil.out(DaoUtil.listOne(user));
+		DaoUtil.rollbackTransaction();
 	}
 	
 	@Test
@@ -96,6 +95,18 @@ public class DatabaseTest{
 		}
 		testEfficiency.endAndOutUsedTime("结束");
 	}
+	
+	@Test
+	public void testUpdateNotNullFile(){
+		Programa programa = new Programa();
+		programa.setName("e");
+		Information information = new Information();
+		information.setId(1);
+		information.setPrograma(programa);
+		information.updateNotNullField(null);
+	}
+	
+	
 	@Test
 	public void testDelete2(){
 		TestEfficiency testEfficiency = new TestEfficiency();

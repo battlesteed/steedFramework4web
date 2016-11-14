@@ -2,13 +2,13 @@ package steed.test;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 
 import org.junit.Test;
 
 import steed.ext.domain.user.User;
 import steed.util.base.BaseUtil;
-import steed.util.base.test.TestUtil;
 import steed.util.dao.DaoUtil;
 import steed.util.system.TaskUtil;
 import steed.util.wechat.AccessTokenUtil;
@@ -33,10 +33,29 @@ public class BaseTest {
 			e.printStackTrace();
 		}
 	}
+	
 	@Test
 	public void testddd(){
-		BaseUtil.out(TestUtil.getTestText().substring(141));
+		 System.out.println("总大小" + FormetFileSize(new File("D:\\temp").getTotalSpace()));
+         System.out.println("剩余" + FormetFileSize(new File("D:\\temp\\").getFreeSpace()));
+         System.out.println("剩余" + (long)new File("E:\\").getFreeSpace()/(1024*1024));
+         System.out.println("剩余" + (long)new File("E:\\").getFreeSpace());
 	}
+	
+	public static String FormetFileSize(long fileS) {
+        DecimalFormat df = new DecimalFormat("#.00");
+        String fileSizeString = "";
+        if (fileS < 1024) {
+            fileSizeString = df.format((double) fileS) + "B";
+        } else if (fileS < 1048576) {
+            fileSizeString = df.format((double) fileS / 1024) + "K";
+        } else if (fileS < 1073741824) {
+            fileSizeString = df.format((double) fileS / 1048576) + "M";
+        } else {
+            fileSizeString = df.format((double) fileS / 1073741824) + "G";
+        }
+        return fileSizeString;
+    }
 	
 	 /**
      * Java代码实现MySQL数据库导出

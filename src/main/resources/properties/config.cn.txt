@@ -1,29 +1,52 @@
-注意!!!不要在这里配置,这仅仅做一个对照使用
+#是否缓存该配置文件,如果缓存了,修改之后得重新部署才会生效,生产模式建议设为true
+cache=false
 #服务器编码,tomcat默认ISO-8859-1,tomcat8及以上请配UTF-8
 serverEncoding=UTF-8
 #系统编码
 characterSet=UTF-8
 #开发模式
-devMode=false
+devMode=true
+#如果没登陆,是否自动跳到登陆页面,如果安全性要求较高,建议设为false
 go2Login=true
+#是否全局管理事务,不建议修改.请勿随便修改.
 wholeManagTransaction=true
-#网站顶部图标地址
+#网站顶部图标地址,请填写绝对路径或相对路径(对浏览器而言)
 siteImg=./images/show.do.png
 #aes加密密钥
 aesKey=80b42fdfd820e73c3218711d9f5d2e5d
-#全局关统一关session
+#全局统一关session
 #whole_closeSession=true
-#日志路径,相对于classpath
+#日志路径,相对于WEB-INF/class/
 log_dir=../logs
 
+#是否单一关系型数据库
+isSignalDatabase=true
+#公司名
+companyName=战马系列框架之web
+#公司主页
+companyUrl=http://battlesteed.cn
 
-#网站名致富包管理平台
+#关系型数据库实体类扫描器
+dao.DomainScanner=steed.domain.SingleDomainScanner
+#sessionFactory获取器
+dao.factoryEngine=steed.util.dao.SimpleFactoryEngine
+#默认的Hql自动生成器
+dao.HqlGenerator=steed.util.dao.SimpleHqlGenerator
+
+#是否单一非关系型数据库
+isSignalNoSqlDatabase=true
+#非关系型数据库实体类扫描器
+ogm.DomainScanner=steed.largewebsite.ogm.SingleDomainScanner
+hibernatesearch.infinispanDataDir=../infinispan
+
+
+#网站名
 site.name=steedFramework4web
 #网站地址,可以是ip也可以是域名,端口号也要带上,不需要加上项目路径
 site.rootURL=http://battlesteed.ngrok.cc
-#后台登陆界面路径
+#后台登陆界面路径,可以通过修改该地址令后台更安全
 site.adminLoginPath=/admin/login.jsp
-#后台登陆路径
+#后台登陆路径,可以通过修改该地址令后台更安全
 site.adminPostLoginPath=/admin/adminPost.jsp
 
 
@@ -42,24 +65,36 @@ mail.smtp.host=smtp.126.com
 mail.smtp.port=25
 
 
+#微信token提前获取的多少时间获取,单位秒
+#例如,token有效期是2小时,当前配置是在过期前的15分钟刷新token
+#利用该配置和微信刷新token后原token还有一段时间可以继续使用,
+#可以配置成提前115(具体数值根据情况调整)分钟刷新,
+#这样可以达到同时在多个程序里面跑,而不会因为相互独立刷新token导致微信接口调用失败的问题
+wechat.tokenAdvanceRefreshTime=900
+#是否只在用微信浏览器访问的时候调用OAuth2.0登陆
 wechat.loginOnlyOnwechat=false
-#微信配置
+#微信appID
 wechat.appID=wxd225550ca5fc04db
-#aes加密
+#该值请用aes加密之后保存
 wechat.appSecret=
+#该值请用aes加密之后保存
 wechat.token=
+#该值请用aes加密之后保存
 wechat.encodingAESKey=
+#商户key,如果没有用到微信支付功能,请忽略.该值请用aes加密之后保存
 wechat.merchant.key=
+#商户id,如果没有用到微信支付功能,请忽略.该值请用aes加密之后保存
 wechat.merchant.id=
+#OAuth2.0获取用户信息时是否获取全部信息,若为false则只获取openid
+#true则获取全部信息并保存到wechatuser表
 wechat.pullAllinformation=true
 #0明文,1兼容,2安全模式
 wechat.encodeMode=1
-#相对路径
+#商户证书存储路径,如果没有用到发微信红包功能,请忽略.相对WEB-INF/class/的路径
 wechat.merchant.certPath=../apiclient_cert.p12
+#ture表示单微信号模式,false表示多微信号模式
 wechat.singleMode=true
-isSignalDatabase=true
-companyName=战马系列框架之web
-companyUrl=http://battlesteed.cn
+
 
 #合作身份者ID
 alipay.partner=
@@ -91,4 +126,5 @@ netty.host=127.0.0.1
 netty.userName=steed
 netty.password=steed
 
+#默认分页大小
 page.size=10

@@ -28,7 +28,7 @@
 		<legend>微信支付参数(不改请不要填)</legend>
 		<dl>
 			<dt>商户号:</dt>
-			<dd><input class="required" name="wechat.merchant.id" type="text" value='<st:config key="wechat.merchant.id" />' /></dd>
+			<dd><input name="wechat.merchant.id" type="text" value='<st:config key="wechat.merchant.id" />' /></dd>
 		</dl>
 		<dl>
 			<dt>商户key:</dt>

@@ -11,11 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import steed.domain.wechat.WechatAccount;
 import steed.engine.wechat.SimpleScanPayCallBackEngine;
-import steed.ext.plugin.WechatAccount2WechatConfigPlugin;
 import steed.util.base.BaseUtil;
-import steed.util.dao.DaoUtil;
 import steed.util.wechat.MessageUtil;
 import steed.util.wechat.MutiAccountSupportUtil;
 import steed.util.wechat.SignUtil;
@@ -61,7 +58,7 @@ public class WechatScanPayCallBackServlet extends HttpServlet{
 
 	private void supportMutiAccount(HttpServletRequest request) {
 		if (!MutiAccountSupportUtil.isSingleMode()) {
-			MutiAccountSupportUtil.setWechatConfig(new WechatAccount2WechatConfigPlugin().getWechatConfig(DaoUtil.get(WechatAccount.class, request.getParameter("key"))));;
+			MutiAccountSupportUtil.setWechatAccount(MutiAccountSupportUtil.getWechatAccount(request.getParameter("key")));
 		}
 	}  
 	  

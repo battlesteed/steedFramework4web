@@ -65,7 +65,7 @@ public class SystemAction extends BaseAction{
 		Map<String, Object> data = (Map<String, Object>) DataCacheUtil.getData(getRequestParameter("state"), "wechatSNSSate");
 		String requestParameter = getRequestParameter("code");
 		if (!StringUtil.isStringEmpty(requestParameter)) {
-			MutiAccountSupportUtil.setWechatConfig(MutiAccountSupportUtil.getWechatConfig((String) data.get("appID")));
+			MutiAccountSupportUtil.setWechatAccount(MutiAccountSupportUtil.getWechatAccount((String) data.get("appID")));
 			WechatUser pullUserInformation;
 			if ((Boolean)data.get("getAllInformation")) {
 				pullUserInformation = WechatInterfaceInvokeUtil.pullUserInformation(requestParameter);

@@ -76,8 +76,6 @@ import steed.util.wechat.domain.send.SetIndustrySend;
 import steed.util.wechat.domain.send.TemplateMessageSend;
 import steed.util.wechat.domain.send.UnifiedOrderSend;
 import steed.util.wechat.domain.sys.PageAccessToken;
-import steed.util.wechat.domain.sys.WechatConfig;
-import steed.util.wechat.domain.sys.WechatMerchant;
 
 /**
  * 微信接口调用工具类
@@ -95,11 +93,11 @@ public class WechatInterfaceInvokeUtil {
 	 * @return
 	 */
 	public static String fitParam2Url(String url){
-		String temp = url.replaceAll("#APPID#", MutiAccountSupportUtil.getWechatConfig().getAppID());
+		String temp = url.replaceAll("#APPID#", MutiAccountSupportUtil.getWechatAccount().getAppID());
 		if (temp.contains("#ACCESS_TOKEN#")) {
 			temp = temp.replaceAll("#ACCESS_TOKEN#", AccessTokenUtil.getAccessToken().getAccess_token());
 		}
-		return temp.replaceAll("#APPSECRET#", MutiAccountSupportUtil.getWechatConfig().getAppSecret());
+		return temp.replaceAll("#APPSECRET#", MutiAccountSupportUtil.getWechatAccount().getAppSecret());
 	}
 	
 	/*******************************\测试***********************/
@@ -500,7 +498,7 @@ public class WechatInterfaceInvokeUtil {
 				.replaceFirst("#REDIRECT_URI#", StringUtil.encodeUrl(PathUtil.getBrowserPath("/system/getWechatUserInformation.act")));
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("goUrl", goUrl);
-		map.put("appID", MutiAccountSupportUtil.getWechatConfig().getAppID());
+		map.put("appID", MutiAccountSupportUtil.getWechatAccount().getAppID());
 		map.put("login", login);
 		map.put("getAllInformation", getAllInformation);
 		DataCacheUtil.setData(state, "wechatSNSSate", map);
@@ -525,7 +523,7 @@ public class WechatInterfaceInvokeUtil {
 				.replaceFirst("#REDIRECT_URI#", StringUtil.encodeUrl(redirectUri));
 		//Map<String, Object> map = new HashMap<String, Object>();
 		//map.put("appID", MutiAccountSupportUtil.getWechatConfig().getAppID());
-		DataCacheUtil.setData(state, "addressShareAppId", MutiAccountSupportUtil.getWechatConfig().getAppID());
+		DataCacheUtil.setData(state, "addressShareAppId", MutiAccountSupportUtil.getWechatAccount().getAppID());
 		return fitParam2Url;
 	}
 	/**
@@ -574,9 +572,8 @@ public class WechatInterfaceInvokeUtil {
 	 * @return
 	 */
 	public static OrderQueryResult queryOrder(OrderQuerySend orderQuerySend){
-		WechatConfig wechatConfig = MutiAccountSupportUtil.getWechatConfig();
-		WechatMerchant wechatMerchant = wechatConfig.getWechatMerchant();
-		orderQuerySend.setMch_id(wechatMerchant.getId());
+		WechatAccount wechatConfig = MutiAccountSupportUtil.getWechatAccount();
+		orderQuerySend.setMch_id(wechatConfig.getMerchantId());
 		orderQuerySend.setAppid(wechatConfig.getAppID());
 		orderQuerySend.setNonce_str(Md5Util.Md5Digest(new Date().getTime()+""+new Random().nextInt()));
 		orderQuerySend.setSign(null);
@@ -595,9 +592,8 @@ public class WechatInterfaceInvokeUtil {
 	 * @return
 	 */
 	public static UnifiedOrderResult unifiedOrder(UnifiedOrderSend unifiedOrderSend){
-		WechatConfig wechatConfig = MutiAccountSupportUtil.getWechatConfig();
-		WechatMerchant wechatMerchant = wechatConfig.getWechatMerchant();
-		unifiedOrderSend.setMch_id(wechatMerchant.getId());
+		WechatAccount wechatConfig = MutiAccountSupportUtil.getWechatAccount();
+		unifiedOrderSend.setMch_id(wechatConfig.getMerchantId());
 		unifiedOrderSend.setSign(null);
 		unifiedOrderSend.setAppid(wechatConfig.getAppID());
 		if (unifiedOrderSend.getNotify_url() == null) {
@@ -684,16 +680,15 @@ public class WechatInterfaceInvokeUtil {
 	 * @return
 	 */
 	public static RefundResult reFund(RefundSend refundSend){
-		WechatConfig wechatConfig = MutiAccountSupportUtil.getWechatConfig();
-		WechatMerchant wechatMerchant = wechatConfig.getWechatMerchant();
+		WechatAccount wechatConfig = MutiAccountSupportUtil.getWechatAccount();
 		refundSend.setAppid(wechatConfig.getAppID());
-		refundSend.setMch_id(wechatMerchant.getId());
+		refundSend.setMch_id(wechatConfig.getMerchantId());
 		refundSend.setNonce_str(Md5Util.Md5Digest(new Date().getTime()+""+new Random().nextInt()));
 		refundSend.setSign(null);
 		refundSend.setSign(SignUtil.signObj(refundSend, "MD5", true));
 		String redPacketSendMessageToXml = MessageUtil.toXml(refundSend);
 		try {
-			return MessageUtil.fromXml(HttpUtil.getRequestString(fitParam2Url(WechatConstantParamter.refundtUrl), null, null, redPacketSendMessageToXml, wechatMerchant.getCertPath(), wechatMerchant.getId()),RefundResult.class);
+			return MessageUtil.fromXml(HttpUtil.getRequestString(fitParam2Url(WechatConstantParamter.refundtUrl), null, null, redPacketSendMessageToXml, wechatConfig.getMerchantCertPath(), wechatConfig.getMerchantId()),RefundResult.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -704,15 +699,14 @@ public class WechatInterfaceInvokeUtil {
 	 * @return
 	 */
 	public static RedPacketResult sendRedPacket(RedPacketSend redPacketSend){
-		WechatConfig wechatConfig = MutiAccountSupportUtil.getWechatConfig();
-		WechatMerchant wechatMerchant = wechatConfig.getWechatMerchant();
-		redPacketSend.setMch_id(wechatMerchant.getId());
+		WechatAccount wechatConfig = MutiAccountSupportUtil.getWechatAccount();
+		redPacketSend.setMch_id(wechatConfig.getMerchantId());
 		if (StringUtil.isStringEmpty(redPacketSend.getSign())) {
 			SignUtil.signRedPacketSend(redPacketSend);
 		}
 		String redPacketSendMessageToXml = MessageUtil.redPacketSendMessageToXml(redPacketSend);
 		try {
-			return MessageUtil.XmlToRedPacketSendMessage(HttpUtil.getRequestString(fitParam2Url(WechatConstantParamter.sendRedPacketUrl), null, null, redPacketSendMessageToXml, wechatMerchant.getCertPath(), wechatMerchant.getId()));
+			return MessageUtil.XmlToRedPacketSendMessage(HttpUtil.getRequestString(fitParam2Url(WechatConstantParamter.sendRedPacketUrl), null, null, redPacketSendMessageToXml, wechatConfig.getMerchantCertPath(), wechatConfig.getMerchantId()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

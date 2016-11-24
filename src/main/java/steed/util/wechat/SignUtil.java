@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import steed.domain.wechat.WechatAccount;
 import steed.exception.runtime.system.FrameworkException;
 import steed.util.base.StringUtil;
 import steed.util.digest.Md5Util;
@@ -17,7 +18,6 @@ import steed.util.wechat.domain.result.UnifiedOrderResult;
 import steed.util.wechat.domain.send.RedPacketSend;
 import steed.util.wechat.domain.send.UnifiedOrderSend;
 import steed.util.wechat.domain.sys.PayCallBack;
-import steed.util.wechat.domain.sys.WechatConfig;
 
 /** 
  * 请求校验工具类 
@@ -85,12 +85,12 @@ public class SignUtil {
      * @return
      */
     public static String signRedPacketSend(RedPacketSend redPacketSend){
-    	WechatConfig wechatConfig = MutiAccountSupportUtil.getWechatConfig();
+    	WechatAccount wechatConfig = MutiAccountSupportUtil.getWechatAccount();
     	redPacketSend.setNonce_str(StringUtil.getSecureRandomString());
     	redPacketSend.setWxappid(wechatConfig.getAppID());
     	Map<String, Object> field2Map = ReflectUtil.field2Map(redPacketSend);
 		String string = sortAndAppendMap(field2Map);
-		string+="&key="+wechatConfig.getWechatMerchant().getKey();
+		string+="&key="+wechatConfig.getMerchantKey();
 		String sign = Md5Util.Md5Digest(string).toUpperCase();
 		redPacketSend.setSign(sign);
 		return sign;
@@ -101,10 +101,10 @@ public class SignUtil {
      * @return
      */
     public static String signScanPayCallBack(PayCallBack scanPayCallBack){
-    	WechatConfig wechatConfig = MutiAccountSupportUtil.getWechatConfig();
+    	WechatAccount wechatConfig = MutiAccountSupportUtil.getWechatAccount();
     	Map<String, Object> field2Map = ReflectUtil.field2Map(scanPayCallBack);
     	String string = sortAndAppendMap(field2Map);
-    	string+="&key="+wechatConfig.getWechatMerchant().getKey();
+    	string+="&key="+wechatConfig.getMerchantKey();
     	String sign = Md5Util.Md5Digest(string).toUpperCase();
     	scanPayCallBack.setSign(sign);
     	return sign;
@@ -115,12 +115,12 @@ public class SignUtil {
      * @return
      */
     public static String signUnifiedOrderSend(UnifiedOrderSend unifiedOrderSend){
-    	WechatConfig wechatConfig = MutiAccountSupportUtil.getWechatConfig();
+    	WechatAccount wechatConfig = MutiAccountSupportUtil.getWechatAccount();
     	unifiedOrderSend.setNonce_str(StringUtil.getSecureRandomString());
     	unifiedOrderSend.setAppid(wechatConfig.getAppID());
     	Map<String, Object> field2Map = ReflectUtil.field2Map(unifiedOrderSend);
     	String string = sortAndAppendMap(field2Map);
-    	string+="&key="+wechatConfig.getWechatMerchant().getKey();
+    	string+="&key="+wechatConfig.getMerchantKey();
     	String sign = Md5Util.Md5Digest(string).toUpperCase();
     	unifiedOrderSend.setSign(sign);
     	return sign;
@@ -133,7 +133,7 @@ public class SignUtil {
 	public static String signMap(Map<String, Object> map,String signType,boolean appendMurchKey) {
     	String sortAndAppendMap = sortAndAppendMap(map);
     	if (appendMurchKey) {
-			sortAndAppendMap += "&key="+MutiAccountSupportUtil.getWechatConfig().getWechatMerchant().getKey();
+			sortAndAppendMap += "&key="+MutiAccountSupportUtil.getWechatAccount().getMerchantKey();
 		}
     	signType = signType.toUpperCase();
     	if ("MD5".equals(signType)) {
@@ -172,7 +172,7 @@ public class SignUtil {
         String timestamp = request.getParameter("timestamp");  
         // 随机数  
         String nonce = request.getParameter("nonce");  
-        return SignUtil.checkSignature(signature, timestamp, nonce,MutiAccountSupportUtil.getWechatConfig().getToken());
+        return SignUtil.checkSignature(signature, timestamp, nonce,MutiAccountSupportUtil.getWechatAccount().getToken());
     }  
 }  
  

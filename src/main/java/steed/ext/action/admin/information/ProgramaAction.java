@@ -41,7 +41,7 @@ public class ProgramaAction extends DwzAdminAction<Programa>{
 	public String delete(){
 		Information in = new Information();
 		in.setPrograma(domain);
-		if (DaoUtil.getCount(in) > 0) {
+		if (!DaoUtil.isResultNull(in)) {
 			DWZMessage dwzMessage = new DWZMessage(DWZMessage.type_delete_fail);
 			dwzMessage.setMessage("该栏目下存在文章，不能删除！！");
 			writeObjectMessage(dwzMessage);

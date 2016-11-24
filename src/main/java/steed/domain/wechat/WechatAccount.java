@@ -11,7 +11,9 @@ import org.hibernate.annotations.GenericGenerator;
 
 import steed.domain.BaseRelationalDatabaseDomain;
 import steed.ext.domain.user.User;
-import steed.util.wechat.domain.sys.WechatConfig;
+import steed.util.base.PathUtil;
+import steed.util.base.PropertyUtil;
+import steed.util.digest.AESUtil;
 
 
 /** 微信公众号 */
@@ -44,6 +46,20 @@ public class WechatAccount extends BaseRelationalDatabaseDomain{
 	 * 证书路径
 	 */
 	private String merchantCertPath;
+	
+	
+	/**
+	 * 从配置文件加载appID等
+	 */
+	public void loadAttrFromConfig(){
+		appID = PropertyUtil.getConfig("wechat.appID");
+		token = AESUtil.aesDecode(PropertyUtil.getConfig("wechat.token"));
+		appSecret =  AESUtil.aesDecode(PropertyUtil.getConfig("wechat.appSecret"));
+		encodingAESKey =  AESUtil.aesDecode(PropertyUtil.getConfig("wechat.encodingAESKey"));
+		merchantKey =  AESUtil.aesDecode(PropertyUtil.getConfig("wechat.merchant.key"));
+		merchantId =  PropertyUtil.getConfig("wechat.merchant.id");
+		merchantCertPath = PathUtil.praseRelativePath(PropertyUtil.getConfig("wechat.merchant.certPath"));
+	}
 
 	public String getMerchantKey() {
 		return merchantKey;
@@ -140,13 +156,13 @@ public class WechatAccount extends BaseRelationalDatabaseDomain{
 		domainInitializeAll(getUser());
 	}
 	
-	public WechatConfig convert2WechatConfig(){
+	/*public WechatConfig convert2WechatConfig(){
 		WechatConfig wechatConfig = new WechatConfig();
 		wechatConfig.setAppID(getAppID());
 		wechatConfig.setAppSecret(getAppSecret());
 		wechatConfig.setEncodingAESKey(getEncodingAESKey());
 		wechatConfig.setToken(getToken());
 		return wechatConfig;
-	}
+	}*/
 
 }

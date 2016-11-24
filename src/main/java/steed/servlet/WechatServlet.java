@@ -16,10 +16,8 @@ import steed.domain.GlobalParam;
 import steed.domain.wechat.WechatAccount;
 import steed.exception.runtime.system.FrameworkException;
 import steed.ext.engine.wechat.MessageEngineFactory;
-import steed.ext.plugin.WechatAccount2WechatConfigPlugin;
 import steed.util.base.BaseUtil;
 import steed.util.base.StringUtil;
-import steed.util.dao.DaoUtil;
 import steed.util.wechat.MessageUtil;
 import steed.util.wechat.MutiAccountSupportUtil;
 import steed.util.wechat.SignUtil;
@@ -134,9 +132,9 @@ public class WechatServlet extends HttpServlet{
     	return "aes".equals(encrypt_type);
     }
 
-	private void supportMutiAccount(HttpServletRequest request) {
+    private void supportMutiAccount(HttpServletRequest request) {
 		if (!MutiAccountSupportUtil.isSingleMode()) {
-			MutiAccountSupportUtil.setWechatConfig(new WechatAccount2WechatConfigPlugin().getWechatConfig(DaoUtil.get(WechatAccount.class, request.getParameter("key"))));;
+			MutiAccountSupportUtil.setWechatAccount(MutiAccountSupportUtil.getWechatAccount(request.getParameter("key")));
 		}
 	}  
 	  

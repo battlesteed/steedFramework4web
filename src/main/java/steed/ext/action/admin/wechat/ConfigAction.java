@@ -67,7 +67,7 @@ public class ConfigAction extends DwzAdminAction{
 		
 		if (certFile != null) {
 			try {
-				IOUtil.copyFile(certFile, MutiAccountSupportUtil.getWechatConfig().getWechatMerchant().getCertPath());
+				IOUtil.copyFile(certFile, MutiAccountSupportUtil.getWechatAccount().getMerchantCertPath());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

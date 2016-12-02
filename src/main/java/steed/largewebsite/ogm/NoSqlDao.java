@@ -2,7 +2,6 @@ package steed.largewebsite.ogm;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -21,11 +20,10 @@ import org.slf4j.LoggerFactory;
 
 import steed.domain.BaseDomain;
 import steed.domain.BaseUnionKeyDomain;
-import steed.domain.annotation.NotQueryCondition;
 import steed.largewebsite.ogm.domain.BaseNosqlDomain;
 import steed.util.base.BaseUtil;
 import steed.util.base.DomainUtil;
-import steed.util.base.StringUtil;
+import steed.util.dao.DaoUtil;
 import steed.util.reflect.ReflectUtil;
 
 public class NoSqlDao {
@@ -592,6 +590,22 @@ public class NoSqlDao {
 	public static void putField2Map(Object obj,Map<String, Object> map) {
 		putField2Map(obj, map, "");
 	}
+	
+	/**
+	 * 是否属于查找索引字段
+	 * @param fieldName
+	 * @return
+	 */
+	public static boolean isSelectIndex(String fieldName){
+		for (String suffix:DaoUtil.indexSuffix) {
+			if (fieldName.endsWith(suffix)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
 	/**
 	 * 把obj中非空字段放到map
 	 * @param t
@@ -604,27 +618,13 @@ public class NoSqlDao {
 			List<Field> Fields = ReflectUtil.getAllFields(obj);
 			for (Field f:Fields) {
 				String fieldName = f.getName();
-				if ("serialVersionUID".equals(fieldName)) {
+				if (ReflectUtil.isFieldFinal(f)) {
 					continue;
 				}
-				//标有Transient且不是索引字段即跳过
-/*					if (f.getAnnotation(Transient.class) != null) {
-						continue;
-					}
-*/				if (ReflectUtil.getAnnotation(NotQueryCondition.class, objClass, f) != null) {
+				//不是索引字段且标有Transient即跳过
+				if (!isSelectIndex(fieldName) && 
+						ReflectUtil.getAnnotation(Transient.class, objClass, f) != null) {
 					continue;
-				}
-				String fieldGetterName = StringUtil.getFieldGetterName(fieldName);
-				/*if (f.getType() != Boolean.class) {
-					fieldGetterName = StringUtil.getFieldGetMethodName(fieldName);
-				}else {
-					fieldGetterName = StringUtil.getFieldIsMethodName(fieldName);
-				}*/
-				Method fidleMethod = ReflectUtil.getDeclaredMethod(objClass, fieldGetterName);
-				if (fidleMethod != null) {
-					if(fidleMethod.getAnnotation(Transient.class) != null){
-						continue;
-					}
 				}
 				
 				f.setAccessible(true);

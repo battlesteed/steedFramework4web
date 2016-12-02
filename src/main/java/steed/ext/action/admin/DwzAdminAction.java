@@ -57,17 +57,17 @@ public abstract class DwzAdminAction<SteedDomain extends BaseDatabaseDomain> ext
 		return dwzMessage;
 	}
 	
-	private Menu getMenu(String subfix){
+	protected Menu getMenu(String subfix){
 		String path = "."+getNamespace()+subfix;
 		Menu menu = new Menu();
 		menu.setUrl(path);
 		return DaoUtil.listOne(menu);
 	}
 	
-	private Menu getActionMenu() {
+	protected Menu getActionMenu() {
 		Menu menu = getMenu("/index.act%");
 		if (menu == null) {
-			menu = getMenu("/%");
+			menu = getMenu("/");
 		}
 		return menu;
 	}

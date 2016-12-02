@@ -32,6 +32,7 @@ public class MutiAccountSupportUtil {
 		public void setWechatAccount(WechatAccount wechatAccount) {
 			ContextUtil.getSession().setAttribute("wechatAccount",wechatAccount);
 		}
+		
 	};
 	
 	
@@ -58,6 +59,7 @@ public class MutiAccountSupportUtil {
 	public static void relese(){
 		wechatAccountThreadLocal.remove();
 	}
+	
 	public static WechatAccount getWechatAccount(){
 		if (wechatAccountThreadLocal.get() != null) {
 			return wechatAccountThreadLocal.get();

@@ -31,7 +31,6 @@ public class IndexAction extends DwzAdminAction{
 	public String index(){
 		if (getSession().getAttribute("menuList") == null) {
 			User user = (User) getLoginUser();
-			//BaseDao.listAllObj(Menu.class)会缓存menu，不用
 			List<String> asc = new ArrayList<String>();
 			asc.add("order1");
 			Menu t = new Menu();
@@ -102,24 +101,12 @@ public class IndexAction extends DwzAdminAction{
 		return steed_forward;
 	}
 	
-	/*@Action(value="main",results={@Result(name="success",location="/WEB-INF/jsp/admin/main.jsp")})
-	public String main(){
-		return steed_forward;
-	}
-	@Action(value="head",results={@Result(name="success",location="/WEB-INF/jsp/admin/head.jsp")})
-	public String head(){
-		return SUCCESS;
-	}*/
+	
 	@Action(value="logout",results={@Result(name="success",location="/WEB-INF/jsp/admin/login.jsp")})
 	public String logout(){
 		setSessionAttribute(GlobalParam.attribute.admin, null);
 		setSessionAttribute(GlobalParam.attribute.user, null);
 		setSessionAttribute("menuList", null);
 		return SUCCESS;
-	}
-	
-	@Override
-	public BaseDatabaseDomain getModel() {
-		return null;
 	}
 }

@@ -304,7 +304,7 @@ public abstract class BaseAction<SteedDomain extends BaseDatabaseDomain> extends
 	protected String index(List<String> desc,List<String> asc){
 		beforeIndex();
 		BaseDomain model = getModel();
-		DomainUtil.FuzzyQueryInitialize(model);
+		DomainUtil.fuzzyQueryInitialize(model);
 		setRequestPage(DaoUtil.listObj(pageSize,currentPage, model,desc,asc));
 		afterIndex();
 		return steed_forward;

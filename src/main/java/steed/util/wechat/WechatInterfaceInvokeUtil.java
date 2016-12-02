@@ -184,7 +184,7 @@ public class WechatInterfaceInvokeUtil {
 		return invokeWechatInterface(send, BaseWechatResult.class, fitParam2Url(WechatConstantParamter.setIndustryUrl));
 	}
 	/**
-	 * @see #getTemplateIdt
+	 * @see #getTemplateId
 	 * @param send
 	 * @return
 	 */
@@ -207,7 +207,7 @@ public class WechatInterfaceInvokeUtil {
 	 * @param send
 	 * @return
 	 */
-	public static TemplateMessageResult setTemplateMessage(TemplateMessageSend send){
+	public static TemplateMessageResult sendTemplateMessage(TemplateMessageSend send){
 		return invokeWechatInterface(send, TemplateMessageResult.class, fitParam2Url(WechatConstantParamter.sendTemplateMessageUrl));
 	}
 	/**
@@ -215,7 +215,7 @@ public class WechatInterfaceInvokeUtil {
 	 * @param send
 	 * @return
 	 */
-	public static TemplateMessageResult setTemplateMessage(TemplateMessageSend send,String template_id_short){
+	public static TemplateMessageResult sendTemplateMessage(TemplateMessageSend send,String template_id_short){
 		String template_id = null;
 		if (template_id_short != null && send.getTemplate_id() == null) {
 			template_id = getTemplateId(template_id_short).getTemplate_id();

@@ -16,6 +16,7 @@ import javax.persistence.IdClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import steed.domain.BaseDatabaseDomain;
 import steed.domain.BaseDomain;
 import steed.domain.BaseUser;
 import steed.domain.UnionKeyDomain;
@@ -377,12 +378,7 @@ public class DomainUtil{
 		} 
 	}
 	
-	/**
-	 * 初始化查询实体类模糊查询
-	 * @param obj
-	 * @param fieldsSkip 跳过的字段，不跳请传空
-	 */
-	public static void FuzzyQueryInitialize(Object obj,String ...fieldsSkip){
+	private static void fuzzyQueryInitialize(String prefix,BaseDomain obj,String ...fieldsSkip){
 		List<String> fieldsSkipList = new ArrayList<String>();
 		Collections.addAll(fieldsSkipList, fieldsSkip);
 		List<Field> allFields = ReflectUtil.getAllFields(obj);
@@ -393,8 +389,12 @@ public class DomainUtil{
 				}
 				f.setAccessible(true);
 				Object value = f.get(obj);
-				if (value instanceof String && !StringUtil.isStringEmpty((String) value)&&!fieldsSkipList.contains(f.getName())) {
-					f.set(obj, "%"+value+"%");
+				if (!fieldsSkipList.contains(prefix+f.getName())) {
+					if (value instanceof String && !StringUtil.isStringEmpty((String) value)) {
+						f.set(obj, "%"+value+"%");
+					}else if (value instanceof BaseDomain && BaseUtil.isObjEmpty(DomainUtil.getDomainId((BaseDomain) value))) {
+						fuzzyQueryInitialize(f.getName()+".", (BaseDomain) value, fieldsSkip);
+					}
 				}
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
@@ -402,6 +402,14 @@ public class DomainUtil{
 				e.printStackTrace();
 			}
 		}
+	}
+	/**
+	 * 初始化查询实体类模糊查询
+	 * @param obj
+	 * @param fieldsSkip 跳过的字段，不跳请传空
+	 */
+	public static void fuzzyQueryInitialize(BaseDomain obj,String ...fieldsSkip){
+		fuzzyQueryInitialize("", obj, fieldsSkip);
 	}
 	
 	

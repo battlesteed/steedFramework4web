@@ -3,7 +3,6 @@ package steed.util.dao;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -28,7 +27,6 @@ import org.slf4j.LoggerFactory;
 import steed.domain.BaseDomain;
 import steed.domain.BaseRelationalDatabaseDomain;
 import steed.domain.BaseUnionKeyDomain;
-import steed.domain.annotation.NotQueryCondition;
 import steed.domain.application.Page;
 import steed.util.base.BaseUtil;
 import steed.util.base.CollectionsUtil;
@@ -90,7 +88,7 @@ public class DaoUtil {
 	/**
 	 * 查询条件后缀
 	 */
-	private static final String[] indexSuffix = {"_max_1","_min_1","_like_1","_not_in_1","_not_equal_1","_not_join","_not_null","_not_compile_param",personalHqlGeneratorKey};
+	public static final String[] indexSuffix = {"_max_1","_min_1","_like_1","_not_in_1","_not_equal_1","_not_join","_not_null","_not_compile_param",personalHqlGeneratorKey};
 	/***********\异常提示专用************/
 	
 	/*//TODO 完善异常类型
@@ -1322,6 +1320,19 @@ public class DaoUtil {
 		setMapParam(map, query);
 		return query;
 	}
+	/**
+	 * 生成SQLquery并设置查询参数
+	 * @param map
+	 * @param sql
+	 * @return
+	 */
+	public static Query createSQLQuery(Map<String, Object> map,StringBuffer sql) {
+		logger.debug("sql---->"+sql.toString());
+		logger.debug("参数---->"+map);
+		Query query = getSession().createSQLQuery(sql.toString());
+		setMapParam(map, query);
+		return query;
+	}
 	
 	protected static Session getSession(){
 		if (currentTransaction.get() == null) {
@@ -1439,30 +1450,14 @@ public class DaoUtil {
 			Class<? extends Object> objClass = obj.getClass();
 			List<Field> Fields = ReflectUtil.getAllFields(obj);
 			for (Field f:Fields) {
-				String fieldName = f.getName();
-				if ("serialVersionUID".equals(fieldName)) {
+				if (ReflectUtil.isFieldFinal(f)) {
 					continue;
 				}
-				//标有Transient且不是索引字段即跳过
-				if (!isSelectIndex(fieldName)) {
-/*					if (f.getAnnotation(Transient.class) != null) {
-						continue;
-					}
-*/					if (ReflectUtil.getAnnotation(NotQueryCondition.class, objClass, f) != null) {
-						continue;
-					}
-					String fieldGetterName = StringUtil.getFieldGetterName(fieldName);
-					/*if (f.getType() != Boolean.class) {
-						fieldGetterName = StringUtil.getFieldGetMethodName(fieldName);
-					}else {
-						fieldGetterName = StringUtil.getFieldIsMethodName(fieldName);
-					}*/
-					Method fidleMethod = ReflectUtil.getDeclaredMethod(objClass, fieldGetterName);
-					if (fidleMethod != null) {
-						if(fidleMethod.getAnnotation(Transient.class) != null){
-							continue;
-						}
-					}
+				String fieldName = f.getName();
+				//不是索引字段且标有Transient即跳过
+				if (!isSelectIndex(fieldName) && 
+						ReflectUtil.getAnnotation(Transient.class, objClass, f) != null) {
+					continue;
 				}
 				
 				f.setAccessible(true);

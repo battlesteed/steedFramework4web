@@ -7,6 +7,8 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import com.opensymphony.xwork2.interceptor.ParametersInterceptor;
+
 import steed.ext.domain.user.User;
 import steed.util.base.BaseUtil;
 import steed.util.dao.DaoUtil;
@@ -36,9 +38,10 @@ public class BaseTest {
 	
 	@Test
 	public void testddd(){
+		ParametersInterceptor p;
 		 System.out.println("总大小" + FormetFileSize(new File("D:\\temp").getTotalSpace()));
          System.out.println("剩余" + FormetFileSize(new File("D:\\temp\\").getFreeSpace()));
-         System.out.println("剩余" + (long)new File("E:\\").getFreeSpace()/(1024*1024));
+         System.out.println("剩余" + (long)new File("E:\\apache-tomcat-9.0.0.M9\\wtpwebapps\\littlePig\\WEB-INF\\logs\\").getFreeSpace()/(1024*1024));
          System.out.println("剩余" + (long)new File("E:\\").getFreeSpace());
 	}
 	

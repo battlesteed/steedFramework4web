@@ -2,7 +2,11 @@ package steed.test;
 
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
+import org.hibernate.hql.ast.origin.hql.parse.HQLParser.elements_key_return;
 import org.junit.Test;
 
 import steed.domain.system.Property;
@@ -14,6 +18,7 @@ import steed.util.base.BaseUtil;
 import steed.util.base.test.TestEfficiency;
 import steed.util.dao.DaoUtil;
 import steed.util.dao.HibernateUtil;
+import steed.util.dao.SimpleHqlGenerator;
 import steed.util.digest.AESUtil;
 import steed.util.digest.Md5Util;
 
@@ -27,6 +32,38 @@ public class DatabaseTest{
 		TerminalUser terminalUser = DaoUtil.get(TerminalUser.class, "admin");
 		terminalUser.setPassword(AESUtil.aesEncode("123456"));
 		terminalUser.update();
+	}
+	
+	/**
+	 * 自定义hql生成器的例子,这里我们要查找姓名或者昵称为admin的用户,
+	 * 如果同时把user实体类的姓名和昵称设置为admin的话,系统默认hql生成器会生成姓名和昵称都是admin这样的查询条件,所以我们要自定义hql生成器
+	 * 
+	 */
+	@Test
+	public void testHqlGenter(){
+		User user = new User();
+		user.setName("admin");
+		//调用setPersonalHqlGenerator即可设置该对象的个性化hql生成器
+		user.setPersonalHqlGenerator(new SimpleHqlGenerator(){
+			@Override
+			protected void appendSingleWhereCondition(String domainSimpleName, StringBuffer hql,
+					List<String> removedEntry, Map<String, ?> query, Entry<String, Object> e,
+					Map<String, Object> put) {
+				//如果查询字段名不是name的话则调用父类方法生成hql
+				if ("name".equals(e.getKey())) {
+					hql.append(" and ( ").append(domainSimpleName).append(".name = :name")
+						.append(" or ").append(domainSimpleName).append(".nickName = :nickName ) ");
+					//这里因为我们多加了一个:nickName参数,所以要调用下面的代码把它加到查询参数里面
+					put.put("nickName", e.getValue());
+				}else{
+					super.appendSingleWhereCondition(domainSimpleName, hql, removedEntry, query, e, put);
+				}
+			}
+			
+		});
+		
+		//这里调用listAllObj生成hql查询数据库,大家可以看一下控制台打印的hql是什么样的.
+		BaseUtil.out(DaoUtil.listAllObj(user));
 	}
 	
 	@Test

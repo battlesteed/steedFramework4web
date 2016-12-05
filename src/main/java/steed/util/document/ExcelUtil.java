@@ -28,6 +28,7 @@ import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -48,14 +49,14 @@ public class ExcelUtil {
         	List<Object> beanRow = excels.get(i);
         	for (int j = 0; j < beanRow.size(); j++) {
         		XSSFCell cell = row.createCell(j);
-				Object str = beanRow.get(j);
-				/*if (str != null) {
-					if (str instanceof Date) {
-						cell.setCellValue(str);
-					}
-				}*/
-//				cell.setCellValue(str == null ? "":str);
-				setCellValue(str, cell,workbook);
+				Object obj = beanRow.get(j);
+				if (obj instanceof MergedRegion) {
+					setCellValue(null, cell,workbook);
+					MergedRegion mergedRegion = (MergedRegion) obj;
+					sheet.addMergedRegionUnsafe(new CellRangeAddress(mergedRegion.getFirstRow(), mergedRegion.getLastRow(), mergedRegion.getFirstCol(), mergedRegion.getLastCol()));
+				}else{
+					setCellValue(obj, cell,workbook);
+				}
 			}
 		}
         

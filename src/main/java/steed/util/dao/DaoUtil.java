@@ -1511,7 +1511,7 @@ public class DaoUtil {
 	 * @param map
 	 */
 	public static StringBuffer appendHqlWhere(String domainSimpleName, StringBuffer hql,
-			Map<String, ? extends Object> map) {
+			Map<String, Object> map) {
 		if (map == null) {
 			return hql;
 		}

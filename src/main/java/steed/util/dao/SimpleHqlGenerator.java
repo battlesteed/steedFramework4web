@@ -22,13 +22,13 @@ import steed.util.base.StringUtil;
 public class SimpleHqlGenerator implements HqlGenerator{
 
 	@Override
-	public StringBuffer appendHqlWhere(String domainSimpleName, StringBuffer hql, Map<String, ?> map) {
+	public StringBuffer appendHqlWhere(String domainSimpleName, StringBuffer hql, Map<String, Object> map) {
 		if (CollectionsUtil.isCollectionsEmpty(map)) {
 			return hql;
 		}
 		List<String> removedEntry = new ArrayList<String>();
-		Map<String, ? extends Object> put = new HashMap<>();
-		for(Entry<String, ? extends Object> e:map.entrySet()){
+		Map<String, Object> put = new HashMap<>();
+		for(Entry<String, Object> e:map.entrySet()){
 			appendSingleWhereCondition(domainSimpleName, hql, removedEntry, map, e,put);
 		}
 		map.putAll((Map) put);
@@ -42,12 +42,14 @@ public class SimpleHqlGenerator implements HqlGenerator{
 	 * append 单个 where 条件
 	 * @param domainSimpleName
 	 * @param hql
-	 * @param map
-	 * @param removedEntry
+	 * @param query
+	 * @param removedEntry 你要移除的查询条件,比如query参数里面有一个<name,false>的查询条件,
+	 * 	然后你生成了domainSimpleName.name is not null 的hql,这个hql是没有:name这个参数的,要把他移除掉,这时候就要调removedEntry.add("name");通知框架把name参数移除掉
 	 * @param e
+	 * @param put 你要往
 	 */
 	protected void appendSingleWhereCondition(String domainSimpleName, StringBuffer hql,
-			List<String> removedEntry, Map<String, ?> query,Entry<String, ? extends Object> e,Map<String, ? extends Object> put) {
+			List<String> removedEntry, Map<String, ?> query,Entry<String, Object> e,Map<String, Object> put) {
 		String key = e.getKey();
 		if ((e.getValue() instanceof Collection || e.getValue().getClass().isArray()) 
 				&& !key.endsWith("_not_join")) {

@@ -11,5 +11,5 @@ import java.util.Map;
  * @see steed.util.dao#HqlGenerator
  */
 public interface HqlGenerator {
-	StringBuffer appendHqlWhere(String domainSimpleName, StringBuffer hql,Map<String, ? extends Object> map);
+	StringBuffer appendHqlWhere(String domainSimpleName, StringBuffer hql,Map<String, Object> map);
 }

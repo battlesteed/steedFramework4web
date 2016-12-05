@@ -7,11 +7,20 @@ import steed.exception.runtime.system.SystemInitException;
 import steed.util.base.BaseUtil;
 
 public abstract class SimpleTaskEngine extends TaskEngine{
+	/**
+	 * 执行间隔
+	 */
 	private long delay;
+	/**
+	 * 第一次执行时的时间间隔
+	 */
 	private long initialDelay;
+	/**
+	 * 时间间隔的单位,见java.util.concurrent.TimeUnit或steed.util.system.SimpleTaskEngine.getTimeUnit(String)
+	 */
 	private String timeUnit;
 	/**
-	 * 0,schedule;1,scheduleWithFixedDelay;2,scheduleAtFixedRate
+	 * 0,schedule(只执行一次);1,scheduleWithFixedDelay(间隔固定的时间执行);2,scheduleAtFixedRate(本任务执行完成后,延迟固定时间再执行下一次任务)
 	 */
 	private int startType = 1;
 	/**

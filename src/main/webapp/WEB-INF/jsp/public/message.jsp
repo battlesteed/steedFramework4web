@@ -1,4 +1,4 @@
-<%@page import="steed.util.dao.DaoUtil"%>
+<%@page import="steed.hibernatemaster.util.DaoUtil"%>
 <%@page import="steed.exception.MessageExceptionInterface"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/jsp/include/head/tagLib.jsp" %>

@@ -20,7 +20,13 @@ public abstract class SimpleTaskEngine extends TaskEngine{
 	 */
 	private String timeUnit;
 	/**
-	 * 0,schedule(只执行一次);1,scheduleWithFixedDelay(间隔固定的时间执行);2,scheduleAtFixedRate(本任务执行完成后,延迟固定时间再执行下一次任务)
+	 * 0,schedule(只执行一次);
+	 * 1,scheduleWithFixedDelay(间隔固定的时间执行);
+	 * 2,scheduleAtFixedRate(本任务执行完成后,延迟固定时间再执行下一次任务)
+	 * 不明白的朋友可以百度一下scheduleWithFixedDelay和scheduleAtFixedRate的区别.
+	 * 
+	 * 在下在这里用一句简单明了的话说一下吧:scheduleWithFixedDelay是从任务开始执行就开始计算执行间隔时间了,
+	 * scheduleAtFixedRate是从任务执行完才开始计算执行时间间隔.
 	 */
 	private int startType = 1;
 	/**

@@ -15,10 +15,12 @@ import org.apache.struts2.convention.annotation.Namespace;
 
 import steed.action.annotation.Power;
 import steed.domain.GlobalParam;
+import steed.hibernatemaster.Config;
 import steed.util.UtilsUtil;
 import steed.util.base.PathUtil;
 import steed.util.base.PropertyUtil;
 import steed.util.file.FileUtil;
+import steed.util.reflect.ReflectUtil;
 import steed.util.system.TaskUtil;
 /**
  * 启动时初始化系统
@@ -35,10 +37,17 @@ public class SystemInitListener implements ServletContextListener {
 		ServletContext servletContext = event.getServletContext();
 		initGlobalParam(servletContext);
 		UtilsUtil.initUtils();
+		configHibernateMaster();
 		servletContext.setAttribute("path_powerMap", scanActionPowerAndDomain());
-		
 		//启动定时任务
 		new TaskUtil().init();
+	}
+	
+	private void configHibernateMaster(){
+		Config.isSignalDatabase = PropertyUtil.getBoolean("isSignalDatabase");
+		Config.devMode = PropertyUtil.getBoolean("devMode");
+		Config.defaultHqlGenerator = ReflectUtil.getInstanceFromProperties("dao.HqlGenerator");
+		Config.factoryEngine = ReflectUtil.getInstanceFromProperties("dao.factoryEngine");
 	}
 
 	

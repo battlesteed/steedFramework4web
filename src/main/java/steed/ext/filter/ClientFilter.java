@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import steed.ext.domain.terminal.ClientMessage;
 import steed.ext.domain.terminal.TerminalUser;
+import steed.hibernatemaster.util.DaoUtil;
 import steed.util.base.PropertyUtil;
 import steed.util.base.StringUtil;
-import steed.util.dao.DaoUtil;
 import steed.util.digest.AESUtil;
 import steed.util.digest.Md5Util;
 import steed.util.http.HttpUtil;

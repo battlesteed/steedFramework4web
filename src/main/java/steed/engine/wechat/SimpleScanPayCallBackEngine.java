@@ -2,7 +2,7 @@ package steed.engine.wechat;
 
 
 import steed.domain.system.Property;
-import steed.util.dao.DaoUtil;
+import steed.hibernatemaster.util.DaoUtil;
 import steed.util.system.SynchronizedKeyGenerator;
 import steed.util.wechat.MessageUtil;
 import steed.util.wechat.domain.sys.PayCallBack;

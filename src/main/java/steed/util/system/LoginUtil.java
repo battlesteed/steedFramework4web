@@ -12,10 +12,10 @@ import steed.domain.application.Message;
 import steed.domain.system.Config;
 import steed.ext.domain.system.LoginLog;
 import steed.ext.domain.user.User;
+import steed.hibernatemaster.util.DaoUtil;
 import steed.servlet.SecurityCode;
 import steed.util.base.DateUtil;
 import steed.util.base.StringUtil;
-import steed.util.dao.DaoUtil;
 import steed.util.digest.AESUtil;
 import steed.util.digest.DigestUtil;
 

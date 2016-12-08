@@ -10,7 +10,7 @@ import steed.domain.GlobalParam;
 import steed.domain.application.DWZMessage;
 import steed.ext.domain.user.User;
 import steed.filter.BaseAdminFilter;
-import steed.util.dao.DaoUtil;
+import steed.hibernatemaster.util.DaoUtil;
 import steed.util.digest.AESUtil;
 import steed.util.http.HttpUtil;
 import steed.util.system.LoginUtil;

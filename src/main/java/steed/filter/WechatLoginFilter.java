@@ -15,10 +15,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import steed.domain.wechat.WechatUser;
+import steed.hibernatemaster.util.DaoUtil;
 import steed.util.base.ContextUtil;
 import steed.util.base.PropertyUtil;
 import steed.util.base.StringUtil;
-import steed.util.dao.DaoUtil;
 import steed.util.wechat.WechatInterfaceInvokeUtil;
 
 /**

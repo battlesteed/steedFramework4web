@@ -16,12 +16,12 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import steed.domain.BaseDomain;
 import steed.domain.GlobalParam;
 import steed.domain.annotation.AllowSpecialCharacter;
 import steed.domain.annotation.CleanXss;
 import steed.domain.annotation.ValidateReg;
 import steed.exception.ValidateException;
+import steed.hibernatemaster.domain.BaseDomain;
 import steed.util.base.BaseUtil;
 import steed.util.base.PropertyUtil;
 import steed.util.base.StringUtil;

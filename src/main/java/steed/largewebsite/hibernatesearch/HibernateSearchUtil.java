@@ -9,9 +9,9 @@ import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
 import org.hibernate.search.annotations.Indexed;
 
-import steed.domain.BaseDatabaseDomain;
-import steed.domain.DomainScanner;
 import steed.exception.PathIsTopException;
+import steed.hibernatemaster.domain.BaseDatabaseDomain;
+import steed.hibernatemaster.domain.DomainScanner;
 import steed.largewebsite.ogm.OgmUtil;
 import steed.util.base.PathUtil;
 

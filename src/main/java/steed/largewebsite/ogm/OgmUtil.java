@@ -20,9 +20,9 @@ import org.hibernate.ogm.cfg.OgmProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import steed.domain.BaseDatabaseDomain;
-import steed.domain.DomainScanner;
 import steed.exception.runtime.BaseRuntimeException;
+import steed.hibernatemaster.domain.BaseDatabaseDomain;
+import steed.hibernatemaster.domain.DomainScanner;
 import steed.util.base.PathUtil;
 import steed.util.base.PropertyUtil;
 import steed.util.reflect.ReflectUtil;

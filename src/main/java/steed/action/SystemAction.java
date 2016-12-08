@@ -12,9 +12,9 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 
 import steed.domain.wechat.WechatUser;
+import steed.hibernatemaster.util.DaoUtil;
 import steed.util.base.ContextUtil;
 import steed.util.base.StringUtil;
-import steed.util.dao.DaoUtil;
 import steed.util.document.QRCodeUtil;
 import steed.util.system.DataCacheUtil;
 import steed.util.wechat.MutiAccountSupportUtil;

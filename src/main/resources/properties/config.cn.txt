@@ -26,8 +26,6 @@ companyName=战马系列框架之web
 #公司主页
 companyUrl=http://battlesteed.cn
 
-#关系型数据库实体类扫描器
-dao.DomainScanner=steed.domain.SingleDomainScanner
 #sessionFactory获取器
 dao.factoryEngine=steed.util.dao.SimpleFactoryEngine
 #默认的Hql自动生成器
@@ -90,7 +88,7 @@ wechat.merchant.id=
 wechat.pullAllinformation=true
 #0明文,1兼容,2安全模式
 wechat.encodeMode=1
-#商户证书存储路径,如果没有用到发微信红包功能,请忽略.相对WEB-INF/class/的路径
+#商户证书存储路径,如果没有用到发微信红包,退款等功能,请忽略.相对WEB-INF/class/的路径
 wechat.merchant.certPath=../apiclient_cert.p12
 #ture表示单微信号模式,false表示多微信号模式
 wechat.singleMode=true

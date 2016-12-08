@@ -7,9 +7,9 @@ import org.junit.Test;
 
 import steed.ext.domain.information.Information;
 import steed.ext.domain.information.Programa;
+import steed.hibernatemaster.util.DaoUtil;
 import steed.util.UtilsUtil;
 import steed.util.base.BaseUtil;
-import steed.util.dao.DaoUtil;
 
 public class TestSonQuery {
 	@Test

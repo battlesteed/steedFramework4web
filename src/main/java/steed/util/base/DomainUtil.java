@@ -16,13 +16,13 @@ import javax.persistence.IdClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import steed.domain.BaseDatabaseDomain;
-import steed.domain.BaseDomain;
 import steed.domain.BaseUser;
-import steed.domain.UnionKeyDomain;
 import steed.exception.runtime.domain.DomainIdAnnotationNotFoundException;
 import steed.exception.runtime.system.FrameworkException;
-import steed.util.dao.DaoUtil;
+import steed.hibernatemaster.domain.BaseDatabaseDomain;
+import steed.hibernatemaster.domain.BaseDomain;
+import steed.hibernatemaster.domain.UnionKeyDomain;
+import steed.hibernatemaster.util.DaoUtil;
 import steed.util.reflect.ReflectUtil;
 /**
  * 实体类工具类

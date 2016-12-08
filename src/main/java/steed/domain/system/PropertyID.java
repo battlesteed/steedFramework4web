@@ -1,7 +1,7 @@
 package steed.domain.system;
 
-import steed.domain.DomainID;
 import steed.domain.annotation.ValidateReg;
+import steed.hibernatemaster.domain.DomainID;
 import steed.util.base.RegUtil;
 
 public class PropertyID extends DomainID{

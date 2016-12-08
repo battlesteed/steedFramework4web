@@ -3,8 +3,8 @@ package steed.util.base;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import steed.domain.BaseDatabaseDomain;
-import steed.domain.BaseDomain;
+import steed.hibernatemaster.domain.BaseDatabaseDomain;
+import steed.hibernatemaster.domain.BaseDomain;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

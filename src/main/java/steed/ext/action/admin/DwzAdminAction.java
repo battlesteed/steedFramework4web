@@ -3,10 +3,10 @@ package steed.ext.action.admin;
 import org.apache.struts2.convention.annotation.Namespace;
 
 import steed.action.admin.BaseAdminAction;
-import steed.domain.BaseDatabaseDomain;
 import steed.domain.application.DWZMessage;
 import steed.ext.domain.system.Menu;
-import steed.util.dao.DaoUtil;
+import steed.hibernatemaster.domain.BaseDatabaseDomain;
+import steed.hibernatemaster.util.DaoUtil;
 /**
  * dwz专用action
  * @author 战马

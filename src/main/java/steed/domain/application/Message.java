@@ -1,6 +1,6 @@
 package steed.domain.application;
 
-import steed.domain.BaseDomain;
+import steed.hibernatemaster.domain.BaseDomain;
 /**
  * 前端提示消息实体类
  * @author 战马

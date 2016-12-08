@@ -16,10 +16,10 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
-import steed.domain.BaseRelationalDatabaseDomain;
 import steed.domain.BaseUser;
 import steed.domain.annotation.EditNotAllowed;
 import steed.domain.annotation.ValidateReg;
+import steed.hibernatemaster.domain.BaseRelationalDatabaseDomain;
 import steed.util.base.CollectionsUtil;
 import steed.util.base.RegUtil;
 import steed.util.base.StringUtil;

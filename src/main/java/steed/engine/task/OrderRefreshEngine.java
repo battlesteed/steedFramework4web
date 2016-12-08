@@ -5,9 +5,9 @@ import java.util.List;
 
 import steed.domain.system.Property;
 import steed.engine.wechat.SimpleScanPayCallBackEngine;
+import steed.hibernatemaster.util.DaoUtil;
 import steed.util.base.BaseUtil;
 import steed.util.base.DateUtil;
-import steed.util.dao.DaoUtil;
 import steed.util.reflect.ReflectUtil;
 import steed.util.system.SimpleTaskEngine;
 import steed.util.wechat.MessageUtil;

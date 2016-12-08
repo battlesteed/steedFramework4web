@@ -1,8 +1,8 @@
 package steed.util.wechat;
 
 import steed.domain.wechat.WechatAccount;
+import steed.hibernatemaster.util.DaoUtil;
 import steed.util.base.ContextUtil;
-import steed.util.dao.DaoUtil;
 
 /**
  * 微信多账号支持工具类

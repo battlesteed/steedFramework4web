@@ -2,7 +2,7 @@ package steed.largewebsite.ogm.domain;
 
 import java.util.List;
 
-import steed.domain.BaseDatabaseDomain;
+import steed.hibernatemaster.domain.BaseDatabaseDomain;
 import steed.largewebsite.ogm.NoSqlDao;
 import steed.util.base.BaseUtil;
 import steed.util.base.DomainUtil;

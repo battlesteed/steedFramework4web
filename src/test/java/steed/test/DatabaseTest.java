@@ -1,12 +1,10 @@
 package steed.test;
 
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.hibernate.hql.ast.origin.hql.parse.HQLParser.elements_key_return;
 import org.junit.Test;
 
 import steed.domain.system.Property;
@@ -14,15 +12,18 @@ import steed.ext.domain.information.Information;
 import steed.ext.domain.information.Programa;
 import steed.ext.domain.terminal.TerminalUser;
 import steed.ext.domain.user.User;
+import steed.hibernatemaster.util.DaoUtil;
+import steed.hibernatemaster.util.HibernateUtil;
+import steed.hibernatemaster.util.SimpleHqlGenerator;
 import steed.util.base.BaseUtil;
 import steed.util.base.test.TestEfficiency;
-import steed.util.dao.DaoUtil;
-import steed.util.dao.HibernateUtil;
-import steed.util.dao.SimpleHqlGenerator;
 import steed.util.digest.AESUtil;
 import steed.util.digest.Md5Util;
 
 public class DatabaseTest{
+	/**
+	 * 初始修改aes密钥时请运行该例子.
+	 */
 	@Test
 	public void aesInit(){
 		User user = DaoUtil.get(User.class, "admin");

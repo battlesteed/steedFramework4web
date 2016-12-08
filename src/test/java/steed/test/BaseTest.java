@@ -10,8 +10,8 @@ import org.junit.Test;
 import com.opensymphony.xwork2.interceptor.ParametersInterceptor;
 
 import steed.ext.domain.user.User;
+import steed.hibernatemaster.util.DaoUtil;
 import steed.util.base.BaseUtil;
-import steed.util.dao.DaoUtil;
 import steed.util.system.TaskUtil;
 import steed.util.wechat.AccessTokenUtil;
 

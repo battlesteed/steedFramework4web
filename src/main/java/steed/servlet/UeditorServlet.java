@@ -14,9 +14,9 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import steed.domain.BaseDomain;
 import steed.domain.BaseUser;
 import steed.domain.GlobalParam;
+import steed.hibernatemaster.domain.BaseDomain;
 import steed.util.base.DomainUtil;
 import steed.util.base.IOUtil;
 import steed.util.base.PathUtil;

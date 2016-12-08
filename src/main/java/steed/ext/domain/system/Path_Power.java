@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.persistence.Id;
 
-import steed.domain.BaseRelationalDatabaseDomain;
+import steed.hibernatemaster.domain.BaseRelationalDatabaseDomain;
 
 public class Path_Power extends BaseRelationalDatabaseDomain{
 	private static final long serialVersionUID = -7618602732432015406L;

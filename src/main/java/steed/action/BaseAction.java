@@ -15,21 +15,21 @@ import org.apache.struts2.ServletActionContext;
 
 import steed.action.annotation.ValidateMe;
 import steed.action.annotation.ValidateUser;
-import steed.domain.BaseDatabaseDomain;
-import steed.domain.BaseDomain;
 import steed.domain.BaseUser;
 import steed.domain.GlobalParam;
-import steed.domain.application.Page;
 import steed.exception.runtime.system.AttackedExeception;
 import steed.exception.runtime.system.FrameworkException;
+import steed.hibernatemaster.domain.BaseDatabaseDomain;
+import steed.hibernatemaster.domain.BaseDomain;
+import steed.hibernatemaster.domain.Page;
+import steed.hibernatemaster.util.DaoUtil;
+import steed.hibernatemaster.util.HibernateUtil;
 import steed.other.SteedHttpServletRequest;
 import steed.util.base.BaseUtil;
 import steed.util.base.ContextUtil;
 import steed.util.base.DomainUtil;
 import steed.util.base.PropertyUtil;
 import steed.util.base.StringUtil;
-import steed.util.dao.DaoUtil;
-import steed.util.dao.HibernateUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;

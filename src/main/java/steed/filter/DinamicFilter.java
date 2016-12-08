@@ -18,10 +18,10 @@ import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import steed.hibernatemaster.util.DaoUtil;
+import steed.hibernatemaster.util.HibernateUtil;
 import steed.util.UtilsUtil;
 import steed.util.base.PropertyUtil;
-import steed.util.dao.DaoUtil;
-import steed.util.dao.HibernateUtil;
 /**
  * 动态过滤器，过滤所有动态url
  * @author 战马

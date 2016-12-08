@@ -1,9 +1,9 @@
 package steed.action.admin;
 
 import steed.action.BaseAction;
-import steed.domain.BaseDatabaseDomain;
 import steed.domain.BaseUser;
 import steed.domain.GlobalParam;
+import steed.hibernatemaster.domain.BaseDatabaseDomain;
 /**
  * 后台管理action均需继承该类
  * @author 战马

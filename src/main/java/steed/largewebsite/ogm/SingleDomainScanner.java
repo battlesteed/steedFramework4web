@@ -6,8 +6,8 @@ import java.util.List;
 
 import javax.persistence.Entity;
 
-import steed.domain.BaseDatabaseDomain;
-import steed.domain.DomainScanner;
+import steed.hibernatemaster.domain.BaseDatabaseDomain;
+import steed.hibernatemaster.domain.DomainScanner;
 import steed.largewebsite.ogm.domain.BaseNosqlDomain;
 import steed.util.base.BaseUtil;
 import steed.util.base.PathUtil;

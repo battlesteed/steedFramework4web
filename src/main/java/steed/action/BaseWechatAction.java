@@ -1,7 +1,7 @@
 package steed.action;
 
-import steed.domain.BaseDatabaseDomain;
 import steed.domain.wechat.WechatUser;
+import steed.hibernatemaster.domain.BaseDatabaseDomain;
 /**
  * 
  * @author 战马

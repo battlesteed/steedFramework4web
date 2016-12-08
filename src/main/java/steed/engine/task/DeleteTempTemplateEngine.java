@@ -3,8 +3,8 @@ package steed.engine.task;
 import java.util.List;
 
 import steed.domain.system.Property;
+import steed.hibernatemaster.util.DaoUtil;
 import steed.util.base.BaseUtil;
-import steed.util.dao.DaoUtil;
 import steed.util.system.SimpleTaskEngine;
 import steed.util.wechat.MutiAccountSupportUtil;
 import steed.util.wechat.WechatInterfaceInvokeUtil;

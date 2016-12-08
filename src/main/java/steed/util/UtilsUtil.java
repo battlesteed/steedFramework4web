@@ -1,9 +1,9 @@
 package steed.util;
 
+import steed.hibernatemaster.util.DaoUtil;
+import steed.hibernatemaster.util.HibernateUtil;
 import steed.util.base.PathUtil;
 import steed.util.base.PropertyUtil;
-import steed.util.dao.DaoUtil;
-import steed.util.dao.HibernateUtil;
 import steed.util.wechat.MutiAccountSupportUtil;
 
 /**

@@ -8,7 +8,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
-import steed.domain.BaseRelationalDatabaseDomain;
+import steed.hibernatemaster.domain.BaseRelationalDatabaseDomain;
 
 /**
  * 栏目

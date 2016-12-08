@@ -6,8 +6,8 @@ import java.util.Date;
 
 import steed.domain.system.Config;
 import steed.exception.runtime.system.FrameworkException;
+import steed.hibernatemaster.util.DaoUtil;
 import steed.util.base.DateUtil;
-import steed.util.dao.DaoUtil;
 
 
 

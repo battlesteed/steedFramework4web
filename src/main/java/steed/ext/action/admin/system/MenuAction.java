@@ -11,11 +11,11 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 
 import steed.action.annotation.Power;
-import steed.domain.BaseDatabaseDomain;
 import steed.domain.application.DWZMessage;
 import steed.ext.action.admin.DwzAdminAction;
 import steed.ext.domain.system.Menu;
-import steed.util.dao.DaoUtil;
+import steed.hibernatemaster.domain.BaseDatabaseDomain;
+import steed.hibernatemaster.util.DaoUtil;
 import steed.util.system.ValidateUtil;
 
 import com.google.gson.Gson;

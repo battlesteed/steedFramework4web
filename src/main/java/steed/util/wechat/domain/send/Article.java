@@ -1,6 +1,6 @@
 package steed.util.wechat.domain.send;
 
-import steed.domain.BaseDomain;
+import steed.hibernatemaster.domain.BaseDomain;
 
 public class Article extends BaseDomain{
 	private String thumb_media_id;

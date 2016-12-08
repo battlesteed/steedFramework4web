@@ -11,7 +11,7 @@ import steed.domain.application.DWZMessage;
 import steed.ext.action.admin.DwzAdminAction;
 import steed.ext.domain.information.Information;
 import steed.ext.domain.information.Programa;
-import steed.util.dao.DaoUtil;
+import steed.hibernatemaster.util.DaoUtil;
 
 @Namespace("/admin/information/programa")
 @ParentPackage(value="steed")

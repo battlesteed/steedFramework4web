@@ -8,7 +8,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import steed.domain.BaseDomain;
+import steed.hibernatemaster.domain.BaseDomain;
 import steed.util.base.BaseUtil;
 import steed.util.base.DomainUtil;
 import steed.util.base.StringUtil;

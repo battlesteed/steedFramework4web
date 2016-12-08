@@ -13,13 +13,13 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import steed.action.annotation.Power;
-import steed.domain.BaseDatabaseDomain;
 import steed.domain.GlobalParam;
 import steed.ext.domain.system.Menu;
 import steed.ext.domain.user.User;
+import steed.hibernatemaster.domain.BaseDatabaseDomain;
+import steed.hibernatemaster.util.DaoUtil;
 import steed.util.base.CollectionsUtil;
 import steed.util.base.StringUtil;
-import steed.util.dao.DaoUtil;
 
 @Namespace("/admin")
 @ParentPackage(value="steed")

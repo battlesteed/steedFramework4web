@@ -16,9 +16,9 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
-import steed.domain.BaseRelationalDatabaseDomain;
 import steed.domain.annotation.ValidateReg;
 import steed.exception.runtime.system.FrameworkException;
+import steed.hibernatemaster.domain.BaseRelationalDatabaseDomain;
 import steed.util.base.RegUtil;
 
 @Entity

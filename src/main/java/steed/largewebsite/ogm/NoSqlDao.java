@@ -18,12 +18,12 @@ import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import steed.domain.BaseDomain;
-import steed.domain.BaseUnionKeyDomain;
+import steed.hibernatemaster.domain.BaseDomain;
+import steed.hibernatemaster.domain.BaseUnionKeyDomain;
+import steed.hibernatemaster.util.DaoUtil;
 import steed.largewebsite.ogm.domain.BaseNosqlDomain;
 import steed.util.base.BaseUtil;
 import steed.util.base.DomainUtil;
-import steed.util.dao.DaoUtil;
 import steed.util.reflect.ReflectUtil;
 
 public class NoSqlDao {

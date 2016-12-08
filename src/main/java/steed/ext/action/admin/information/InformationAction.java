@@ -14,8 +14,8 @@ import steed.ext.action.admin.DwzAdminAction;
 import steed.ext.domain.information.Information;
 import steed.ext.domain.information.Programa;
 import steed.ext.domain.user.User;
+import steed.hibernatemaster.util.DaoUtil;
 import steed.util.base.StringUtil;
-import steed.util.dao.DaoUtil;
 @Namespace("/admin/information/information")
 @ParentPackage(value="steed")
 @InterceptorRefs({@InterceptorRef(value="mydefault")})

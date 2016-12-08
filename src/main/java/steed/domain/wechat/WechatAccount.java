@@ -9,8 +9,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
-import steed.domain.BaseRelationalDatabaseDomain;
 import steed.ext.domain.user.User;
+import steed.hibernatemaster.domain.BaseRelationalDatabaseDomain;
 import steed.util.base.PathUtil;
 import steed.util.base.PropertyUtil;
 import steed.util.digest.AESUtil;

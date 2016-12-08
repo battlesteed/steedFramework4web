@@ -12,8 +12,8 @@ import org.apache.struts2.util.StrutsTypeConverter;
 import com.opensymphony.xwork2.ActionContext;
 
 import steed.action.BaseAction;
-import steed.domain.BaseDatabaseDomain;
 import steed.exception.runtime.system.FrameworkException;
+import steed.hibernatemaster.domain.BaseDatabaseDomain;
 import steed.util.base.DomainUtil;
 import steed.util.base.StringUtil;
 import steed.util.reflect.ReflectUtil;

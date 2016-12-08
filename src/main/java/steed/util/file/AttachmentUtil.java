@@ -5,9 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
-import steed.domain.BaseDomain;
 import steed.domain.BaseUser;
 import steed.domain.GlobalParam;
+import steed.hibernatemaster.domain.BaseDomain;
 import steed.util.base.DomainUtil;
 import steed.util.base.PathUtil;
 import steed.util.digest.DigestUtil;

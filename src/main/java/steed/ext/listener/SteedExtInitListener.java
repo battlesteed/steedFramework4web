@@ -12,11 +12,11 @@ import javax.servlet.ServletContextEvent;
 import steed.exception.PathIsTopException;
 import steed.ext.domain.system.Path_Power;
 import steed.ext.domain.user.Power;
+import steed.hibernatemaster.util.DaoUtil;
 import steed.listener.SystemInitListener;
 import steed.util.base.CollectionsUtil;
 import steed.util.base.PathUtil;
 import steed.util.base.PropertyUtil;
-import steed.util.dao.DaoUtil;
 /**
  * 
  * @author 战马

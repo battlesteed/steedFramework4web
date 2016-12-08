@@ -9,7 +9,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
-import steed.domain.BaseRelationalDatabaseDomain;
+import steed.hibernatemaster.domain.BaseRelationalDatabaseDomain;
 import steed.util.base.StringUtil;
 import steed.util.wechat.domain.result.WechatResult;
 

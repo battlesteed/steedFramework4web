@@ -9,7 +9,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import steed.action.annotation.Power;
 import steed.ext.action.admin.DwzAdminAction;
 import steed.ext.domain.user.User;
-import steed.util.dao.DaoUtil;
+import steed.hibernatemaster.util.DaoUtil;
 @ParentPackage(value="steed")
 @InterceptorRefs({@InterceptorRef(value="mydefault")})
 @Namespace("/admin/user/userCenter")

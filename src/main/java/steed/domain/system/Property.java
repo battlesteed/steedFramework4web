@@ -12,8 +12,8 @@ import org.hibernate.Hibernate;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import steed.domain.BaseUnionKeyDomain;
 import steed.domain.annotation.ValidateReg;
+import steed.hibernatemaster.domain.BaseUnionKeyDomain;
 import steed.util.base.RegUtil;
 
 @Entity

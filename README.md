@@ -1,21 +1,19 @@
 
 # steedFramework4web by 战马
 
-# 超快速开发大中小型网站的全能型web框架(大型网站部分正在逐步完善,敬请期待)
+# 超快速开发大中小型网站的全能型web框架**[qq群196749420](http://shang.qq.com/wpa/qunwpa?idkey=3a090653940907189c6c7bc9503247a2ff3b7b4603d8e2c58b49665583bfe133)**
 
-## 视频教程列表
 
- * **[steedFrameword4web交流qq群196749420](http://shang.qq.com/wpa/qunwpa?idkey=3a090653940907189c6c7bc9503247a2ff3b7b4603d8e2c58b49665583bfe133)**
+
+## 视频教程列表(更多用法请查看wiki)
  
  * **[部署教程](http://v.youku.com/v_show/id_XMTcxNjg1Njc0NA==.html?beta&)** 
  * **[基础用法](http://v.youku.com/v_show/id_XMTgxMDQxMTg3Ng==.html)** 
 
-## 文档我会慢慢完善的(其实根本不需要什么文档,对着例子,看看注释基本都会用了的),麻烦大家耐心等待.
-
 ## 本人工作到现在一直在用和在升级的一个框架,已经应用于多个项目,稳定运行了的,用过该框架的同行都说好,可以放心使用.
 
 ## 依赖项目:
- struts2,hibernate-orm,slf4j,log4j,gson,poi,xstream,dom4j,zxing,httpclient,netty,jsoup,proxool,c3p0等.
+ **[hibernateMaster](http://git.oschina.net/battle_steed/hibernateMaster)**, struts2,hibernate-orm,slf4j,log4j,gson,poi,xstream,dom4j,zxing,httpclient,netty,jsoup,proxool,c3p0等.
 
 ## 特色:
 

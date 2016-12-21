@@ -23,16 +23,25 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.config.Registry;
+import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContexts;
+import org.apache.http.cookie.CookieSpecProvider;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.cookie.BasicClientCookie;
+import org.apache.http.impl.cookie.BestMatchSpecFactory;
+import org.apache.http.impl.cookie.BrowserCompatSpecFactory;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
@@ -48,7 +57,25 @@ public class HttpUtil {
 	public static final int http_get = 0;
 	public static final int http_post = 1;
 	private static final Logger log = LoggerFactory.getLogger(HttpUtil.class);
+	private static HttpClientContext context = null;
 	
+	static{
+		setContext();
+	}
+	
+	public static void setContext() {
+		
+	    context = HttpClientContext.create();
+	    Registry<CookieSpecProvider> registry = RegistryBuilder
+	        .<CookieSpecProvider> create()
+	        .register(CookieSpecs.BEST_MATCH, new BestMatchSpecFactory())
+	        .register(CookieSpecs.BROWSER_COMPATIBILITY,
+	            new BrowserCompatSpecFactory()).build();
+	    context.setCookieSpecRegistry(registry);
+	    context.setCookieStore(new BasicCookieStore());
+	    
+	}
+
 	
 	public static void writeJson(HttpServletResponse response, Object obj){
 		ServletOutputStream outputStream;
@@ -188,7 +215,7 @@ public class HttpUtil {
 	private static void setHotlinkingHeader(HttpRequestBase requestBase){
 		URI uri = requestBase.getURI();
 		requestBase.setHeader("Host", uri.getHost());
-		requestBase.setHeader("Referer",uri.getPath());
+//		requestBase.setHeader("Referer",uri.getPath());
 	}
 	/**
 	 * 创建带证书的ssl链接
@@ -234,7 +261,7 @@ public class HttpUtil {
 	
 	private static String getRequestString(HttpRequestBase requestBase,CloseableHttpClient httpClient) {
 		try {
-			CloseableHttpResponse response = httpClient.execute(requestBase);
+			CloseableHttpResponse response = httpClient.execute(requestBase,context);
 			HttpEntity entity = response.getEntity();
 			String string = EntityUtils.toString(entity, StringUtil.getCharacterSet());
 			log.debug("requestString---->{}", new Object[]{string});
@@ -254,7 +281,7 @@ public class HttpUtil {
 	}
 	private static byte[] getRequestBytes(HttpRequestBase requestBase,CloseableHttpClient httpClient) {
 		try {
-			CloseableHttpResponse response = httpClient.execute(requestBase);
+			CloseableHttpResponse response = httpClient.execute(requestBase,context);
 			HttpEntity entity = response.getEntity();
 			return EntityUtils.toByteArray(entity);
 		} catch (ClientProtocolException e) {

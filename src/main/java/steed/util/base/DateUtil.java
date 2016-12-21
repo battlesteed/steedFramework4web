@@ -80,7 +80,7 @@ public class DateUtil {
 	 * @return date比date2多的天数
 	 */
 	public static int getLastDate(Date date,Date date2){
-		return (int) (date.getTime()-date2.getTime())/(1000*60*60*24);
+		return (int) ((date.getTime()-date2.getTime())/(1000*60*60*24));
 	}
 	
 	/**

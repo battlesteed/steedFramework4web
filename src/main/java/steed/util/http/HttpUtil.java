@@ -13,6 +13,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -215,7 +216,7 @@ public class HttpUtil {
 	private static void setHotlinkingHeader(HttpRequestBase requestBase){
 		URI uri = requestBase.getURI();
 		requestBase.setHeader("Host", uri.getHost());
-//		requestBase.setHeader("Referer",uri.getPath());
+		requestBase.setHeader("Referer",uri.getPath());
 	}
 	/**
 	 * 创建带证书的ssl链接
@@ -324,6 +325,19 @@ public class HttpUtil {
 		}
 	}
 	
+	public static Map<String, String> getFireFoxHeader(){
+		Map<String, String> fireFoxHeader = new HashMap<>();
+		fireFoxHeader.put("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0");
+		fireFoxHeader.put("Accept-Language", "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3");
+		fireFoxHeader.put("Pragma", "no-cache");
+		fireFoxHeader.put("Upgrade-Insecure-Requests", "1");
+		fireFoxHeader.put("Connection", "keep-alive");
+		fireFoxHeader.put("Cache-Control", "no-cache");
+		fireFoxHeader.put("Accept-Encoding", "gzip, deflate");
+		return fireFoxHeader;
+	}
+	
+	
 	public static HttpRequestBase buildRequest(int requestType,String url,Map<String, String> param,Map<String, String> header){
 		HttpRequestBase requestBase;
 		switch (requestType) {
@@ -337,13 +351,17 @@ public class HttpUtil {
 				throw new RuntimeException("requestType只能是steed.util.http.HttpUtil.http_post或steed.util.http.HttpUtil.http_get!!!!");
 		}
 		
-		setHotlinkingHeader(requestBase);
 		
 		if (param != null) {
 			setParam((HttpPost) requestBase, param);
 		}
 		if (header != null) {
 			setHeader(requestBase, header);
+			if (header.get("Referer") == null && header.get("Host") == null) {
+				setHotlinkingHeader(requestBase);
+			}
+		}else {
+			setHotlinkingHeader(requestBase);
 		}
 		
 		return requestBase;

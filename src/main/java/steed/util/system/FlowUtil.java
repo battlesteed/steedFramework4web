@@ -7,6 +7,7 @@ import java.util.Date;
 import steed.domain.system.Config;
 import steed.exception.runtime.system.FrameworkException;
 import steed.hibernatemaster.util.DaoUtil;
+import steed.hibernatemaster.util.DaoUtil.ImmediatelyTransactionData;
 import steed.util.base.DateUtil;
 
 
@@ -62,6 +63,7 @@ public class FlowUtil {
 	public static String getFlowString(String key,
 			int flowLength,boolean includeTimestamp){
 		synchronized (SynchronizedKeyGenerator.getKey("steed.util.system.FlowUtil.getFlowString", key)) {
+			ImmediatelyTransactionData immediatelyTransactionBegin = DaoUtil.immediatelyTransactionBegin();
 			Config config2 = DaoUtil.get(Config.class, key);
 			if (config2 == null) {
 				config2 = new Config(key, "201603140");
@@ -75,6 +77,7 @@ public class FlowUtil {
 			if (includeTimestamp) {
 				flow = config.getValue().substring(0, 8)+flow;
 			}
+			DaoUtil.immediatelyTransactionEnd(immediatelyTransactionBegin);
 			return flow;
 		}
 	}

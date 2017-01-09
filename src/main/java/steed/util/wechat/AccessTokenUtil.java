@@ -19,7 +19,14 @@ import steed.util.wechat.domain.result.AccessToken;
 public class AccessTokenUtil {
 	private static Logger logger = Logger.getLogger(AccessTokenUtil.class);
 	private static AccessToken accessToken = null;
-	
+	/**
+	 * #微信token提前获取的多少时间获取,单位秒<br>
+#例如,token有效期是2小时,当前配置是在过期前的15分钟刷新token<br>
+#利用该配置和微信刷新token后原token还有一段时间可以继续使用,<br>
+#可以配置成提前115(具体数值根据情况调整)分钟刷新,<br>
+#这样可以达到同时在多个程序里面跑,而不会因为相互独立刷新token导致微信接口调用失败的问题<br>
+#但是请注意不要刷新太频繁,这样会导致刷新toke接口超过调用次数限制.<br>
+	 */
 	public static int tokenAdvanceRefreshTime = PropertyUtil.getInteger("wechat.tokenAdvanceRefreshTime");
 	
 	/**

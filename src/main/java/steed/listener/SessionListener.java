@@ -7,6 +7,8 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
+import steed.hibernatemaster.util.DaoUtil;
+
 public class SessionListener implements HttpSessionListener{
 	private Map<Object, HttpSession> map = new HashMap<>();
 	public Map<Object, HttpSession> getAllSession() {

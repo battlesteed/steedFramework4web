@@ -44,6 +44,7 @@ public class SystemInitListener implements ServletContextListener {
 	}
 	
 	private void configHibernateMaster(){
+		Config.autoCommitTransaction = true;
 		Config.isSignalDatabase = PropertyUtil.getBoolean("isSignalDatabase");
 		Config.devMode = PropertyUtil.getBoolean("devMode");
 		Config.defaultHqlGenerator = ReflectUtil.getInstanceFromProperties("dao.HqlGenerator");

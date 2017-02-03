@@ -36,6 +36,7 @@ import steed.exception.runtime.system.FrameworkException;
 import steed.exception.runtime.wechat.AttachTypeNotSupportedException;
 import steed.exception.runtime.wechat.WechatIoException;
 import steed.hibernatemaster.util.DaoUtil;
+import steed.hibernatemaster.util.DaoUtil.ImmediatelyTransactionData;
 import steed.util.base.BaseUtil;
 import steed.util.base.PathUtil;
 import steed.util.base.StringUtil;
@@ -198,9 +199,29 @@ public class WechatInterfaceInvokeUtil {
 	 * @return
 	 */
 	public static GetTemplateIdResult getTemplateId(String template_id_short){
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("template_id_short", template_id_short);
-		return invokeWechatInterface(map, GetTemplateIdResult.class, fitParam2Url(WechatConstantParamter.getTemplateIdUrl));
+		Property property = new Property();
+		property.setPropertyType("tempTemplateID_" + template_id_short);
+		String appID = MutiAccountSupportUtil.getWechatAccount().getAppID();
+		property.setKee(appID);
+		synchronized (SynchronizedKeyGenerator.getKey("steed.util.wechat.WechatInterfaceInvokeUtil.getTemplateId(String)", appID+template_id_short)) {
+			Property property2 = property.smartGet();
+			if (property2 != null) {
+				GetTemplateIdResult result = new GetTemplateIdResult();
+				result.setTemplate_id(property2.getValue());
+				return result;
+			}
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("template_id_short", template_id_short);
+			GetTemplateIdResult invokeWechatInterface = invokeWechatInterface(map, GetTemplateIdResult.class, fitParam2Url(WechatConstantParamter.getTemplateIdUrl));
+			if (invokeWechatInterface.isSuccess()) {
+				ImmediatelyTransactionData immediatelyTransactionBegin = DaoUtil.immediatelyTransactionBegin();
+				property.setValue(invokeWechatInterface.getTemplate_id());
+				property.save();
+				DaoUtil.immediatelyTransactionEnd(immediatelyTransactionBegin);
+			}
+			return invokeWechatInterface;
+		}
 	}
 	/**
 	 * 发送模板消息
@@ -222,46 +243,24 @@ public class WechatInterfaceInvokeUtil {
 			send.setTemplate_id(template_id);
 		}
 		TemplateMessageResult invokeWechatInterface = invokeWechatInterface(send, TemplateMessageResult.class, fitParam2Url(WechatConstantParamter.sendTemplateMessageUrl));
-		if (template_id != null) {
-			deleteTemplateEnsureSuccess(template_id);
+		//"模板id不存在错误码"40037
+		if (template_id != null && !invokeWechatInterface.isSuccess() && 40037 == invokeWechatInterface.getErrcode()) {
+			synchronized (SynchronizedKeyGenerator.getKey("deleteInvalidTemplateIdCache", template_id)) {
+				BaseUtil.getLogger().warn("删除模板{}失效",template_id);
+				Property property = new Property();
+				property.setPropertyType("tempTemplateID_" + template_id_short);
+				property.setKee(MutiAccountSupportUtil.getWechatAccount().getAppID());
+				ImmediatelyTransactionData immediatelyTransactionBegin = DaoUtil.immediatelyTransactionBegin();
+				boolean delete = property.delete();
+				DaoUtil.immediatelyTransactionEnd(immediatelyTransactionBegin);
+				if (delete) {
+					sendTemplateMessage(send, template_id_short);
+				}
+			}
 		}
 		return invokeWechatInterface;
 	}
 	
-	public static void deleteTemplateEnsureSuccess(final String template_id) {
-		final Map<String, String> map = new HashMap<String, String>();
-		map.put("template_id", template_id);
-		final WechatAccount wechatAccount = MutiAccountSupportUtil.getWechatAccount();
-		new Thread(new Runnable() {
-			public void run() {
-				synchronized (SynchronizedKeyGenerator.getKey("deleteTemplateEnsureSuccess", template_id)) {
-					MutiAccountSupportUtil.setWechatAccount(wechatAccount);
-					Property property = new Property();
-					property.setPropertyType("tempTemplateID");
-					property.setKee(template_id);
-					property.setValue(wechatAccount.getAppID());
-					property.save();
-					DaoUtil.managTransaction();
-					int count = 1;
-					boolean success = false;
-					while (!success&&count<30) {
-						BaseWechatResult deleteResult = invokeWechatInterface(map, BaseWechatResult.class, fitParam2Url(fitParam2Url(WechatConstantParamter.deleteTemplateMessageUrl)));
-						success = (deleteResult != null && deleteResult.isSuccess());
-						try {
-							Thread.sleep(1000*10*count++);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-					if (!success) {
-						BaseUtil.getLogger().error("删除模板{}失败",template_id);
-					}else {
-						property.delete();
-					}
-				}
-			}
-		}).start();
-	}
 	
 	
 	/*************************#模板消息******************************/

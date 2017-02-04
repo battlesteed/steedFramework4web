@@ -253,6 +253,10 @@ public class WechatInterfaceInvokeUtil {
 				ImmediatelyTransactionData immediatelyTransactionBegin = DaoUtil.immediatelyTransactionBegin();
 				boolean delete = property.delete();
 				DaoUtil.immediatelyTransactionEnd(immediatelyTransactionBegin);
+				property = property.smartGet();
+				if (property != null) {
+					DaoUtil.evict(property);
+				}
 				if (delete) {
 					send.setTemplate_id(null);
 					sendTemplateMessage(send, template_id_short);

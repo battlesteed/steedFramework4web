@@ -46,7 +46,7 @@ public class DeleteLogEngine extends SimpleTaskEngine{
 	}
 
 	protected void keepSpaceSave(List<File> allFile) {
-		long freeSpace = new File(log_dir).getFreeSpace();
+		long freeSpace = new File(log_dir).getUsableSpace();
 		if (freeSpace < minSpaceRemain*1024*1024) {
 			BaseUtil.getLogger().warn("硬盘空间不足{}MB,开始删除未过期日志!!!",minSpaceRemain);
 			long spaceNeedToDelete = minSpaceRemain*1024*1024 - freeSpace;

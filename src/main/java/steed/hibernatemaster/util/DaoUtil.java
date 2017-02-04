@@ -127,11 +127,16 @@ public class DaoUtil {
 	 * @return 
 	 */
 	public static ImmediatelyTransactionData immediatelyTransactionBegin(){
+		BaseUtil.getLogger().debug("立即事务开始");
+		Session session = getSession();
 		Transaction currentTransaction = getCurrentTransaction();
 		Boolean autoManagTransaction = getAutoManagTransaction();
+		Boolean transactionType = getTransactionType();
 		setAutoManagTransaction(true);
 		setCurrentTransaction(null);
-		ImmediatelyTransactionData immediatelyTransactionData = new ImmediatelyTransactionData(currentTransaction, autoManagTransaction,getSession());
+		setTransactionType(null);
+		ImmediatelyTransactionData immediatelyTransactionData = new ImmediatelyTransactionData(currentTransaction, autoManagTransaction,session);
+		immediatelyTransactionData.transactionType = transactionType;
 		HibernateUtil.setSession(null);
 		return immediatelyTransactionData;
 	}
@@ -141,9 +146,12 @@ public class DaoUtil {
 	 * @param immediatelyTransactionData
 	 */
 	public static void immediatelyTransactionEnd(ImmediatelyTransactionData immediatelyTransactionData){
+		HibernateUtil.closeSession();
+		DaoUtil.setTransactionType(immediatelyTransactionData.transactionType);
 		DaoUtil.setCurrentTransaction(immediatelyTransactionData.currentTransaction);
 		DaoUtil.setAutoManagTransaction(immediatelyTransactionData.autoManagTransaction);
 		HibernateUtil.setSession(immediatelyTransactionData.session);
+		BaseUtil.getLogger().debug("立即事务结束");
 	}
 	
 	
@@ -1054,6 +1062,7 @@ public class DaoUtil {
 	
 	public static void beginTransaction(){
 		if (currentTransaction.get() == null) {
+			BaseUtil.getLogger().debug("开启事务.....");
 			currentTransaction.set(getSession().beginTransaction());
 		}
 	}
@@ -1082,7 +1091,10 @@ public class DaoUtil {
 			return boolean1;
 		} catch (Exception e) {
 			e.printStackTrace();
-			rollbackTransaction();
+			try {
+				rollbackTransaction();
+			} catch (Exception e2) {
+			}
 			setException(e);
 			return false;
 		}
@@ -1106,6 +1118,7 @@ public class DaoUtil {
 		Transaction transaction = getTransaction();
 		if (transaction != null) {
 			transaction.commit();
+			BaseUtil.getLogger().debug("提交事务.....");
 		}
 		currentTransaction.remove();
 	}
@@ -1118,6 +1131,7 @@ public class DaoUtil {
 		Transaction transaction = getTransaction();
 		if (transaction != null) {
 			transaction.rollback();
+			BaseUtil.getLogger().debug("回滚事务.....");
 		}
 		currentTransaction.remove();
 	}
@@ -1156,7 +1170,7 @@ public class DaoUtil {
 	 * @param strictlyMode 严格模式，如果为true则 字段==null才算空，
 	 * 	否则调用BaseUtil.isObjEmpty判断字段是否为空
 	 * @see BaseUtil#isObjEmpty
-	 * @see steed.util.base.DomainUtil#fillDomain
+	 * @see DomainUtil#fillDomain
 	 * @return
 	 */
 	public static boolean updateNotNullField(BaseRelationalDatabaseDomain obj,List<String> updateEvenNull,boolean strictlyMode){
@@ -1365,6 +1379,7 @@ public class DaoUtil {
 	
 	protected static Session getSession(){
 		if (currentTransaction.get() == null) {
+			BaseUtil.getLogger().debug("开启事务.....");
 			currentTransaction.set(HibernateUtil.getSession().beginTransaction());
 		}
 		return HibernateUtil.getSession();
@@ -1644,9 +1659,11 @@ public class DaoUtil {
 		Transaction currentTransaction;
 		Boolean autoManagTransaction;
 		Session session;
+		Boolean transactionType;
 		public ImmediatelyTransactionData(Transaction currentTransaction,Boolean autoManagTransaction,Session session) {
 			this.currentTransaction = currentTransaction;
 			this.autoManagTransaction = autoManagTransaction;
+			this.session = session;
 		}
 	}
 }

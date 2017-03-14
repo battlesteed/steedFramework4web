@@ -1525,7 +1525,7 @@ public class DaoUtil {
 						&& !(value instanceof BaseUnionKeyDomain)
 						&& BaseUtil.isObjEmpty(DomainUtil.getDomainId((BaseDomain) value))) {
 					//实体类级联查询支持,离0hql的伟大构想已经非常接近了!
-					putField2Map(value, map,fieldName +".");
+					putField2Map(value, map,prefixName + fieldName +".");
 				}
 			}
 		} catch (IllegalArgumentException | IllegalAccessException e) {

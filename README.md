@@ -67,9 +67,9 @@ jdk1.8(要用1.7的改一下hibernate版本,最新hibernate不支持1.7,那些�
 
 * 2.修改/src/main/resources/pool-one.properties数据库连接相关信息(也支持c3p0连接池,把/src/main/resources/hibernate.cfg.xml c3p0注释去掉,然后注释掉proxool即可)
 
-* 3.修改/src/main/resources/properties/config.properties 中的serverEncoding和site.rootURL和aesKey(可以不修改,建议修改).
+* 3.修改/src/main/resources/properties/config.properties 中的serverEncoding和site.rootURL和aesKey(aesKey可以不修改,建议修改).
  
-* 4.如果修改了aeskey(test包下面的config.properties,因为是在test目录下面运行的)请运行steed.test.DatabaseTest.aesInit()(运行之前请手动添加junit jar包).
+* 4.如果修改了aeskey(test包下面的config.properties也要修改,因为是在test目录下面运行junit的)请运行steed.test.DatabaseTest.aesInit()(运行之前请手动添加junit jar包).
 
 * 5.部署运行,默认账号:admin,密码:123456
 

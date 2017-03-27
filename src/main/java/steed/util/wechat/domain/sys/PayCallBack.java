@@ -16,6 +16,10 @@ public class PayCallBack{
 	private String nonce_str;
 	private String sign;
 	private String result_code;
+	
+	private String trade_state;
+	private String trade_state_desc;
+	
 	private String err_code;
 	private String err_code_des;
 	private String openid;
@@ -45,6 +49,18 @@ public class PayCallBack{
 		return return_msg;
 	}
 	
+	public String getTrade_state() {
+		return trade_state;
+	}
+	public void setTrade_state(String trade_state) {
+		this.trade_state = trade_state;
+	}
+	public String getTrade_state_desc() {
+		return trade_state_desc;
+	}
+	public void setTrade_state_desc(String trade_state_desc) {
+		this.trade_state_desc = trade_state_desc;
+	}
 	public boolean isSuccess() {
 		return "SUCCESS".equals(result_code);
 	}

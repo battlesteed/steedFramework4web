@@ -14,10 +14,13 @@ public abstract class TaskEngine implements Runnable{
 		try{
 			DaoUtil.setAutoManagTransaction(false);
 			doTask();
+			DaoUtil.managTransaction();
 		}catch (Exception e) {
+			if (DaoUtil.getTransactionType() != null) {
+				DaoUtil.rollbackTransaction();
+			}
 			BaseUtil.getLogger().error("后台定时任务出错!",e);
 		}finally{
-			DaoUtil.managTransaction();
 			UtilsUtil.releaseUtils();
 		}
 	}

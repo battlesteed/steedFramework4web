@@ -204,7 +204,9 @@ public class WechatInterfaceInvokeUtil {
 		String appID = MutiAccountSupportUtil.getWechatAccount().getAppID();
 		property.setKee(appID);
 		synchronized (SynchronizedKeyGenerator.getKey("steed.util.wechat.WechatInterfaceInvokeUtil.getTemplateId(String)", appID+template_id_short)) {
+			ImmediatelyTransactionData immediatelyTransactionData = DaoUtil.immediatelyTransactionBegin();
 			Property property2 = property.smartGet();
+			DaoUtil.immediatelyTransactionEnd(immediatelyTransactionData);
 			if (property2 != null) {
 				GetTemplateIdResult result = new GetTemplateIdResult();
 				result.setTemplate_id(property2.getValue());
@@ -246,7 +248,7 @@ public class WechatInterfaceInvokeUtil {
 		//"模板id不存在错误码"40037
 		if (template_id != null && !invokeWechatInterface.isSuccess() && 40037 == invokeWechatInterface.getErrcode()) {
 			synchronized (SynchronizedKeyGenerator.getKey("deleteInvalidTemplateIdCache", template_id)) {
-				BaseUtil.getLogger().warn("删除模板{}失效",template_id);
+				BaseUtil.getLogger().warn("删除失效模板{}",template_id);
 				Property property = new Property();
 				property.setPropertyType("tempTemplateID_" + template_id_short);
 				property.setKee(MutiAccountSupportUtil.getWechatAccount().getAppID());

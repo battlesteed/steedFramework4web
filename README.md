@@ -1,12 +1,13 @@
 
 # steedFramework4web by 战马
 
-# 超快速开发大中小型网站的全能型web框架**[qq群196749420](http://shang.qq.com/wpa/qunwpa?idkey=3a090653940907189c6c7bc9503247a2ff3b7b4603d8e2c58b49665583bfe133)**
+# 超快速开发大中小型网站的全能型web框架**[懒癌发作,文档难产,qq群人工文档支持196749420](http://shang.qq.com/wpa/qunwpa?idkey=3a090653940907189c6c7bc9503247a2ff3b7b4603d8e2c58b49665583bfe133)**
 
 
 
 ## 视频教程列表(更多用法请查看wiki)
  
+ * **[度娘云密码: 8vd8](http://pan.baidu.com/s/1gfiiaun)** 
  * **[部署教程](http://v.youku.com/v_show/id_XMTcxNjg1Njc0NA==.html?beta&)** 
  * **[基础用法](http://v.youku.com/v_show/id_XMTgxMDQxMTg3Ng==.html)** 
 

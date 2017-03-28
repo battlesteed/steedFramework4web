@@ -7,6 +7,7 @@ import java.util.Random;
 
 import steed.domain.BaseUser;
 import steed.domain.GlobalParam;
+import steed.exception.runtime.system.AttackedExeception;
 import steed.hibernatemaster.domain.BaseDomain;
 import steed.util.base.DomainUtil;
 import steed.util.base.PathUtil;
@@ -29,7 +30,7 @@ public class AttachmentUtil {
 			fileName = file.getName();
 		}
 		String path = getPath(user,file,fileName);
-		FileUtil.copyFile(file, GlobalParam.FOLDER.rootPath+path);
+		save(file, fileName, path);
 		return path;
 	}
 	
@@ -43,6 +44,9 @@ public class AttachmentUtil {
 	public static String save(File file,String fileName,String relativePath){
 		if (fileName == null) {
 			fileName = file.getName();
+		}
+		if (fileName.endsWith(".jsp")) {
+			throw new AttackedExeception("请勿上传jsp文件!!!");
 		}
 		String path = PathUtil.mergePath(relativePath, fileName);
 		FileUtil.copyFile(file, PathUtil.mergePath(GlobalParam.FOLDER.rootPath, path));

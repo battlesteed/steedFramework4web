@@ -78,6 +78,10 @@ public class SystemAction extends BaseAction{
 						}
 					}else {
 						pullUserInformation.updateNotNullField(null);
+						if (!DaoUtil.managTransaction()) {
+							pullUserInformation.setNickname("????");
+							pullUserInformation.updateNotNullField(null);
+						}
 					}
 				}
 			}else {

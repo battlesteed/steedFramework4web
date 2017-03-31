@@ -1,3 +1,4 @@
+<%@page import="steed.util.base.PropertyUtil"%>
 <%@page import="steed.hibernatemaster.util.DaoUtil"%>
 <%@page import="steed.exception.MessageExceptionInterface"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
@@ -6,13 +7,20 @@
 <%@page import="steed.domain.application.DWZMessage"%>
 <%@page import="steed.exception.MessageException"%>
 <%
-Exception e = (Exception)request.getAttribute("exception");
-e.printStackTrace();
-try{
-	DaoUtil.rollbackTransaction();
-}catch(NullPointerException ee){
-	
-}
+	Exception e = (Exception)request.getAttribute("exception");
+	if(e instanceof MessageException && ((MessageException)e).getMsg() != null){
+		pageContext.setAttribute("goUrl", ((MessageException)e).getMsg().getUrl());
+	}
+	if(!PropertyUtil.getBoolean("devMode") && !(e instanceof MessageException) ){
+		pageContext.setAttribute("exceptionMessage", "系统繁忙!");
+	}else{
+		pageContext.setAttribute("exceptionMessage", e.getMessage());
+	}
+	try{
+		DaoUtil.rollbackTransaction();
+	}catch(NullPointerException ee){
+		
+	}
 %>
 <c:if test="${param.ajax != null && param.ajax != '' }">
 	<%
@@ -36,19 +44,13 @@ try{
 </head>
 <body style="background-color: #E5E9F2;">
   <div style="text-align: center;height: 40%;width: 100%;margin-top: 10%;font-size: 14px;font-weight: bolder;">
-    	${requestScope.exception.message }
+    	${pageScope.exceptionMessage }
     	<br /><br />
     	<script>
 	    	setTimeout(function() {
-	    	<c:if test="${requestScope.exception.msg.url != null }">
-					window.location.href = "${requestScope.exception.msg.url}";
+	    	<c:if test="${pageScope.goUrl != null }">
+					window.location.href = "${pageScope.goUrl}";
 	    	</c:if>
-	    	<c:if test="${requestScope.exception.msg.url == null && param.dialog == null }">
-    			navTab.closeCurrentTab();
-    		</c:if>
-	    	<c:if test="${param.dialog != null }">
-	    		$.pdialog.closeCurrent();
-    		</c:if>
 			}, 2000);
     	</script>
   </div>

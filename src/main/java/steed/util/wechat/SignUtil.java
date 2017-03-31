@@ -125,6 +125,24 @@ public class SignUtil {
     	unifiedOrderSend.setSign(sign);
     	return sign;
     }
+    
+    /**
+     * 对统一下单接口返回的结果签名,给微信jssdk支付用
+     * @param unifiedOrder
+     * @return 签名结果
+     */
+    public static Map<String, Object> signPayJsSdk(UnifiedOrderResult unifiedOrder) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("appId", MutiAccountSupportUtil.getWechatAccount().getAppID());
+		Long value = (Long)(new Date().getTime()/1000);
+		map.put("timeStamp", value);
+		map.put("nonceStr", Md5Util.Md5Digest("sted"+value));
+		map.put("package", "prepay_id="+unifiedOrder.getPrepay_id());
+		map.put("signType", "MD5");
+		map.put("paySign", SignUtil.signMap(map, "MD5",true).toUpperCase());
+		return map;
+	}
+    
 
     public static String signMap(Map<String, Object> map,String signType) {
     	return signMap(map, signType, false);

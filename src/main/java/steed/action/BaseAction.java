@@ -203,6 +203,7 @@ public abstract class BaseAction<SteedDomain extends BaseDatabaseDomain> extends
 			Page<SteedDomain> page = new Page<SteedDomain>(); 
 			page.setCurrentPage(currentPage);
 			page.setPageSize(pageSize);
+			setRequestAttribute("page", page);
 			return page;
 		}
 		return (Page<SteedDomain>) requestAttribute;

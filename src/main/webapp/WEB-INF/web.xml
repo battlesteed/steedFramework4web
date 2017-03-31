@@ -176,12 +176,12 @@
 	</servlet-mapping>
 	<!-- 扫描二维码支付回调servlet -->
 	<servlet>
-		<servlet-name>ScanPayCallBackServlet</servlet-name>
+		<servlet-name>WechatPayCallBackServlet</servlet-name>
 		<servlet-class>steed.servlet.WechatScanPayCallBackServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ScanPayCallBackServlet</servlet-name>
-		<url-pattern>/wechat/scanPayCallBackServlet.jsp</url-pattern>
+		<url-pattern>/wechat/wechatPayCallBackServlet.jsp</url-pattern>
 	</servlet-mapping>
 	
 	

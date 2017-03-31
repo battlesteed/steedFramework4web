@@ -23,6 +23,7 @@ import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -593,9 +594,39 @@ public class WechatInterfaceInvokeUtil {
 		}
 		return null;
 	}
+	
+
+	/**
+	 * 获取统一订单
+	 * @param tradeType 交易类型,取值如下：JSAPI，NATIVE，APP，WAP,详细说明见
+	 * @param body 订单信息
+	 * @param totalFee 金额(单位:分)
+	 * @param orderNumber 订单号,不传的话则自动生成订单号
+	 * @return
+	 */
+	public static UnifiedOrderSend getUnifiedOrderSend(String tradeType,String body,int totalFee,String orderNumber) {
+		UnifiedOrderSend orderSend = new UnifiedOrderSend();
+		orderSend.setBody(body);
+		if (orderNumber == null) {
+			orderNumber = FlowUtil.getFlowString("tempOrderNumber", 6, true);
+		}
+		orderSend.setOut_trade_no(orderNumber);
+		orderSend.setTotal_fee(totalFee);
+		orderSend.setTrade_type("JSAPI");
+		try{
+			orderSend.setSpbill_create_ip(ServletActionContext.getRequest().getRemoteAddr());
+			orderSend.setOpenid(((WechatUser)ServletActionContext.getRequest().getSession().getAttribute("wechatUser")).getOpenid());
+		}catch (Exception e) {
+		}
+		return orderSend;
+	}
+	
+	
 	/**
 	 * 统一下单接口
 	 * @return
+	 * 
+	 * @see #getUnifiedOrderSend
 	 */
 	public static UnifiedOrderResult unifiedOrder(UnifiedOrderSend unifiedOrderSend){
 		WechatAccount wechatConfig = MutiAccountSupportUtil.getWechatAccount();
@@ -603,7 +634,7 @@ public class WechatInterfaceInvokeUtil {
 		unifiedOrderSend.setSign(null);
 		unifiedOrderSend.setAppid(wechatConfig.getAppID());
 		if (unifiedOrderSend.getNotify_url() == null) {
-			unifiedOrderSend.setNotify_url(PathUtil.getBrowserPath("/scanPayCallBackServlet.jsp"));
+			unifiedOrderSend.setNotify_url(PathUtil.getBrowserPath("/wechatPayCallBackServlet.jsp"));
 		}
 		SignUtil.signUnifiedOrderSend(unifiedOrderSend);
 		String redPacketSendMessageToXml = MessageUtil.unifiedOrderSendToXml(unifiedOrderSend);
@@ -612,7 +643,7 @@ public class WechatInterfaceInvokeUtil {
 			if (xmlToUnifiedOrderResult.isSuccess()) {
 				Property property = new Property();
 				property.setPropertyType("wechatOrder");
-				property.setKee(unifiedOrderSend.getOut_trade_no());
+				property.setKee(unifiedOrderSend.getOut_trade_no()+","+wechatConfig.getAppID());
 				property.setValue(wechatConfig.getAppID());
 				property.save();
 			}

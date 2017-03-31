@@ -4,10 +4,12 @@ import java.util.Date;
 import java.util.List;
 
 import steed.domain.system.Property;
-import steed.engine.wechat.SimpleScanPayCallBackEngine;
+import steed.engine.wechat.SimpleWechatPayCallBackEngine;
+import steed.engine.wechat.WechatPayCallBackEngine;
 import steed.hibernatemaster.util.DaoUtil;
 import steed.util.base.BaseUtil;
 import steed.util.base.DateUtil;
+import steed.util.base.PropertyUtil;
 import steed.util.reflect.ReflectUtil;
 import steed.util.system.SimpleTaskEngine;
 import steed.util.wechat.MessageUtil;
@@ -29,14 +31,16 @@ public class OrderRefreshEngine extends SimpleTaskEngine{
 		for(Property p:listAllObj){
 			MutiAccountSupportUtil.setWechatAccount(MutiAccountSupportUtil.getWechatAccount(p.getValue()));
 			OrderQuerySend send = new OrderQuerySend();
-			send.setOut_trade_no(p.getKee());
+			send.setOut_trade_no(p.getKee().split(",")[0]);
 			OrderQueryResult queryOrder = WechatInterfaceInvokeUtil.queryOrder(send);
 			if (queryOrder.isSuccess()) {
 				if ("SUCCESS".equals(queryOrder.getTrade_state())) {
 					BaseUtil.getLogger().debug("查询到订单{}已经支付成功,开始做支付操作..");
 					PayCallBack payCallBack = new PayCallBack();
 					ReflectUtil.copySameField(payCallBack, queryOrder);
-					String message = new SimpleScanPayCallBackEngine().getMessage(payCallBack);
+					String className = PropertyUtil.getProperties("wechatFrameworkConfig.properties").getProperty("wechatPayCallBackEngine");
+			        Object newInstance = ReflectUtil.newInstance(className);
+			        String message = ((WechatPayCallBackEngine)newInstance).getMessage(payCallBack);
 					ScanPayCallBackResult result = MessageUtil.fromXml(message, ScanPayCallBackResult.class);
 					if ("SUCCESS".equals(result.getReturn_code())) {
 						p.delete();

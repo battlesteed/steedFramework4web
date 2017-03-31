@@ -5,20 +5,22 @@ import steed.domain.system.Property;
 import steed.hibernatemaster.util.DaoUtil;
 import steed.util.system.SynchronizedKeyGenerator;
 import steed.util.wechat.MessageUtil;
+import steed.util.wechat.MutiAccountSupportUtil;
+import steed.util.wechat.MutiAccountSupportUtil.MutiAccountSupport;
 import steed.util.wechat.domain.sys.PayCallBack;
 import steed.util.wechat.domain.sys.ScanPayCallBackResult;
 /**
- * 支付事件成功回调回复引擎
+ * 事件成功回调回复引擎
  * @author 战马
  */
-public class SimpleScanPayCallBackEngine implements ScanPayCallBackEngine{
+public class SimpleWechatPayCallBackEngine implements WechatPayCallBackEngine{
 	public String getMessage(PayCallBack scanPayCallBack) {
 		//TODO 在这里写充值成功逻辑,以下是例子
 		//一定要同步,微信一个订单会通知多次
 		synchronized (SynchronizedKeyGenerator.getKey("SimpleScanPayCallBackEngine",scanPayCallBack.getOut_trade_no())) {
 			Property property = new Property();
 			property.setPropertyType("wechatOrder");
-			property.setKee(scanPayCallBack.getOut_trade_no());
+			property.setKee(scanPayCallBack.getOut_trade_no()+"," +MutiAccountSupportUtil.getWechatAccount().getAppID());
 			if (!DaoUtil.isResultNull(property)) {
 				return onPay(scanPayCallBack);
 			}else {

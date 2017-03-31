@@ -11,8 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import steed.engine.wechat.SimpleScanPayCallBackEngine;
+import steed.engine.wechat.MessageEngine;
+import steed.engine.wechat.SimpleWechatPayCallBackEngine;
+import steed.engine.wechat.WechatPayCallBackEngine;
+import steed.hibernatemaster.util.base.ReflectUtil;
 import steed.util.base.BaseUtil;
+import steed.util.base.PropertyUtil;
+import steed.util.base.StringUtil;
 import steed.util.wechat.MessageUtil;
 import steed.util.wechat.MutiAccountSupportUtil;
 import steed.util.wechat.SignUtil;
@@ -23,9 +28,9 @@ import steed.util.wechat.domain.sys.PayCallBack;
  * 微信servlet
  * @author 战马
  */  
-public class WechatScanPayCallBackServlet extends HttpServlet{
+public class WechatPayCallBackServlet extends HttpServlet{
     private static final long serialVersionUID = 4440739483644821986L; 
-    private static final Logger logger = LoggerFactory.getLogger(WechatScanPayCallBackServlet.class);
+    private static final Logger logger = LoggerFactory.getLogger(WechatPayCallBackServlet.class);
   
     /** 
      * 确认请求来自微信服务器 
@@ -48,7 +53,10 @@ public class WechatScanPayCallBackServlet extends HttpServlet{
 			return;
 		}
         PrintWriter out = response.getWriter();  
-        String message = new SimpleScanPayCallBackEngine().getMessage(scanPayCallBack);
+        
+		String className = PropertyUtil.getProperties("wechatFrameworkConfig.properties").getProperty("wechatPayCallBackEngine");
+        Object newInstance = ReflectUtil.newInstance(className);
+        String message = ((WechatPayCallBackEngine)newInstance).getMessage(scanPayCallBack);
 		out.print(message);
         out.flush();
         out.close();  

@@ -33,6 +33,7 @@ public class DatabaseTest{
 		TerminalUser terminalUser = DaoUtil.get(TerminalUser.class, "admin");
 		terminalUser.setPassword(AESUtil.aesEncode("123456"));
 		terminalUser.update();
+		DaoUtil.managTransaction();
 	}
 	
 	/**

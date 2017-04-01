@@ -50,6 +50,14 @@ public class ReflectUtil {
 					}
 					try {
 						Field declaredField = copy.getClass().getDeclaredField(f.getName());
+						if (!declaredField.getType().isAssignableFrom(f.getType())) {
+							try {
+								value = ReflectUtil.string2BaseID(declaredField.getType(), value.toString());
+							} catch (RuntimeException e) {
+								BaseUtil.getLogger().warn("注意!字段相同的"+f.getName()+"类型却不同且不是基本数据类型或string!无法复制值!",e);
+								continue;
+							}
+						}
 						declaredField.setAccessible(true);
 						declaredField.set(copy, value);
 					} catch (NoSuchFieldException e) {

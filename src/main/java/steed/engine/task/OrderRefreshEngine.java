@@ -35,7 +35,7 @@ public class OrderRefreshEngine extends SimpleTaskEngine{
 			OrderQueryResult queryOrder = WechatInterfaceInvokeUtil.queryOrder(send);
 			if (queryOrder.isSuccess()) {
 				if ("SUCCESS".equals(queryOrder.getTrade_state())) {
-					BaseUtil.getLogger().debug("查询到订单{}已经支付成功,开始做支付操作..");
+					BaseUtil.getLogger().debug("查询到订单{}已经支付成功,开始做支付操作..",send.getOut_trade_no());
 					PayCallBack payCallBack = new PayCallBack();
 					ReflectUtil.copySameField(payCallBack, queryOrder);
 					String className = PropertyUtil.getProperties("wechatFrameworkConfig.properties").getProperty("wechatPayCallBackEngine");

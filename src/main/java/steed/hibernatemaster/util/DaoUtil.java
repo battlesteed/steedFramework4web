@@ -1097,6 +1097,8 @@ public class DaoUtil {
 			}
 			setException(e);
 			return false;
+		}finally {
+			relese();
 		}
 	}
 	

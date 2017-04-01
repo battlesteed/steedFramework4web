@@ -181,7 +181,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ScanPayCallBackServlet</servlet-name>
-		<url-pattern>/wechat/wechatPayCallBackServlet.jsp</url-pattern>
+		<url-pattern>/wechatPayCallBackServlet.jsp</url-pattern>
 	</servlet-mapping>
 	
 	

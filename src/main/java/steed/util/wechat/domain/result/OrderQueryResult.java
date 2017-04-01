@@ -24,7 +24,7 @@ public class OrderQueryResult extends BaseWechatResult{
 	private String trade_type;
 	private String trade_state;
 	private String bank_type;
-	private String total_fee;
+	private Integer total_fee;
 	private String fee_type;
 	private String cash_fee;
 	private String cash_fee_type;
@@ -138,10 +138,10 @@ public class OrderQueryResult extends BaseWechatResult{
 	public void setBank_type(String bank_type) {
 		this.bank_type = bank_type;
 	}
-	public String getTotal_fee() {
+	public Integer getTotal_fee() {
 		return total_fee;
 	}
-	public void setTotal_fee(String total_fee) {
+	public void setTotal_fee(Integer total_fee) {
 		this.total_fee = total_fee;
 	}
 	public String getFee_type() {

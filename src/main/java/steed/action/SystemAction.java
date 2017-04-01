@@ -73,12 +73,16 @@ public class SystemAction extends BaseAction{
 					if (DaoUtil.smartGet(pullUserInformation) == null) {
 						pullUserInformation.save();
 						if (!DaoUtil.managTransaction()) {
+							DaoUtil.relese();
+							DaoUtil.closeSession();
 							pullUserInformation.setNickname("????");
 							pullUserInformation.save();
 						}
 					}else {
 						pullUserInformation.updateNotNullField(null);
 						if (!DaoUtil.managTransaction()) {
+							DaoUtil.relese();
+							DaoUtil.closeSession();
 							pullUserInformation.setNickname("????");
 							pullUserInformation.updateNotNullField(null);
 						}

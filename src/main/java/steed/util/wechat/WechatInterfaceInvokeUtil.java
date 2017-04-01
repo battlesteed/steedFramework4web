@@ -608,7 +608,7 @@ public class WechatInterfaceInvokeUtil {
 		UnifiedOrderSend orderSend = new UnifiedOrderSend();
 		orderSend.setBody(body);
 		if (orderNumber == null) {
-			orderNumber = FlowUtil.getFlowString("tempOrderNumber", 6, true);
+			orderNumber = FlowUtil.getFlowString(MutiAccountSupportUtil.getWechatAccount().getAppID()+"tempOrderNumber", 6, true);
 		}
 		orderSend.setOut_trade_no(orderNumber);
 		orderSend.setTotal_fee(totalFee);

@@ -111,6 +111,12 @@ public class BaseTest {
     public void testTask(){
     }
 	
+    @Test
+    public void testFuckNickName(){
+    	String string  = new String(new byte[]{(byte) 0xF0,(byte) 0x9F,(byte) 0x91,(byte) 0x80});
+    	BaseUtil.out(string.replaceAll("👀", ""));
+    }
+    
 	@Test
 	public void testmysqlBackup(){
 		try {

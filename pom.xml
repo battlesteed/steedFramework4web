@@ -364,7 +364,7 @@
 	</dependency>
 	
 	<!-- #rpc -->
-	 <dependency>
+	<!--  <dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-pool2</artifactId>
 			<version>2.2</version>
@@ -384,7 +384,7 @@
 			<version>1.2.12</version>
 			<scope>provided</scope>
 	</dependency>
-	<!-- https://mvnrepository.com/artifact/org.springframework/spring -->
+	https://mvnrepository.com/artifact/org.springframework/spring
 	<dependency>
 	    <groupId>org.springframework</groupId>
 	    <artifactId>spring</artifactId>
@@ -394,7 +394,7 @@
 	    <groupId>org.springframework</groupId>
 	    <artifactId>spring</artifactId>
 	    <version>2.5.6</version>
-	</dependency>
+	</dependency> -->
 
 	
 	<!-- /rpc -->

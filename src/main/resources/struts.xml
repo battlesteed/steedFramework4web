@@ -76,7 +76,7 @@
 	     <result name="message">/WEB-INF/jsp/public/message.jsp</result>
 	 </global-results>
 	 <global-exception-mappings>
-           <exception-mapping exception="java.lang.Exception" result="message2"/>
+           <exception-mapping exception="java.lang.Exception" result="message"/>
      </global-exception-mappings>
 	 
    </package>

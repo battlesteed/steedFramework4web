@@ -179,6 +179,7 @@ public class WechatUser extends BaseRelationalDatabaseDomain implements WechatRe
 	}
 	@Override
 	public boolean save() {
+		new String(new byte[]{(byte) 0xF0,(byte) 0x9F,(byte) 0x91,(byte) 0x80});
 		nickname = nickname.replace("💝", "?");
 		return super.save();
 	}

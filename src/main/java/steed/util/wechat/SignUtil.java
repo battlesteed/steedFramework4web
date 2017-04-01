@@ -140,6 +140,8 @@ public class SignUtil {
 		map.put("package", "prepay_id="+unifiedOrder.getPrepay_id());
 		map.put("signType", "MD5");
 		map.put("paySign", SignUtil.signMap(map, "MD5",true).toUpperCase());
+		map.put("timestamp", map.get("timeStamp"));
+		map.remove("timeStamp");
 		return map;
 	}
     

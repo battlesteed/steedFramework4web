@@ -1,3 +1,4 @@
+<%@page import="steed.exception.runtime.MessageRuntimeException"%>
 <%@page import="steed.util.base.PropertyUtil"%>
 <%@page import="steed.hibernatemaster.util.DaoUtil"%>
 <%@page import="steed.exception.MessageExceptionInterface"%>
@@ -8,10 +9,10 @@
 <%@page import="steed.exception.MessageException"%>
 <%
 	Exception e = (Exception)request.getAttribute("exception");
-	if(e instanceof MessageException && ((MessageException)e).getMsg() != null){
-		pageContext.setAttribute("goUrl", ((MessageException)e).getMsg().getUrl());
+	if(e instanceof MessageExceptionInterface && ((MessageExceptionInterface)e).getMsg() != null){
+		pageContext.setAttribute("goUrl", ((MessageExceptionInterface)e).getMsg().getUrl());
 	}
-	if(!PropertyUtil.getBoolean("devMode") && !(e instanceof MessageException) ){
+	if(!PropertyUtil.getBoolean("devMode") && !(e instanceof MessageExceptionInterface)){
 		pageContext.setAttribute("exceptionMessage", "系统繁忙!");
 	}else{
 		pageContext.setAttribute("exceptionMessage", e.getMessage());

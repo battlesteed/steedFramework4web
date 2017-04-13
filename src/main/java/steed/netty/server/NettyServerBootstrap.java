@@ -68,14 +68,14 @@ public class NettyServerBootstrap {
         new NettyServerBootstrap(PropertyUtil.getInteger("netty.serverPort"));
         CommonMsg commonMsg = new CommonMsg(121);
         commonMsg.setContent("服务端发过来的基本消息对象类型数据");
-        /*while (true){
+        while (true){
         	for (Entry<String, SocketChannel> t:NettyChannelMap.getMap().entrySet()) {
         		SocketChannel channel= t.getValue();
         		if(channel!=null){
         			channel.writeAndFlush(commonMsg);
         		}
 			}
-            TimeUnit.SECONDS.sleep(1);
-        }*/
+            TimeUnit.SECONDS.sleep(6);
+        }
     }
 }

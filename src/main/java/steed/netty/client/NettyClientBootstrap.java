@@ -168,10 +168,10 @@ public class NettyClientBootstrap {
 			NettyClientBootstrap doConnect = new NettyClientBootstrap();
 			CommonMsg commonMsg = new CommonMsg(121);
 		    commonMsg.setContent("客户端发过来的基本消息对象类型数据");
-			/*while (true){
+			while (true){
         		doConnect.send(commonMsg);
-	            TimeUnit.SECONDS.sleep(60);
-		    }*/
+	            TimeUnit.SECONDS.sleep(3);
+		    }
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

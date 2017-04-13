@@ -12,7 +12,6 @@ public class LoginEngine implements NettyEngine{
         loginMsg.setPassword(PropertyUtil.getConfig("netty.password"));
         loginMsg.setUserName(PropertyUtil.getConfig("netty.userName"));
         loginMsg.setContent("mycontent,你自己定义的数据,用于登陆时候做数据交换");
-        loginMsg.setClientId("myid");//你的客户端id
         bootstrap.send(loginMsg);
 	}
 

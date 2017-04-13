@@ -17,6 +17,8 @@ import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
 import io.netty.handler.timeout.IdleStateHandler;
+import steed.netty.module.BaseMsg;
+import steed.netty.module.CommonMsg;
 import steed.util.base.BaseUtil;
 import steed.util.base.PropertyUtil;
 import steed.util.base.StringUtil;
@@ -29,27 +31,35 @@ public class NettyClientBootstrap {
 //    public static NettyClientBootstrap nettyClientBootstrap;
     private ChannelFuture future;
     private EventLoopGroup eventLoopGroup;
-    public NettyClientBootstrap(int port, String host) throws InterruptedException {
+    private String clientId;
+    
+    public NettyClientBootstrap(int port, String host,String clientID) throws InterruptedException {
         this.port = port;
         this.host = host;
+        clientId = clientID;
         start();
     }
     
+    public NettyClientBootstrap(String clientID) throws InterruptedException {
+    	this(PropertyUtil.getInteger("netty.serverPort"),PropertyUtil.getConfig("netty.host"),clientID);
+    }
     public NettyClientBootstrap() throws InterruptedException {
-    	this(PropertyUtil.getInteger("netty.serverPort"),PropertyUtil.getConfig("netty.host"));
+    	this(PropertyUtil.getInteger("netty.serverPort"),PropertyUtil.getConfig("netty.host"), StringUtil.getSecureRandomString());
 	}
 
-	public NettyClientBootstrap(int port, String host, EventLoopGroup group2) throws InterruptedException {
+	/*public NettyClientBootstrap(int port, String host, EventLoopGroup group2,String clientID) throws InterruptedException {
     	this.port = port;
         this.host = host;
         this.eventLoopGroup = group2;
+       
+        clientId = clientID;
         start();
-	}
+	}*/
 	
 	protected ChannelHandler[] getHandlers(){
-		ChannelHandler[] handlers = new ChannelHandler[2];
-		handlers[0] = new NettyClientBytesHandler(NettyClientBootstrap.this);
-		handlers[1] = new NettyClientHandler(NettyClientBootstrap.this);
+		ChannelHandler[] handlers = new ChannelHandler[1];
+//		handlers[0] = new NettyClientBytesHandler(NettyClientBootstrap.this);
+		handlers[0] = new NettyClientHandler(NettyClientBootstrap.this);
 		return handlers;
 	}
 	
@@ -81,11 +91,26 @@ public class NettyClientBootstrap {
             }
         });
         
-        future =bootstrap.connect(host,port).sync();
-        if (future.isSuccess()) {
-            socketChannel = (SocketChannel)future.channel();
-            System.out.println("connect server  成功---------");
+      /*  ChannelFuture connect =null;
+		while(!(connect = bootstrap.connect(host,port)).isSuccess()){
+        	Thread.sleep(2000);
+        	BaseUtil.getLogger().warn("无法连接到服务端,两秒后重试!");
         }
+		while(!(future = connect.sync()).isSuccess()){
+			
+			Thread.sleep(2000);
+		}*/
+        while(future == null || !future.isSuccess()){
+	        try {
+	        	future = bootstrap.connect(host,port).sync();
+			} catch (Exception e) {
+				Thread.sleep(2000);
+	        	BaseUtil.getLogger().warn("无法连接到服务端,两秒后重试!");
+			}
+        }
+        socketChannel = (SocketChannel)future.channel();
+        
+        System.out.println("connect server  成功---------");
         
     }
 	
@@ -102,6 +127,10 @@ public class NettyClientBootstrap {
 	
 	public ChannelFuture send(Object data){
         return socketChannel.writeAndFlush(data);
+	}
+	public ChannelFuture send(BaseMsg data){
+		data.setClientId(clientId);
+		return socketChannel.writeAndFlush(data);
 	}
 	
 	private NettyEngine getNettyEngine(String key){
@@ -130,18 +159,19 @@ public class NettyClientBootstrap {
 		}
 	}
 	
+	public String getClientId() {
+		return clientId;
+	}
+
 	public static void main(String []args) {
 		try {
 			NettyClientBootstrap doConnect = new NettyClientBootstrap();
-			 while (true){
-	        	try {
-	        		doConnect.login();
-	        		doConnect.send("aaaa".getBytes("GBK"));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-	            TimeUnit.SECONDS.sleep(1);
-		     }
+			CommonMsg commonMsg = new CommonMsg(121);
+		    commonMsg.setContent("客户端发过来的基本消息对象类型数据");
+			/*while (true){
+        		doConnect.send(commonMsg);
+	            TimeUnit.SECONDS.sleep(60);
+		    }*/
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

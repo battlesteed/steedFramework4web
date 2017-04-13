@@ -22,7 +22,14 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<BaseMsg> {
         NettyChannelMap.remove((SocketChannel)ctx.channel());
     }
     
-    private static NettyEngine getNettyEngine(String key){
+    @Override
+	public void channelActive(ChannelHandlerContext ctx) throws Exception {
+		super.channelActive(ctx);
+		LoginMsg loginMsg = new LoginMsg();
+		ctx.writeAndFlush(loginMsg);
+	}
+
+	private static NettyEngine getNettyEngine(String key){
 		String className = PropertyUtil.getProperties("nettyEngine.properties").getProperty("netty.server."+key);
 		if (StringUtil.isStringEmpty(className)) {
 			return null;

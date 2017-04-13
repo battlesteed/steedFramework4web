@@ -23,7 +23,7 @@ public abstract class SimpleWechatPayCallBackEngine implements WechatPayCallBack
 			Property property = new Property();
 			property.setPropertyType("wechatOrder");
 			property.setKee(key);
-			if (!DaoUtil.isResultNull(property) && DataCacheUtil.getData(key, "SimpleWechatPayCallBackEngineLock") == null) {
+			if (DataCacheUtil.getData(key, "SimpleWechatPayCallBackEngineLock") == null && !DaoUtil.isResultNull(property) ) {
 				lock();
 				return getReturnMessage(onPay(scanPayCallBack));
 			}else {

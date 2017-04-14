@@ -384,7 +384,7 @@ public class DomainUtil{
 		List<Field> allFields = ReflectUtil.getAllFields(obj);
 		for (Field f:allFields) {
 			try {
-				if (DaoUtil.isSelectIndex(f.getName())) {
+				if (DaoUtil.isSelectIndex(f.getName()) > 0) {
 					continue;
 				}
 				f.setAccessible(true);

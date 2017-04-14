@@ -71,18 +71,18 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<BaseMsg> {
             case LOGIN:{
                 //向服务器发起登录
             	dealMessageByEngine("login",baseMsg);
-            }
-            break;
+            	}
+            	break;
             case PING:{
                 System.out.println("receive ping from server----------");
-            }
-            break;
+            	}
+            	break;
             case common:{
             	 //收到客户端的请求
             	BaseUtil.getLogger().debug("收到服务端消息----->"+baseMsg.getContent());
 				dealMessageByEngine("common."+((CommonMsg)baseMsg).getMsgCode(),baseMsg);
-            }
-            break;
+            	}
+            	break;
             default:break;
         }
         ReferenceCountUtil.release(msgType);

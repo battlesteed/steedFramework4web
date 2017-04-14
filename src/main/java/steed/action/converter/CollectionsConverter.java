@@ -54,7 +54,7 @@ public class CollectionsConverter extends StrutsTypeConverter {
 		List<Object> domainList = new ArrayList<>();
 		for (String str:eval) {
 			if (!StringUtil.isStringEmpty(str)) {
-				domainList.add(ReflectUtil.string2BaseID(domainClass, str));
+				domainList.add(ReflectUtil.convertFromString(domainClass, str));
 			}
 		}
 		return domainList;
@@ -69,7 +69,7 @@ public class CollectionsConverter extends StrutsTypeConverter {
 				if (!StringUtil.isStringEmpty(str)) {
 					Object domain = domainClass.getConstructor().newInstance(null);
 					Class<?> fieldType = idField.getType();
-					Object ID = ReflectUtil.string2BaseID(fieldType, str);
+					Object ID = ReflectUtil.convertFromString(fieldType, str);
 					idField.set(domain, ID);
 					domainList.add(domain);
 				}

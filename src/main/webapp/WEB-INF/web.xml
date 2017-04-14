@@ -174,13 +174,13 @@
 		<servlet-name>WechatServlet</servlet-name>
 		<url-pattern>/wechat/wechatInterface.jsp</url-pattern>
 	</servlet-mapping>
-	<!-- 扫描二维码支付回调servlet -->
+	<!--微信支付回调servlet -->
 	<servlet>
 		<servlet-name>WechatPayCallBackServlet</servlet-name>
-		<servlet-class>steed.servlet.WechatScanPayCallBackServlet</servlet-class>
+		<servlet-class>steed.servlet.WechatPayCallBackServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>ScanPayCallBackServlet</servlet-name>
+		<servlet-name>WechatPayCallBackServlet</servlet-name>
 		<url-pattern>/wechatPayCallBackServlet.jsp</url-pattern>
 	</servlet-mapping>
 	

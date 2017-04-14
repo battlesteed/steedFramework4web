@@ -39,7 +39,7 @@ public class PropertyUtil {
 	}
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static <T> T getConfig(String key,Class baseType){
-		return (T) ReflectUtil.string2BaseID(baseType, getConfig(key));
+		return (T) ReflectUtil.convertFromString(baseType, getConfig(key));
 	}
 /*	public static <T> T getConstant(String key,Class<T> t){
 		return (T) ReflectUtil.string2BaseID(t, getProperties("constant.properties").getProperty(key));

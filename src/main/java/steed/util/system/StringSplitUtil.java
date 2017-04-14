@@ -32,7 +32,7 @@ public class StringSplitUtil {
 	public static <T> T[] convertFromString(String[] ids,Class<T> type){
 		T[] newInstance = (T[]) Array.newInstance(type, ids.length);
 		for (int i = 0; i < ids.length; i++) {
-			newInstance[i] = (T) ReflectUtil.string2BaseID(type, ids[i]);
+			newInstance[i] = (T) ReflectUtil.convertFromString(type, ids[i]);
 		}
 		return newInstance;
 	}

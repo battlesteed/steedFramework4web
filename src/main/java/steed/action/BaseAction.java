@@ -1,8 +1,12 @@
 package steed.action;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
@@ -30,6 +34,7 @@ import steed.util.base.ContextUtil;
 import steed.util.base.DomainUtil;
 import steed.util.base.PropertyUtil;
 import steed.util.base.StringUtil;
+import steed.util.reflect.ReflectUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -306,10 +311,44 @@ public abstract class BaseAction<SteedDomain extends BaseDatabaseDomain> extends
 		beforeIndex();
 		BaseDomain model = getModel();
 		DomainUtil.fuzzyQueryInitialize(model);
-		setRequestPage(DaoUtil.listObj(pageSize,currentPage, model,desc,asc));
+		setRequestPage(DaoUtil.listObj(getModel().getClass(),pageSize,currentPage, getModelQueryMapByRequestParam(),desc,asc));
 		afterIndex();
 		return steed_forward;
 	}
+	
+	/**
+	 * 将传过来的request参数根据model字段转换成的map(如果参数中有查询字段,但是model没有,返回的map一样会带有查询字段),
+	 * 解决早期框架添加大于,小于这样的查询操作符需要在实体类加字段的尴尬情况
+	 * @param 转换map的参考class
+	 * @return
+	 */
+	protected Map<String, Object> getRequetParamQueryMap(BaseDomain model,String paramPrefixName){
+		Map<String, Object> putField2Map = DaoUtil.putField2Map(model);
+		Enumeration<String> parameterNames = getRequest().getParameterNames();
+		while(parameterNames.hasMoreElements()){
+			String nextElement = parameterNames.nextElement().replaceAll(paramPrefixName, "");
+			int selectIndex = DaoUtil.isSelectIndex(nextElement);
+			if (!putField2Map.containsKey(nextElement) && selectIndex > 0) {
+				String fileName = nextElement.substring(0, nextElement.length()-selectIndex);
+				try {
+					Field declaredField = model.getClass().getDeclaredField(fileName);
+					Serializable convertFromString = ReflectUtil.convertFromString(declaredField.getType(), getRequestParameter(nextElement));
+					if (convertFromString == null) {
+						continue;
+					}
+					putField2Map.put(nextElement, convertFromString);
+				} catch (NoSuchFieldException | SecurityException e) {
+					e.printStackTrace();
+				} 
+			}
+		}
+		return putField2Map;
+	}
+	
+	protected Map<String, Object> getModelQueryMapByRequestParam(){
+		return getRequetParamQueryMap(getModel(), "");
+	}
+	
  
 	protected String add(){
 		beforeAdd();

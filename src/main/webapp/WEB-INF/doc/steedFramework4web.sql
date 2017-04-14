@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
+Source Server         : jspstudy
 Source Server Version : 50547
 Source Host           : localhost:3306
-Source Database       : steedframework4web
+Source Database       : steedframeword4web
 
 Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2016-08-17 17:59:51
+Date: 2017-04-14 17:15:38
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3643,6 +3643,7 @@ INSERT INTO `loginlog` VALUES ('admin', '0:0:0:0:0:0:0:1', '2016-07-29 10:57:08'
 INSERT INTO `loginlog` VALUES ('admin', '0:0:0:0:0:0:0:1', '2016-08-05 09:07:56', '登录成功', null, null, '3');
 INSERT INTO `loginlog` VALUES ('admin', '0:0:0:0:0:0:0:1', '2016-08-09 10:54:16', '登录成功', null, null, '3');
 INSERT INTO `loginlog` VALUES ('admin', '0:0:0:0:0:0:0:1', '2016-08-17 10:51:23', '登录成功', null, null, '3');
+INSERT INTO `loginlog` VALUES ('admin', '0:0:0:0:0:0:0:1', '2017-04-14 17:15:17', '登录成功', null, null, '3');
 
 -- ----------------------------
 -- Table structure for `logisticscompany`
@@ -3867,7 +3868,7 @@ INSERT INTO `programa` VALUES ('e', 'eee');
 DROP TABLE IF EXISTS `property`;
 CREATE TABLE `property` (
   `kee` varchar(128) NOT NULL,
-  `propertyType` int(11) NOT NULL,
+  `propertyType` varchar(11) NOT NULL,
   `value` varchar(128) DEFAULT NULL,
   `createDate` datetime DEFAULT NULL,
   PRIMARY KEY (`kee`,`propertyType`)

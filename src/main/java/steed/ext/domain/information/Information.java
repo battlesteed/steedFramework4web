@@ -36,8 +36,6 @@ public class Information extends BaseRelationalDatabaseDomain{
 	 * 发布日期
 	 */
 	private Date publishDate;
-	private Date publishDate_max_1;
-	private Date publishDate_min_1;
 
 	/**
 	 * 因为评论可能很多，所以不做一对多映射
@@ -58,20 +56,6 @@ public class Information extends BaseRelationalDatabaseDomain{
 	}
 	public void setTitle_like_1(String title_like_1) {
 		this.title_like_1 = title_like_1;
-	}
-	@Transient
-	public Date getPublishDate_max_1() {
-		return publishDate_max_1;
-	}
-	public void setPublishDate_max_1(Date publishDate_max_1) {
-		this.publishDate_max_1 = publishDate_max_1;
-	}
-	@Transient
-	public Date getPublishDate_min_1() {
-		return publishDate_min_1;
-	}
-	public void setPublishDate_min_1(Date publishDate_min_1) {
-		this.publishDate_min_1 = publishDate_min_1;
 	}
 	
 	@OneToOne

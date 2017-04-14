@@ -13,7 +13,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.conversion.impl.DateConverter;
+import com.opensymphony.xwork2.conversion.impl.DefaultTypeConverter;
 
 import steed.util.base.BaseUtil;
 import steed.util.base.PropertyUtil;
@@ -52,7 +57,7 @@ public class ReflectUtil {
 						Field declaredField = copy.getClass().getDeclaredField(f.getName());
 						if (!declaredField.getType().isAssignableFrom(f.getType())) {
 							try {
-								value = ReflectUtil.string2BaseID(declaredField.getType(), value.toString());
+								value = ReflectUtil.convertFromString(declaredField.getType(), value.toString());
 							} catch (RuntimeException e) {
 								BaseUtil.getLogger().warn("注意!字段相同的"+f.getName()+"类型却不同且不是基本数据类型或string!无法复制值!",e);
 								continue;
@@ -100,8 +105,21 @@ public class ReflectUtil {
 	 * @param str
 	 * @return
 	 */
-	public static Serializable string2BaseID(Class<?> baseType,String str){
-		if (baseType == String.class) {
+	public static Serializable convertFromString(Class<?> baseType,String str){
+		if (str == null) {
+			return null;
+		}
+		//直接用struts内置日期转换器转换......我真他妈6
+		//有sql.date util.date timestame等等....
+		if (Date.class.isAssignableFrom(baseType)) {
+			Map<String, Object> context = new HashMap<>();
+			context.put(ActionContext.LOCALE, Locale.getDefault());
+			return  (Serializable) new DateConverter().convertValue(context, null, null, null, str, baseType);
+		}else{
+			return (Serializable) new DefaultTypeConverter() {
+			}.convertValue(str, baseType);
+		}
+		/*if (baseType == String.class) {
 			return str;
 		}
 		if (baseType == Integer.class || baseType == int.class) {
@@ -121,8 +139,8 @@ public class ReflectUtil {
 		}
 		if (baseType == Boolean.class || baseType == boolean.class) {
 			return Boolean.parseBoolean(str);
-		}
-		throw new RuntimeException(baseType.getName()+"不是基本ID类型");
+		}*/
+		
 	}
 	public static boolean isClassBaseID(Class<?> clazz){
 		return clazz == String.class || 
@@ -130,8 +148,7 @@ public class ReflectUtil {
 				clazz == Integer.class||
 				clazz == Float.class ||
 				clazz == Long.class ||
-				clazz == Character.class ||
-				clazz == Double.class;
+				clazz == Character.class;
 	}
 	public static boolean isClassBaseType(Class<?> clazz){
 		return clazz == Byte.class || 
@@ -141,6 +158,7 @@ public class ReflectUtil {
 				clazz == Boolean.class ||
 				clazz == Character.class ||
 				clazz == Double.class ||
+				Date.class.isAssignableFrom(clazz) || 
 				clazz == Long.class;
 	}
 	
@@ -152,6 +170,7 @@ public class ReflectUtil {
 				obj instanceof Boolean ||
 				obj instanceof Character ||
 				obj instanceof Long ||
+				obj instanceof Date ||
 				obj instanceof Double;
 	}
 	
@@ -193,7 +212,7 @@ public class ReflectUtil {
 		try {
 			Field declaredField = getDeclaredField(obj, fieldName);
 			if (value instanceof String) {
-				value = ReflectUtil.string2BaseID(declaredField.getType(), (String) value);
+				value = ReflectUtil.convertFromString(declaredField.getType(), (String) value);
 			}
 			declaredField.setAccessible(true);
 			declaredField.set(obj, value);

@@ -1501,7 +1501,7 @@ public class DaoUtil {
 				}
 				String fieldName = f.getName();
 				//不是索引字段且标有Transient即跳过
-				if (!isSelectIndex(fieldName)) {
+				if (isSelectIndex(fieldName) == 0) {
 					if (ReflectUtil.getAnnotation(Transient.class, objClass, f) != null) {
 						continue;
 					}else if (ReflectUtil.getDeclaredMethod(objClass, StringUtil.getFieldGetterName(fieldName)) == null 
@@ -1537,16 +1537,16 @@ public class DaoUtil {
 	
 	/**
 	 * 是否属于查找索引字段
-	 * @param fieldName
-	 * @return
+	 * @param fieldName 字段名..
+	 * @return 如果不是索引字段返回0,是则返回索引后缀长度...方便subString那到真实字段名
 	 */
-	public static boolean isSelectIndex(String fieldName){
+	public static int isSelectIndex(String fieldName){
 		for (String suffix:indexSuffix) {
 			if (fieldName.endsWith(suffix)) {
-				return true;
+				return suffix.length();
 			}
 		}
-		return false;
+		return 0;
 	}
 	
 	/**

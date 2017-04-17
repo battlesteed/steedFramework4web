@@ -329,10 +329,14 @@ public abstract class BaseAction<SteedDomain extends BaseDatabaseDomain> extends
 			String nextElement = parameterNames.nextElement().replaceAll(paramPrefixName, "");
 			int selectIndex = DaoUtil.isSelectIndex(nextElement);
 			if (!putField2Map.containsKey(nextElement) && selectIndex > 0) {
+				String requestParameter = getRequestParameter(nextElement);
+				if (StringUtil.isStringEmpty(requestParameter)) {
+					continue;
+				}
 				String fileName = nextElement.substring(0, nextElement.length()-selectIndex);
 				try {
 					Field declaredField = model.getClass().getDeclaredField(fileName);
-					Serializable convertFromString = ReflectUtil.convertFromString(declaredField.getType(), getRequestParameter(nextElement));
+					Serializable convertFromString = ReflectUtil.convertFromString(declaredField.getType(), requestParameter);
 					if (convertFromString == null) {
 						continue;
 					}
